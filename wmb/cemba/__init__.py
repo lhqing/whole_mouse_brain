@@ -30,6 +30,7 @@ class CEMBASnmCAndSnm3C:
         self.CEMBA_SNM3C_100K_IMPUTED_COOL_PATH = CEMBA_SNM3C_100K_IMPUTED_COOL_PATH
         self.CEMBA_SNMC_MCDS_PATH = CEMBA_SNMC_MCDS_PATH
         self.CEMBA_SNM3C_MCDS_PATH = CEMBA_SNM3C_MCDS_PATH
+        self.CEMBA_LIU_2021_NATURE_SNMC_METADATA_PATH = CEMBA_LIU_2021_NATURE_SNMC_METADATA_PATH
         return
 
     def get_mc_mapping_metric(self, pass_basic_qc_only=True):
@@ -44,6 +45,11 @@ class CEMBASnmCAndSnm3C:
         df1 = self.get_mc_mapping_metric(pass_basic_qc_only)
         df2 = self.get_m3c_mapping_metric(pass_basic_qc_only)
         df = pd.concat([df1, df2])
+        if 'Technology' in df:
+            name_map = {i: i for i in df['Technology'].unique()}
+            name_map['snmC-seq2'] = 'snmC-seq2&3'
+            name_map['snmC-seq3'] = 'snmC-seq2&3'
+            df['Technology2'] = df['Technology'].map(name_map)
         return df
 
     def get_allc_path(self, dataset, allc_type):
@@ -130,8 +136,8 @@ class CEMBASnmCAndSnm3C:
                              'Check doc string for allowed values.')
         return cool_paths
 
+    def get_liu_2021_mc_metadata(self):
+        return pd.read_csv(self.CEMBA_LIU_2021_NATURE_SNMC_METADATA_PATH, index_col=0)
+
 
 cemba = CEMBASnmCAndSnm3C()
-
-# snm3C compartment, embedding, domain
-# cluster assignments
