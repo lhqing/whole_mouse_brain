@@ -34,7 +34,9 @@ CEMBA_SNM3C_100K_IMPUTED_COOL_PATH = PACKAGE_DIR / 'files/CEMBA.snm3C.100KImpute
 
 # MCDS Path 04/20/2022
 CEMBA_SNMC_MCDS_PATH = '/gale/netapp/cemba3c/BICCN/CEMBA_RS1/dataset/CEMBA.snmC.mcds'
-CEMBA_SNM3C_MCDS_PATH = '/gale/netapp/cemba3c/BICCN/CEMBA_3C/mcds/mcds/*.mcds'
+CEMBA_SNM3C_MCDS_PATH = '/gale/netapp/cemba3c/BICCN/CEMBA_3C/mcds/CEMBA.snm3C.mcds'
+# separate MCDS subject to delete
+# CEMBA_SNM3C_MCDS_PATH = '/gale/netapp/cemba3c/BICCN/CEMBA_3C/mcds/mcds/*.mcds'
 # TODO one last region need to generate, then complete the ensemble clustering
 
 # snm3C compartment, embedding, domain
