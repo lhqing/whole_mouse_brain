@@ -37,7 +37,6 @@ CEMBA_SNMC_MCDS_PATH = '/gale/netapp/cemba3c/BICCN/CEMBA_RS1/dataset/CEMBA.snmC.
 CEMBA_SNM3C_MCDS_PATH = '/gale/netapp/cemba3c/BICCN/CEMBA_3C/mcds/CEMBA.snm3C.mcds'
 # separate MCDS subject to delete
 # CEMBA_SNM3C_MCDS_PATH = '/gale/netapp/cemba3c/BICCN/CEMBA_3C/mcds/mcds/*.mcds'
-# TODO one last region need to generate, then complete the ensemble clustering
 
 # snm3C compartment, embedding, domain
 CEMBA_SNM3C_3C_ZARR = None

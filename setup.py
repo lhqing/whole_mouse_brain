@@ -17,7 +17,7 @@ setup(
         "Programming Language :: Python :: 3.8",
     ],
     packages=find_packages(exclude=("docs", "test")),
-    package_data={"": ["*.gz", "*.csv", "*.hdf"]},
+    package_data={"": ["*.gz", "*.csv", "*.tsv", "*.hdf", '*.lib', '*.txt']},
     include_package_data=True,
     install_requires=[
         "numpy",
