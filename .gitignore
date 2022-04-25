@@ -129,3 +129,4 @@ dmypy.json
 .pyre/
 .idea/inspectionProfiles/profiles_settings.xml
 wmb/_version.py
+wmb/files/.DS_Store
