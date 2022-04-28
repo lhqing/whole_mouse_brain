@@ -1,5 +1,6 @@
-import pandas as pd
 import joblib
+import pandas as pd
+
 from .ccf_ref import StructureTree
 from ..files import *
 
@@ -7,21 +8,60 @@ from ..files import *
 class BrainRegions:
     def __init__(self):
         self.BICCN_BRAIN_REGION_METADATA_PATH = BICCN_BRAIN_REGION_METADATA_PATH
+        self._region_meta = pd.read_csv(self.BICCN_BRAIN_REGION_METADATA_PATH,
+                                        index_col=0)
+        self._region_type = 'all'
 
         nodes = joblib.load(AIBS_REFERENCE_STRUCTURE_TREE_PATH)
         self.ccf = StructureTree(nodes)
         return
 
     def get_brain_metadata(self, region_type='all'):
-        df = pd.read_csv(self.BICCN_BRAIN_REGION_METADATA_PATH, index_col=0)
         if region_type != 'all':
             if isinstance(region_type, str):
                 region_type = [region_type]
+            df = self._region_meta
             df = df[df['RegionType'].isin(region_type)].copy()
             if df.shape[0] == 0:
                 raise KeyError(f'Got unknown region_type {region_type}. '
                                f'Possible values are {df["RegionType"].unique().tolist()}')
-        return df
+            return df
+        else:
+            return self._region_meta.copy()
+
+    def get_value_map(self, k, v):
+        value_map = self._region_meta.set_index(k)[v].to_dict()
+        return value_map
+
+    def get_major_region_palette(self):
+        return self.get_value_map('MajorRegion', 'MajorRegionColor')
+
+    def get_sub_region_palette(self):
+        return self.get_value_map('SubRegion', 'SubRegionColor')
+
+    def get_dissection_region_palette(self):
+        return self.get_value_map('Acronym', 'DissectionRegionColor')
+
+    def get_cemba_id_region_palette(self):
+        return self.get_value_map('CEMBAID', 'DissectionRegionColor')
+
+    def map_dissection_region_to_sub_region(self):
+        return self.get_value_map('Acronym', 'SubRegion')
+
+    def map_dissection_region_to_major_region(self):
+        return self.get_value_map('Acronym', 'MajorRegion')
+
+    def map_sub_region_to_major_region(self):
+        return self.get_value_map('SubRegion', 'MajorRegion')
+
+    def map_cemba_id_to_dissection_region(self):
+        return self.get_value_map('CEMBAID', 'Acronym')
+
+    def map_cemba_id_to_sub_region(self):
+        return self.get_value_map('CEMBAID', 'SubRegion')
+
+    def map_cemba_id_to_major_region(self):
+        return self.get_value_map('CEMBAID', 'MajorRegion')
 
 
 brain = BrainRegions()

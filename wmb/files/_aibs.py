@@ -37,4 +37,4 @@ AIBS_TENX_SAMPLE_FULL_METADATA_PATH = PACKAGE_DIR / 'files/AIBS.TENX.SampleMetad
 AIBS_TENX_SAMPLE_TOTAL_METADATA_PATH = PACKAGE_DIR / 'files/AIBS.TENX.KeySampleMetadata.816.csv.gz'
 AIBS_TENX_SAMPLE_TOTAL_FULL_METADATA_PATH = PACKAGE_DIR / 'files/AIBS.TENX.SampleMetadata.816.csv.gz'
 # TODO, zarr need to be sorted after basic clustering
-AIBS_TENX_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/AIBS_10X/AIBS.10X.unordered.zarr'
+AIBS_TENX_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/AIBS_TENX/AIBS.10X.unordered.zarr'
