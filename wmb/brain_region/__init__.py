@@ -29,39 +29,45 @@ class BrainRegions:
         else:
             return self._region_meta.copy()
 
-    def get_value_map(self, k, v):
-        value_map = self._region_meta.set_index(k)[v].to_dict()
+    def get_value_map(self, k, v, region_type):
+        if isinstance(region_type, str):
+            region_type = [region_type]
+        if region_type is not None:
+            use_meta = self._region_meta[self._region_meta['RegionType'].isin(region_type)]
+        else:
+            use_meta = self._region_meta
+        value_map = use_meta.set_index(k)[v].to_dict()
         return value_map
 
-    def get_major_region_palette(self):
-        return self.get_value_map('MajorRegion', 'MajorRegionColor')
+    def get_major_region_palette(self, region_type=None):
+        return self.get_value_map('MajorRegion', 'MajorRegionColor', region_type=region_type)
 
-    def get_sub_region_palette(self):
-        return self.get_value_map('SubRegion', 'SubRegionColor')
+    def get_sub_region_palette(self, region_type=None):
+        return self.get_value_map('SubRegion', 'SubRegionColor', region_type=region_type)
 
-    def get_dissection_region_palette(self):
-        return self.get_value_map('Acronym', 'DissectionRegionColor')
+    def get_dissection_region_palette(self, region_type=None):
+        return self.get_value_map('Acronym', 'DissectionRegionColor', region_type=region_type)
 
-    def get_cemba_id_region_palette(self):
-        return self.get_value_map('CEMBAID', 'DissectionRegionColor')
+    def get_cemba_id_region_palette(self, region_type=None):
+        return self.get_value_map('CEMBAID', 'DissectionRegionColor', region_type=region_type)
 
-    def map_dissection_region_to_sub_region(self):
-        return self.get_value_map('Acronym', 'SubRegion')
+    def map_dissection_region_to_sub_region(self, region_type=None):
+        return self.get_value_map('Acronym', 'SubRegion', region_type=region_type)
 
-    def map_dissection_region_to_major_region(self):
-        return self.get_value_map('Acronym', 'MajorRegion')
+    def map_dissection_region_to_major_region(self, region_type=None):
+        return self.get_value_map('Acronym', 'MajorRegion', region_type=region_type)
 
-    def map_sub_region_to_major_region(self):
-        return self.get_value_map('SubRegion', 'MajorRegion')
+    def map_sub_region_to_major_region(self, region_type=None):
+        return self.get_value_map('SubRegion', 'MajorRegion', region_type=region_type)
 
-    def map_cemba_id_to_dissection_region(self):
-        return self.get_value_map('CEMBAID', 'Acronym')
+    def map_cemba_id_to_dissection_region(self, region_type=None):
+        return self.get_value_map('CEMBAID', 'Acronym', region_type=region_type)
 
-    def map_cemba_id_to_sub_region(self):
-        return self.get_value_map('CEMBAID', 'SubRegion')
+    def map_cemba_id_to_sub_region(self, region_type=None):
+        return self.get_value_map('CEMBAID', 'SubRegion', region_type=region_type)
 
-    def map_cemba_id_to_major_region(self):
-        return self.get_value_map('CEMBAID', 'MajorRegion')
+    def map_cemba_id_to_major_region(self, region_type=None):
+        return self.get_value_map('CEMBAID', 'MajorRegion', region_type=region_type)
 
 
 brain = BrainRegions()

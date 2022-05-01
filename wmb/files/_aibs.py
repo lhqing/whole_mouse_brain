@@ -22,8 +22,9 @@ PACKAGE_DIR = pathlib.Path(wmb.__path__[0])
 
 AIBS_SMART_CELL_METADATA_PATH = PACKAGE_DIR / 'files/AIBS.SMART.KeyCellMetadata.213261.csv.gz'
 AIBS_SMART_CELL_FULL_METADATA_PATH = PACKAGE_DIR / 'files/AIBS.SMART.CellMetadata.213261.csv.gz'
-# TODO, zarr need to be sorted after basic clustering
 AIBS_SMART_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/AIBS_SMART/AIBS.SMART.ordered.zarr'
+AIBS_SMART_CELL_TYPE_ANNOTATION_PATH = '/home/hanliu/project/cemba/study/Clustering/' \
+                                       'AIBS_SMART/Summary/AIBS.SMART.Annotations.zarr'
 
 # gene metadata
 # clustering, outlier
@@ -36,5 +37,6 @@ AIBS_TENX_SAMPLE_METADATA_PATH = PACKAGE_DIR / 'files/AIBS.TENX.KeySampleMetadat
 AIBS_TENX_SAMPLE_FULL_METADATA_PATH = PACKAGE_DIR / 'files/AIBS.TENX.SampleMetadata.688.csv.gz'
 AIBS_TENX_SAMPLE_TOTAL_METADATA_PATH = PACKAGE_DIR / 'files/AIBS.TENX.KeySampleMetadata.816.csv.gz'
 AIBS_TENX_SAMPLE_TOTAL_FULL_METADATA_PATH = PACKAGE_DIR / 'files/AIBS.TENX.SampleMetadata.816.csv.gz'
-# TODO, zarr need to be sorted after basic clustering
-AIBS_TENX_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/AIBS_TENX/AIBS.10X.unordered.zarr'
+AIBS_TENX_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/AIBS_TENX/AIBS.10X.ordered.zarr'
+AIBS_TENX_CELL_TYPE_ANNOTATION_PATH = '/home/hanliu/project/cemba/study/Clustering/' \
+                                      'AIBS_TENX/Summary/AIBS.TENX.Annotations.zarr'

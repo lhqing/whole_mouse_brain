@@ -428,6 +428,15 @@ class StructureTree(SimpleTree):
             return None
 
         super(StructureTree, self).__init__(nodes, _get_id, _get_parent)
+        self._id_to_acronym = self.get_id_acronym_map()
+        self._acronym_to_id = self.get_acronym_id_map()
+        return
+
+    def id_to_acronym(self, structure_id):
+        return self._id_to_acronym[structure_id]
+
+    def acronym_to_id(self, acronym):
+        return self._acronym_to_id[acronym]
 
     @list_or_single
     def get_structures_by_id(self, structure_ids):
@@ -547,9 +556,8 @@ class StructureTree(SimpleTree):
             Keys are structure acronyms. Values are structure ids.
 
         """
-
-        return self.value_map(lambda x: x['acronym'],
-                              lambda y: y['id'])
+        return self.value_map(lambda x: x['id'],
+                              lambda y: y['acronym'])
 
     def get_acronym_id_map(self):
         """Get a dictionary mapping ids to structure acronyms across all nodes.
@@ -561,8 +569,8 @@ class StructureTree(SimpleTree):
 
         """
 
-        return self.value_map(lambda x: x['id'],
-                              lambda y: y['acronym'])
+        return self.value_map(lambda x: x['acronym'],
+                              lambda y: y['id'])
 
     def get_ancestor_id_map(self):
         """Get a dictionary mapping structure ids to ancestor ids across all
@@ -583,10 +591,10 @@ class StructureTree(SimpleTree):
 
         Parameters
         ----------
-        child_id : int
-            Id of the putative child structure.
-        parent_id : int
-            Id of the putative parent structure.
+        child_id : int or str
+            Id or acronym of the putative child structure.
+        parent_id : int or str
+            Id or acronym of the putative parent structure.
 
         Returns
         -------
@@ -595,6 +603,11 @@ class StructureTree(SimpleTree):
             the one specified by parent_id. Otherwise False.
 
         """
+        # convert acronym to id
+        if isinstance(child_id, str):
+            child_id = self.acronym_to_id(child_id)
+        if isinstance(parent_id, str):
+            parent_id = self.acronym_to_id(parent_id)
 
         return parent_id in self.ancestor_ids([child_id])[0]
 
@@ -792,7 +805,8 @@ class StructureTree(SimpleTree):
 
     @staticmethod
     def collect_sets(structure):
-        """Structure sets may be specified by full records or id. This method
+        """
+        Structure sets may be specified by full records or id. This method
         collects all structure set records/ids in a structure record and
         replaces them with a single list of id records.
         """
