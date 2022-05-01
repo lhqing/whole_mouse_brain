@@ -7,7 +7,7 @@ from ..files import \
 
 
 class AIBSTENXCellAnnotation(CellAnnotation):
-    def __init__(self, annot_path):
+    def __init__(self, annot_path=AIBS_TENX_CELL_TYPE_ANNOTATION_PATH):
         super().__init__(annot_path)
 
         # add AIBS specific attributes
@@ -24,11 +24,8 @@ class AIBSTENXCellAnnotation(CellAnnotation):
         return
 
 
-aibs_tenx_annot = AIBSTENXCellAnnotation(AIBS_TENX_CELL_TYPE_ANNOTATION_PATH)
-
-
-class AIBSSMARTCellAnnotation(AIBS_SMART_CELL_TYPE_ANNOTATION_PATH):
-    def __init__(self, annot_path):
+class AIBSSMARTCellAnnotation(CellAnnotation):
+    def __init__(self, annot_path=AIBS_SMART_CELL_TYPE_ANNOTATION_PATH):
         super().__init__(annot_path)
 
         cell_meta = aibs.get_smart_cell_metadata()
@@ -38,6 +35,3 @@ class AIBSSMARTCellAnnotation(AIBS_SMART_CELL_TYPE_ANNOTATION_PATH):
         self.annot['SubRegion'] = cell_meta['Substructure'].map(
             brain.map_dissection_region_to_sub_region())
         return
-
-
-aibs_smart_annot = AIBSSMARTCellAnnotation(AIBS_SMART_CELL_TYPE_ANNOTATION_PATH)

@@ -22,6 +22,7 @@ setup(
     install_requires=[
         "numpy",
         "pandas",
+        "xarray",
         "seaborn",
         "matplotlib"
     ]

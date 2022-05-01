@@ -1,1 +1,1 @@
-from .aibs import aibs_tenx_annot, aibs_smart_annot
+from .aibs import AIBSTENXCellAnnotation, AIBSSMARTCellAnnotation
