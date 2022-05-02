@@ -25,6 +25,7 @@ AIBS_SMART_CELL_FULL_METADATA_PATH = PACKAGE_DIR / 'files/AIBS.SMART.CellMetadat
 AIBS_SMART_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/AIBS_SMART/AIBS.SMART.ordered.zarr'
 AIBS_SMART_CELL_TYPE_ANNOTATION_PATH = '/home/hanliu/project/cemba/study/Clustering/' \
                                        'AIBS_SMART/Summary/AIBS.SMART.Annotations.zarr'
+AIBS_SMART_OUTLIER_IDS_PATH = PACKAGE_DIR / 'files/AIBS.SMART.DoubletsID.txt.gz'
 
 # gene metadata
 # clustering, outlier
@@ -40,3 +41,4 @@ AIBS_TENX_SAMPLE_TOTAL_FULL_METADATA_PATH = PACKAGE_DIR / 'files/AIBS.TENX.Sampl
 AIBS_TENX_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/AIBS_TENX/AIBS.10X.ordered.zarr'
 AIBS_TENX_CELL_TYPE_ANNOTATION_PATH = '/home/hanliu/project/cemba/study/Clustering/' \
                                       'AIBS_TENX/Summary/AIBS.TENX.Annotations.zarr'
+AIBS_TENX_OUTLIER_IDS_PATH = PACKAGE_DIR / 'files/AIBS.TENX.DoubletsID.txt.gz'
