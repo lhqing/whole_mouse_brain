@@ -33,23 +33,25 @@ CEMBA_SNM3C_25K_IMPUTED_COOL_PATH = PACKAGE_DIR / 'files/CEMBA.snm3C.25KImputedC
 CEMBA_SNM3C_100K_IMPUTED_COOL_PATH = PACKAGE_DIR / 'files/CEMBA.snm3C.100KImputedCoolURLs.csv.gz'
 
 # MCDS Path 04/20/2022
+# MCDS is ordered according to the first pass clustering, data type is standardized
 CEMBA_SNMC_MCDS_PATH = '/gale/netapp/cemba3c/BICCN/CEMBA_RS1/dataset/CEMBA.snmC.mcds'
 CEMBA_SNM3C_MCDS_PATH = '/gale/netapp/cemba3c/BICCN/CEMBA_3C/mcds/CEMBA.snm3C.mcds'
-# separate MCDS subject to delete
-# CEMBA_SNM3C_MCDS_PATH = '/gale/netapp/cemba3c/BICCN/CEMBA_3C/mcds/mcds/*.mcds'
 
-# snm3C compartment, embedding, domain
+# TODO snm3C compartment, embedding, domain
 CEMBA_SNM3C_3C_ZARR = None
 
 # cluster assignments
-# TODO first round clustering, mark clustering based outliers
-# TODO second round clustering, finalize cluster labels
-
-# Liu 2021 Nature metadata
 # cell class, major type, subtype
 # outliers
 # colors
+# TODO first round clustering, mark clustering based outliers
+# TODO second round clustering, finalize cluster labels
+
+# Outlier IDs
+# /home/hanliu/project/cemba/study/MarkOutlier/CEMBA_MC 05/02/2022
+CEMBA_SNMC_OUTLIER_IDS_PATH = PACKAGE_DIR / 'files/CEMBA.snmC.DoubletsID.txt.gz'
+# TODO snm3C outliers
+# CEMBA_SNM3C_OUTLIER_IDS_PATH = PACKAGE_DIR / 'files/CEMBA.snm3C.DoubletsID.txt.gz'
+
+# Liu 2021 Nature metadata
 CEMBA_LIU_2021_NATURE_SNMC_METADATA_PATH = PACKAGE_DIR / 'files/CEMBA.Liu2021Nature.snmC.metadata.csv.gz'
-
-# Brain region metadata
-

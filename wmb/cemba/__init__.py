@@ -31,25 +31,99 @@ class CEMBASnmCAndSnm3C:
         self.CEMBA_SNMC_MCDS_PATH = CEMBA_SNMC_MCDS_PATH
         self.CEMBA_SNM3C_MCDS_PATH = CEMBA_SNM3C_MCDS_PATH
         self.CEMBA_LIU_2021_NATURE_SNMC_METADATA_PATH = CEMBA_LIU_2021_NATURE_SNMC_METADATA_PATH
+        self.CEMBA_SNMC_OUTLIER_IDS_PATH = CEMBA_SNMC_OUTLIER_IDS_PATH
+        # self.CEMBA_SNM3C_OUTLIER_IDS_PATH = CEMBA_SNM3C_OUTLIER_IDS_PATH
         return
 
-    def get_mc_mapping_metric(self, pass_basic_qc_only=True):
+    def get_mc_mapping_metric(self, pass_basic_qc_only=True, remove_outlier_ids=True, select_cells=None):
+        """
+        Load the mapping metric for CEMBA snmC cells.
+
+        Parameters
+        ----------
+        pass_basic_qc_only
+            Only cells that pass basic QC are returned.
+        remove_outlier_ids
+            Remove cells that are outliers.
+        select_cells
+            Select cells with a list of id or path to a file containing a list of id.
+
+        Returns
+        -------
+        pd.DataFrame
+        """
         df = _get_mapping_metric(self.CEMBA_SNMC_MAPPING_METRIC_PATH, pass_basic_qc_only)
+        if remove_outlier_ids:
+            outlier_ids = pd.read_csv(self.CEMBA_SNMC_OUTLIER_IDS_PATH,
+                                      index_col=0, header=None).index
+            df = df[~df.index.isin(outlier_ids)].copy()
+        if select_cells is not None:
+            if isinstance(select_cells, (str, pathlib.Path)):
+                select_cells = pd.read_csv(select_cells, index_col=0, header=None).index
+            df = df[df.index.isin(select_cells)].copy()
         return df
 
-    def get_m3c_mapping_metric(self, pass_basic_qc_only=True):
+    def get_m3c_mapping_metric(self, pass_basic_qc_only=True, remove_outlier_ids=True, select_cells=None):
+        """
+        Load the mapping metric for CEMBA snm3C cells.
+
+        Parameters
+        ----------
+        pass_basic_qc_only
+            Only cells that pass basic QC are returned.
+        remove_outlier_ids
+            Remove cells that are outliers.
+        select_cells
+            Select cells with a list of id or path to a file containing a list of id.
+
+        Returns
+        -------
+        pd.DataFrame
+        """
         df = _get_mapping_metric(self.CEMBA_SNM3C_MAPPING_METRIC_PATH, pass_basic_qc_only)
+        if remove_outlier_ids:
+            pass
+            # TODO
+            # outlier_ids = pd.read_csv(self.CEMBA_SNM3C_OUTLIER_IDS_PATH,
+            #                          index_col=0, header=None).squeeze().index
+            # df = df[~df.index.isin(outlier_ids)].copy()
+
+        if select_cells is not None:
+            if isinstance(select_cells, (str, pathlib.Path)):
+                select_cells = pd.read_csv(select_cells, index_col=0, header=None).index
+            df = df[df.index.isin(select_cells)].copy()
         return df
 
-    def get_mc_m3c_mapping_metric(self, pass_basic_qc_only=True):
-        df1 = self.get_mc_mapping_metric(pass_basic_qc_only)
-        df2 = self.get_m3c_mapping_metric(pass_basic_qc_only)
+    def get_mc_m3c_mapping_metric(self, pass_basic_qc_only=True, remove_outlier_ids=True, select_cells=None):
+        """
+        Load the mapping metric for CEMBA snmC and snm3C cells.
+
+        Parameters
+        ----------
+        pass_basic_qc_only
+            Only cells that pass basic QC are returned.
+        remove_outlier_ids
+            Remove cells that are outliers.
+        select_cells
+            Select cells with a list of id or path to a file containing a list of id.
+
+        Returns
+        -------
+        pd.DataFrame
+        """
+        df1 = self.get_mc_mapping_metric(pass_basic_qc_only, remove_outlier_ids)
+        df2 = self.get_m3c_mapping_metric(pass_basic_qc_only, remove_outlier_ids)
         df = pd.concat([df1, df2])
         if 'Technology' in df:
             name_map = {i: i for i in df['Technology'].unique()}
             name_map['snmC-seq2'] = 'snmC-seq2&3'
             name_map['snmC-seq3'] = 'snmC-seq2&3'
             df['Technology2'] = df['Technology'].map(name_map)
+
+        if select_cells is not None:
+            if isinstance(select_cells, (str, pathlib.Path)):
+                select_cells = pd.read_csv(select_cells, index_col=0, header=None).index
+            df = df[df.index.isin(select_cells)].copy()
         return df
 
     def get_allc_path(self, dataset, allc_type):

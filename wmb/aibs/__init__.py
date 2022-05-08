@@ -26,15 +26,21 @@ class AIBS:
         self.AIBS_TENX_OUTLIER_IDS_PATH = AIBS_TENX_OUTLIER_IDS_PATH
         return
 
-    def get_smart_cell_metadata(self, pass_basic_qc_only=True):
+    def get_smart_cell_metadata(self, pass_basic_qc_only=True, remove_outlier_ids=True):
         df = pd.read_csv(self.AIBS_SMART_CELL_METADATA_PATH, index_col=0)
         df.index.name = 'cell'
         if pass_basic_qc_only:
             df = df[df['PassBasicQC']].copy()
+        if remove_outlier_ids:
+            df = df.drop(self.get_smart_outlier_ids())
         return df
 
     def get_tenx_sample_metadata(self):
         df = pd.read_csv(self.AIBS_TENX_SAMPLE_METADATA_PATH, index_col=0)
+        
+        # three sample has missing values in the current manifest file, 05/08/2022
+        df.fillna('nan', inplace=True)
+
         df.index.name = 'sample'
         return df
 
