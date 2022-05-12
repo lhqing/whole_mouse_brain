@@ -37,7 +37,7 @@ class AIBS:
 
     def get_tenx_sample_metadata(self):
         df = pd.read_csv(self.AIBS_TENX_SAMPLE_METADATA_PATH, index_col=0)
-        
+
         # three sample has missing values in the current manifest file, 05/08/2022
         df.fillna('nan', inplace=True)
 
