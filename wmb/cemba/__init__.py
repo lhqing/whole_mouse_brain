@@ -237,6 +237,7 @@ class CEMBASnmCAndSnm3C:
                                      self.get_mc_mapping_metric())
 
     def get_m3c_annot(self):
+        # TODO: make 3C annotation
         raise NotImplementedError('Not implemented yet')
         # return CEMBAm3CCellAnnotation(self.CEMBA_SNM3C_CELL_TYPE_ANNOTATION_PATH,
         #                               self.get_m3c_mapping_metric())

@@ -8,9 +8,12 @@ For each dataset, write a get gene value function, given gene name, return gene 
 
 """
 
-from .aibs import aibs
-from .annot import AIBSTENXCellAnnotation, AIBSSMARTCellAnnotation, BROADTENXCellAnnotation
-from .brain_region import brain
-from .broad import broad
+# datasets agents
 from .cemba import cemba
+from .aibs import aibs
+from .broad import broad
+
+# reference agents
+from .brain_region import brain
+# from .genes import genes
 from .genome import mm10
