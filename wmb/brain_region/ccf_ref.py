@@ -32,8 +32,7 @@
 # CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
-#
-from __future__ import division, print_function, absolute_import
+
 
 import functools
 import operator as op
@@ -592,9 +591,9 @@ class StructureTree(SimpleTree):
         Parameters
         ----------
         child_id : int or str
-            Id or acronym of the putative child structure.
+            ID or acronym of the putative child structure.
         parent_id : int or str
-            Id or acronym of the putative parent structure.
+            ID or acronym of the putative parent structure.
 
         Returns
         -------
@@ -768,7 +767,7 @@ class StructureTree(SimpleTree):
 
     @staticmethod
     def hex_to_rgb(hex_color):
-        """Convert a hexadecimal color string to a uint8 triplet
+        """Convert a hexadecimal color string to an uint8 triplet
 
         Parameters
         ----------
