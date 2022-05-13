@@ -1,6 +1,8 @@
 import pandas as pd
 
 from wmb.files import *
+from ..brain_region import brain
+from ..annot import CEMBAmCCellAnnotation
 
 
 def _get_mapping_metric(path, pass_basic_qc_only=True):
@@ -8,6 +10,17 @@ def _get_mapping_metric(path, pass_basic_qc_only=True):
     df.index.name = 'cell'
     if pass_basic_qc_only:
         df = df[df['PassBasicQC']].copy()
+    return df
+
+
+def _add_brain_region(df, region_type):
+    df['CEMBARegion'] = df['DissectionRegion'].copy()
+    df['DissectionRegion'] = df['DissectionRegion'].map(
+        brain.map_cemba_id_to_dissection_region(region_type=region_type))
+    df['MajorRegion'] = df['DissectionRegion'].map(
+        brain.map_dissection_region_to_major_region(region_type=region_type))
+    df['SubRegion'] = df['DissectionRegion'].map(
+        brain.map_dissection_region_to_sub_region(region_type=region_type))
     return df
 
 
@@ -32,7 +45,10 @@ class CEMBASnmCAndSnm3C:
         self.CEMBA_SNM3C_MCDS_PATH = CEMBA_SNM3C_MCDS_PATH
         self.CEMBA_LIU_2021_NATURE_SNMC_METADATA_PATH = CEMBA_LIU_2021_NATURE_SNMC_METADATA_PATH
         self.CEMBA_SNMC_OUTLIER_IDS_PATH = CEMBA_SNMC_OUTLIER_IDS_PATH
-        # self.CEMBA_SNM3C_OUTLIER_IDS_PATH = CEMBA_SNM3C_OUTLIER_IDS_PATH
+        self.CEMBA_SNM3C_OUTLIER_IDS_PATH = CEMBA_SNM3C_OUTLIER_IDS_PATH
+
+        self.CEMBA_SNMC_CELL_TYPE_ANNOTATION_PATH = CEMBA_SNMC_CELL_TYPE_ANNOTATION_PATH
+        self.CEMBA_SNM3C_CELL_TYPE_ANNOTATION_PATH = CEMBA_SNM3C_CELL_TYPE_ANNOTATION_PATH
         return
 
     def get_mc_mapping_metric(self, pass_basic_qc_only=True, remove_outlier_ids=True, select_cells=None):
@@ -61,6 +77,9 @@ class CEMBASnmCAndSnm3C:
             if isinstance(select_cells, (str, pathlib.Path)):
                 select_cells = pd.read_csv(select_cells, index_col=0, header=None).index
             df = df[df.index.isin(select_cells)].copy()
+
+        # add brain region
+        df = _add_brain_region(df, region_type='CEMBA')
         return df
 
     def get_m3c_mapping_metric(self, pass_basic_qc_only=True, remove_outlier_ids=True, select_cells=None):
@@ -82,16 +101,16 @@ class CEMBASnmCAndSnm3C:
         """
         df = _get_mapping_metric(self.CEMBA_SNM3C_MAPPING_METRIC_PATH, pass_basic_qc_only)
         if remove_outlier_ids:
-            pass
-            # TODO
-            # outlier_ids = pd.read_csv(self.CEMBA_SNM3C_OUTLIER_IDS_PATH,
-            #                          index_col=0, header=None).squeeze().index
-            # df = df[~df.index.isin(outlier_ids)].copy()
-
+            outlier_ids = pd.read_csv(self.CEMBA_SNM3C_OUTLIER_IDS_PATH,
+                                      index_col=0, header=None).squeeze().index
+            df = df[~df.index.isin(outlier_ids)].copy()
         if select_cells is not None:
             if isinstance(select_cells, (str, pathlib.Path)):
                 select_cells = pd.read_csv(select_cells, index_col=0, header=None).index
             df = df[df.index.isin(select_cells)].copy()
+
+        # add brain region
+        df = _add_brain_region(df, region_type='CEMBA_3C')
         return df
 
     def get_mc_m3c_mapping_metric(self, pass_basic_qc_only=True, remove_outlier_ids=True, select_cells=None):
@@ -212,6 +231,15 @@ class CEMBASnmCAndSnm3C:
 
     def get_liu_2021_mc_metadata(self):
         return pd.read_csv(self.CEMBA_LIU_2021_NATURE_SNMC_METADATA_PATH, index_col=0)
+
+    def get_mc_annot(self):
+        return CEMBAmCCellAnnotation(self.CEMBA_SNMC_CELL_TYPE_ANNOTATION_PATH,
+                                     self.get_mc_mapping_metric())
+
+    def get_m3c_annot(self):
+        raise NotImplementedError('Not implemented yet')
+        # return CEMBAm3CCellAnnotation(self.CEMBA_SNM3C_CELL_TYPE_ANNOTATION_PATH,
+        #                               self.get_m3c_mapping_metric())
 
 
 cemba = CEMBASnmCAndSnm3C()

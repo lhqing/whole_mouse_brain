@@ -42,16 +42,17 @@ CEMBA_SNM3C_3C_ZARR = None
 
 # cluster assignments
 # cell class, major type, subtype
-# outliers
-# colors
-# TODO first round clustering, mark clustering based outliers
-# TODO second round clustering, finalize cluster labels
+CEMBA_SNMC_CELL_TYPE_ANNOTATION_PATH = '/home/hanliu/project/cemba/study/Clustering/' \
+                                       'CEMBA_MC/Summary/CEMBA.snmC.Annotations.zarr'
+# TODO snm3C cell type annotation
+CEMBA_SNM3C_CELL_TYPE_ANNOTATION_PATH = None
+# CEMBA_SNM3C_CELL_TYPE_ANNOTATION_PATH = '/home/hanliu/project/cemba/study/Clustering/' \
+#                                        'CEMBA_3C/Summary/CEMBA.snm3C.Annotations.zarr'
 
 # Outlier IDs
-# /home/hanliu/project/cemba/study/MarkOutlier/CEMBA_MC 05/02/2022
+# /home/hanliu/project/cemba/study/MarkOutlier 05/12/2022
 CEMBA_SNMC_OUTLIER_IDS_PATH = PACKAGE_DIR / 'files/CEMBA.snmC.DoubletsID.txt.gz'
-# TODO snm3C outliers
-# CEMBA_SNM3C_OUTLIER_IDS_PATH = PACKAGE_DIR / 'files/CEMBA.snm3C.DoubletsID.txt.gz'
+CEMBA_SNM3C_OUTLIER_IDS_PATH = PACKAGE_DIR / 'files/CEMBA.snm3C.DoubletsID.txt.gz'
 
 # Liu 2021 Nature metadata
 CEMBA_LIU_2021_NATURE_SNMC_METADATA_PATH = PACKAGE_DIR / 'files/CEMBA.Liu2021Nature.snmC.metadata.csv.gz'

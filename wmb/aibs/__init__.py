@@ -1,6 +1,7 @@
 import pandas as pd
 
 from wmb.files import *
+from ..annot import AIBSTENXCellAnnotation, AIBSSMARTCellAnnotation
 
 
 def _get_mapping_metric(path, pass_basic_qc_only=True):
@@ -17,6 +18,7 @@ class AIBS:
         self.AIBS_SMART_CELL_FULL_METADATA_PATH = AIBS_SMART_CELL_FULL_METADATA_PATH
         self.AIBS_SMART_ZARR_PATH = AIBS_SMART_ZARR_PATH
         self.AIBS_SMART_OUTLIER_IDS_PATH = AIBS_SMART_OUTLIER_IDS_PATH
+        self.AIBS_SMART_CELL_TYPE_ANNOTATION_PATH = AIBS_SMART_CELL_TYPE_ANNOTATION_PATH
 
         self.AIBS_TENX_SAMPLE_METADATA_PATH = AIBS_TENX_SAMPLE_METADATA_PATH
         self.AIBS_TENX_SAMPLE_FULL_METADATA_PATH = AIBS_TENX_SAMPLE_FULL_METADATA_PATH
@@ -24,6 +26,7 @@ class AIBS:
         self.AIBS_TENX_SAMPLE_TOTAL_FULL_METADATA_PATH = AIBS_TENX_SAMPLE_TOTAL_FULL_METADATA_PATH
         self.AIBS_TENX_ZARR_PATH = AIBS_TENX_ZARR_PATH
         self.AIBS_TENX_OUTLIER_IDS_PATH = AIBS_TENX_OUTLIER_IDS_PATH
+        self.AIBS_TENX_SAMPLE_TYPE_ANNOTATION_PATH = AIBS_TENX_CELL_TYPE_ANNOTATION_PATH
         return
 
     def get_smart_cell_metadata(self, pass_basic_qc_only=True, remove_outlier_ids=True):
@@ -53,6 +56,14 @@ class AIBS:
         ids = pd.read_csv(self.AIBS_SMART_OUTLIER_IDS_PATH, index_col=0, header=None).index
         ids.name = 'cell'
         return ids
+
+    def get_smart_annot(self):
+        return AIBSSMARTCellAnnotation(self.AIBS_SMART_CELL_TYPE_ANNOTATION_PATH,
+                                       self.get_smart_cell_metadata())
+
+    def get_tenx_annot(self):
+        return AIBSTENXCellAnnotation(self.AIBS_TENX_SAMPLE_TYPE_ANNOTATION_PATH,
+                                      self.get_tenx_sample_metadata())
 
 
 aibs = AIBS()

@@ -1,4 +1,5 @@
 import pandas as pd
+import xarray as xr
 
 
 def transfer_cluster_annot(prev_cluster,
@@ -6,6 +7,15 @@ def transfer_cluster_annot(prev_cluster,
                            confident=0.9,
                            less_confident=0.5,
                            null_name=''):
+    if isinstance(prev_cluster, xr.DataArray):
+        prev_cluster = prev_cluster.to_pandas()
+
+    if isinstance(cur_cluster, xr.DataArray):
+        cur_cluster = cur_cluster.to_pandas()
+
+    prev_cluster = prev_cluster.reindex(cur_cluster.index)
+    prev_cluster.fillna(null_name, inplace=True)
+
     table = pd.DataFrame({'cur': cur_cluster, 'prev': prev_cluster})
     counts = table.value_counts().unstack().fillna(0).astype(int)
     ratio = counts / counts.sum(axis=1).values[:, None]
