@@ -29,13 +29,16 @@ def _add_brain_region(df, region_type):
 
 class CEMBASnmCAndSnm3C:
     def __init__(self):
+        # mapping metric
         self.CEMBA_SNMC_MAPPING_METRIC_PATH = CEMBA_SNMC_MAPPING_METRIC_PATH
-        self.CEMBA_SNM3C_MAPPING_METRIC_PATH = CEMBA_SNM3C_MAPPING_METRIC_PATH
         self.CEMBA_SNMC_FULL_MAPPING_METRIC_PATH = CEMBA_SNMC_FULL_MAPPING_METRIC_PATH
+        self.CEMBA_SNM3C_MAPPING_METRIC_PATH = CEMBA_SNM3C_MAPPING_METRIC_PATH
         self.CEMBA_SNM3C_FULL_MAPPING_METRIC_PATH = CEMBA_SNM3C_FULL_MAPPING_METRIC_PATH
+
+        # cell level raw files
         self.CEMBA_SNMC_ALLC_PATH = CEMBA_SNMC_ALLC_PATH
-        self.CEMBA_SNM3C_ALLC_PATH = CEMBA_SNM3C_ALLC_PATH
         self.CEMBA_SNMC_MCG_ALLC_PATH = CEMBA_SNMC_MCG_ALLC_PATH
+        self.CEMBA_SNM3C_ALLC_PATH = CEMBA_SNM3C_ALLC_PATH
         self.CEMBA_SNM3C_MCG_ALLC_PATH = CEMBA_SNM3C_MCG_ALLC_PATH
         self.CEMBA_SNM3C_CONTACT_PATH = CEMBA_SNM3C_CONTACT_PATH
         self.CEMBA_SNM3C_10K_RAW_COOL_PATH = CEMBA_SNM3C_10K_RAW_COOL_PATH
@@ -44,15 +47,24 @@ class CEMBASnmCAndSnm3C:
         self.CEMBA_SNM3C_10K_IMPUTED_COOL_PATH = CEMBA_SNM3C_10K_IMPUTED_COOL_PATH
         self.CEMBA_SNM3C_25K_IMPUTED_COOL_PATH = CEMBA_SNM3C_25K_IMPUTED_COOL_PATH
         self.CEMBA_SNM3C_100K_IMPUTED_COOL_PATH = CEMBA_SNM3C_100K_IMPUTED_COOL_PATH
+
+        # dataset paths
         self.CEMBA_SNMC_MCDS_PATH = CEMBA_SNMC_MCDS_PATH
         self.CEMBA_SNM3C_MCDS_PATH = CEMBA_SNM3C_MCDS_PATH
+        self.CEMBA_SNM3C_3C_CHROM100K_RAW_ZARR = CEMBA_SNM3C_3C_CHROM100K_RAW_ZARR
+        self.CEMBA_SNM3C_3C_COMPARTMENT_ZARR = CEMBA_SNM3C_3C_COMPARTMENT_ZARR
+        self.CEMBA_SNM3C_3C_DOMAIN_INSULATION_ZARR = CEMBA_SNM3C_3C_DOMAIN_INSULATION_ZARR
+
+        # other metadata
         self.CEMBA_LIU_2021_NATURE_SNMC_METADATA_PATH = CEMBA_LIU_2021_NATURE_SNMC_METADATA_PATH
         self.CEMBA_SNMC_OUTLIER_IDS_PATH = CEMBA_SNMC_OUTLIER_IDS_PATH
         self.CEMBA_SNM3C_OUTLIER_IDS_PATH = CEMBA_SNM3C_OUTLIER_IDS_PATH
 
+        # annotation
         self.CEMBA_SNMC_CELL_TYPE_ANNOTATION_PATH = CEMBA_SNMC_CELL_TYPE_ANNOTATION_PATH
         self.CEMBA_SNM3C_CELL_TYPE_ANNOTATION_PATH = CEMBA_SNM3C_CELL_TYPE_ANNOTATION_PATH
 
+        # internal variables
         self._mc_gene_mcds = None
         self._m3c_gene_mcds = None
         return
@@ -254,7 +266,7 @@ class CEMBASnmCAndSnm3C:
         # return CEMBAm3CCellAnnotation(self.CEMBA_SNM3C_CELL_TYPE_ANNOTATION_PATH,
         #                               self.get_m3c_mapping_metric())
 
-    @lru_cache(maxsize=100)
+    @lru_cache(maxsize=200)
     def get_mc_gene_frac(self, gene, mc_type='CHN'):
         if self._mc_gene_mcds is None:
             self._open_mc_gene_mcds()
@@ -268,7 +280,8 @@ class CEMBASnmCAndSnm3C:
             gene_name = mm10.gene_id_to_name(gene)
 
         gene_data = self._mc_gene_mcds['geneslop2k_da_frac'].sel(
-            mc_type=mc_type, geneslop2k=gene_id).to_pandas()
+            mc_type=mc_type, geneslop2k=gene_id
+        ).to_pandas()
         return gene_data
 
 
