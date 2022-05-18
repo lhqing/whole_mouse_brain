@@ -1,10 +1,11 @@
+from functools import lru_cache
+
 import pandas as pd
 from ALLCools.mcds import MCDS
 
-from functools import lru_cache
 from wmb.files import *
+from ..annot import CEMBAmCCellAnnotation, CEMBAATACCellAnnotation
 from ..brain_region import brain
-from ..annot import CEMBAmCCellAnnotation
 from ..genome import mm10
 
 
@@ -285,4 +286,25 @@ class CEMBASnmCAndSnm3C:
         return gene_data
 
 
+class CEMBAATAC:
+    """
+    CEMBA ATAC-seq data
+    """
+
+    def __init__(self):
+        self.CEMBA_ATAC_ZARR_PATH = CEMBA_ATAC_ZARR_PATH
+        self.CEMBA_ATAC_CELL_TYPE_ANNOTATION_PATH = CEMBA_ATAC_CELL_TYPE_ANNOTATION_PATH
+        self.CEMBA_ATAC_CLUSTER_FULL_NAME_PATH = CEMBA_ATAC_CLUSTER_FULL_NAME_PATH
+
+        self._full_name_map = pd.read_csv(self.CEMBA_ATAC_CLUSTER_FULL_NAME_PATH,
+                                          index_col=0, sep='\t').squeeze()
+
+    def get_atac_annot(self):
+        return CEMBAATACCellAnnotation(self.CEMBA_ATAC_CELL_TYPE_ANNOTATION_PATH)
+
+    def get_cluster_full_name(self, name):
+        return self._full_name_map.loc[name]
+
+
 cemba = CEMBASnmCAndSnm3C()
+cemba_atac = CEMBAATAC()
