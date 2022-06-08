@@ -12,6 +12,7 @@ For each dataset, write a get gene value function, given gene name, return gene 
 from .cemba import cemba, cemba_atac
 from .aibs import aibs
 from .broad import broad
+from .glia import glia
 
 # reference agents
 from .brain_region import brain
