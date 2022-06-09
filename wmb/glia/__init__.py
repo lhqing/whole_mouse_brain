@@ -21,7 +21,7 @@ REGION_PALETTE = {
 class GliaMCT:
     def __init__(self):
         self.metadata = '/gale/netapp/glia1/analysis_hl/study/BasicCellFilter/Glia.snmCT.CellMetadata.csv.gz'
-        self.GLIA_MCT_MCDS_PATH = ['/gale/netapp/glia1/dataset/mcds/mct1819.mcds']
+        self.GLIA_MCT_MCDS_PATH = '/gale/netapp/glia1/dataset/mcds/*.mcds'
         self.GLIA_MCT_RNA_ZARR_PATH = '/gale/netapp/glia1/dataset/rna_ds/*.RNA.zarr'
         self.GLIA_MCT_ANNOTATION_PATH = '/gale/netapp/glia1/analysis_hl/study/Clustering/' \
                                         'Summary/GLIA.snmCT.Annotations.zarr'
