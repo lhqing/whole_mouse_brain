@@ -13,6 +13,7 @@ from .cemba import cemba, cemba_atac
 from .aibs import aibs
 from .broad import broad
 from .glia import glia
+from .pbn import pbn
 
 # reference agents
 from .brain_region import brain

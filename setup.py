@@ -24,6 +24,7 @@ setup(
         "pandas",
         "xarray",
         "seaborn",
-        "matplotlib"
+        "matplotlib",
+        "ALLCools"
     ]
 )
