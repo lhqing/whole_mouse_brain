@@ -52,5 +52,5 @@ jobs:
         registry: gcr.io
         project_id: prod-635e
         image_name: wmb
-        image_tag: ${{ steps.get_tag_name.outputs.GIT_TAG_NAME}}
+        image_tag: ${{ steps.get_tag_name.outputs.GIT_TAG_NAME}},latest
         dockerfile: ./Dockerfile
