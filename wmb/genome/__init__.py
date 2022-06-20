@@ -1,5 +1,5 @@
 import pandas as pd
-
+import numpy as np
 from ..files import *
 
 
@@ -29,23 +29,48 @@ class MM10GenomeRef:
 
         self._gene_name_to_id = {v: k for k, v in self._gene_id_to_name.items()}
         self._gene_id_base_to_name = {k.split('.')[0]: v for k, v in self._gene_id_to_name.items()}
+        self._gene_id_base_to_id = {k.split('.')[0]: k for k in self._gene_id_to_name.keys()}
         self._gene_name_to_id_base = {v: k for k, v in self._gene_id_base_to_name.items()}
         return
 
-    def gene_id_to_name(self, gene_id):
+    def gene_id_to_name(self, gene_id, allow_nan=True):
         try:
             return self._gene_id_to_name[gene_id]
         except KeyError as e:
             try:
                 return self._gene_id_base_to_name[gene_id]
             except KeyError:
+                if allow_nan:
+                    return np.nan
+                else:
+                    raise e
+
+    def gene_name_to_id(self, gene_name, allow_nan=True):
+        try:
+            return self._gene_name_to_id[gene_name]
+        except KeyError as e:
+            if allow_nan:
+                return np.nan
+            else:
                 raise e
 
-    def gene_name_to_id(self, gene_name):
-        return self._gene_name_to_id[gene_name]
+    def gene_name_to_id_base(self, gene_name, allow_nan=True):
+        try:
+            return self._gene_name_to_id_base[gene_name]
+        except KeyError as e:
+            if allow_nan:
+                return np.nan
+            else:
+                raise e
 
-    def gene_name_to_id_base(self, gene_name):
-        return self._gene_name_to_id_base[gene_name]
+    def gene_id_base_to_id(self, gene_id_base, allow_nan=True):
+        try:
+            return self._gene_id_base_to_id[gene_id_base]
+        except KeyError as e:
+            if allow_nan:
+                return np.nan
+            else:
+                raise e
 
 
 mm10 = MM10GenomeRef()

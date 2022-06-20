@@ -11,11 +11,15 @@ class BROAD:
         self.BROAD_TENX_ZARR_PATH = BROAD_TENX_ZARR_PATH
         self.BROAD_TENX_OUTLIER_IDS_PATH = BROAD_TENX_OUTLIER_IDS_PATH
         self.BROAD_TENX_CELL_TYPE_ANNOTATION_PATH = BROAD_TENX_CELL_TYPE_ANNOTATION_PATH
+        self.BROAD_TENX_GENE_MAP_PATH = BROAD_TENX_GENE_MAP_PATH
 
         self._gene_zarr = None
         self._cell_million_reads = None
         self._gene_index = None
         return
+
+    def get_tenx_gene_map(self):
+        return pd.read_csv(self.BROAD_TENX_GENE_MAP_PATH, index_col=0, header=0).squeeze()
 
     def get_tenx_sample_metadata(self):
         df = pd.read_csv(self.BROAD_TENX_SAMPLE_METADATA_PATH, index_col=0)

@@ -23,6 +23,7 @@ class AIBS:
         self.AIBS_SMART_ZARR_PATH = AIBS_SMART_ZARR_PATH
         self.AIBS_SMART_OUTLIER_IDS_PATH = AIBS_SMART_OUTLIER_IDS_PATH
         self.AIBS_SMART_CELL_TYPE_ANNOTATION_PATH = AIBS_SMART_CELL_TYPE_ANNOTATION_PATH
+        self.AIBS_SMART_GENE_MAP_PATH = AIBS_SMART_GENE_MAP_PATH
 
         self.AIBS_TENX_SAMPLE_METADATA_PATH = AIBS_TENX_SAMPLE_METADATA_PATH
         self.AIBS_TENX_SAMPLE_FULL_METADATA_PATH = AIBS_TENX_SAMPLE_FULL_METADATA_PATH
@@ -31,6 +32,7 @@ class AIBS:
         self.AIBS_TENX_ZARR_PATH = AIBS_TENX_ZARR_PATH
         self.AIBS_TENX_OUTLIER_IDS_PATH = AIBS_TENX_OUTLIER_IDS_PATH
         self.AIBS_TENX_SAMPLE_TYPE_ANNOTATION_PATH = AIBS_TENX_CELL_TYPE_ANNOTATION_PATH
+        self.AIBS_TENX_GENE_MAP_PATH = AIBS_TENX_GENE_MAP_PATH
 
         # internal variables
         self._smart_gene_zarr = None
@@ -40,6 +42,12 @@ class AIBS:
         self._tenx_cell_million_reads = None
         self._tenx_gene_index = None
         return
+
+    def get_smart_gene_map(self):
+        return pd.read_csv(self.AIBS_SMART_GENE_MAP_PATH, index_col=0, header=0).squeeze()
+
+    def get_tenx_gene_map(self):
+        return pd.read_csv(self.AIBS_TENX_GENE_MAP_PATH, index_col=0, header=0).squeeze()
 
     def get_smart_cell_metadata(self, pass_basic_qc_only=True, remove_outlier_ids=True):
         df = pd.read_csv(self.AIBS_SMART_CELL_METADATA_PATH, index_col=0)

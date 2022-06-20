@@ -16,3 +16,6 @@ BROAD_TENX_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/BROAD_TENX/BROAD.TENX.ordered
 BROAD_TENX_CELL_TYPE_ANNOTATION_PATH = '/home/hanliu/project/cemba/study/Clustering/' \
                                        'BROAD_TENX/Summary/BROAD.TENX.Annotations.zarr'
 BROAD_TENX_OUTLIER_IDS_PATH = PACKAGE_DIR / 'files/BROAD.TENX.DoubletsID.txt.gz'
+
+# gene metadata
+BROAD_TENX_GENE_MAP_PATH = PACKAGE_DIR / 'files/BROAD.TENX.GeneMap.csv'

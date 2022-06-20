@@ -11,6 +11,8 @@ class AIBSTENXCellAnnotation(CellAnnotation):
         # add AIBS specific attributes
         self['sample'] = self.get_index('cell').map(lambda i: i.split('-')[0])
 
+        self['DissectionRegion'] = self['sample'].to_pandas().map(metadata['Structure'])
+
         metadata['MajorRegion'] = metadata['Structure'].map(
             brain.map_dissection_region_to_major_region())
         self['MajorRegion'] = self['sample'].to_pandas().map(metadata['MajorRegion'])
@@ -26,6 +28,8 @@ class AIBSSMARTCellAnnotation(CellAnnotation):
 
     def __init__(self, annot_path, metadata):
         super().__init__(annot_path)
+
+        self['DissectionRegion'] = metadata['Substructure']
 
         self['MajorRegion'] = metadata['Substructure'].map(
             brain.map_dissection_region_to_major_region())

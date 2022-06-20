@@ -31,6 +31,8 @@ AIBS_SMART_CELL_TYPE_ANNOTATION_PATH = '/home/hanliu/project/cemba/study/Cluster
 AIBS_SMART_OUTLIER_IDS_PATH = PACKAGE_DIR / 'files/AIBS.SMART.DoubletsID.txt.gz'
 
 # gene metadata
+AIBS_SMART_GENE_MAP_PATH = PACKAGE_DIR / 'files/AIBS.SMART.GeneMap.csv'
+
 # clustering
 
 # =================================
@@ -48,3 +50,6 @@ AIBS_TENX_CELL_TYPE_ANNOTATION_PATH = '/home/hanliu/project/cemba/study/Clusteri
 # Outliers
 # /home/hanliu/project/cemba/study/MarkOutlier/AIBS_TENX 05/02/2022
 AIBS_TENX_OUTLIER_IDS_PATH = PACKAGE_DIR / 'files/AIBS.TENX.DoubletsID.txt.gz'
+
+# gene metadata
+AIBS_TENX_GENE_MAP_PATH = PACKAGE_DIR / 'files/AIBS.TENX.GeneMap.csv'
