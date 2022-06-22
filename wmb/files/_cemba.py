@@ -38,9 +38,9 @@ CEMBA_SNMC_MCDS_PATH = '/gale/netapp/cemba3c/BICCN/CEMBA_RS1/dataset/CEMBA.snmC.
 CEMBA_SNM3C_MCDS_PATH = '/gale/netapp/cemba3c/BICCN/CEMBA_3C/mcds/CEMBA.snm3C.mcds'
 # snm3C compartment, embedding, domain
 # prepared in /gale/netapp/cemba3c/BICCN/CEMBA_3C/mcds/prepare_3c_matrix 05/15/2022
-CEMBA_SNM3C_3C_COMPARTMENT_ZARR = '/gale/netapp/cemba3c/BICCN/CEMBA_3C/mcds/CEMBA.snm3C.3C.mcds/chrom100k'
-CEMBA_SNM3C_3C_DOMAIN_INSULATION_ZARR = '/gale/netapp/cemba3c/BICCN/CEMBA_3C/mcds/CEMBA.snm3C.3C.mcds/chrom25k'
-CEMBA_SNM3C_3C_CHROM100K_RAW_ZARR = '/gale/netapp/cemba3c/BICCN/CEMBA_3C/mcds/CEMBA.snm3C.chrom100k_raw.zarr'
+CEMBA_SNM3C_3C_COMPARTMENT_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/CEMBA_3C/mcds/CEMBA.snm3C.3C.mcds/chrom100k'
+CEMBA_SNM3C_3C_DOMAIN_INSULATION_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/CEMBA_3C/mcds/CEMBA.snm3C.3C.mcds/chrom25k'
+CEMBA_SNM3C_3C_CHROM100K_RAW_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/CEMBA_3C/mcds/CEMBA.snm3C.chrom100k_raw.zarr'
 
 # cluster assignments
 # cell class, major type, subtype
