@@ -23,8 +23,7 @@ PACKAGE_DIR = pathlib.Path(wmb.__path__[0])
 AIBS_SMART_CELL_METADATA_PATH = PACKAGE_DIR / 'files/AIBS.SMART.KeyCellMetadata.213261.csv.gz'
 AIBS_SMART_CELL_FULL_METADATA_PATH = PACKAGE_DIR / 'files/AIBS.SMART.CellMetadata.213261.csv.gz'
 AIBS_SMART_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/AIBS_SMART/AIBS.SMART.ordered.zarr'
-AIBS_SMART_CELL_TYPE_ANNOTATION_PATH = '/home/hanliu/project/cemba/study/Clustering/' \
-                                       'AIBS_SMART/Summary/AIBS.SMART.Annotations.zarr'
+AIBS_SMART_CELL_TYPE_ANNOTATION_PATH = '/gale/netapp/cemba3c/BICCN/wmb/aibs/AIBS.SMART.Annotations.zarr'
 
 # Outliers
 # /home/hanliu/project/cemba/study/MarkOutlier/AIBS_SMART 05/02/2022
@@ -44,8 +43,7 @@ AIBS_TENX_SAMPLE_FULL_METADATA_PATH = PACKAGE_DIR / 'files/AIBS.TENX.SampleMetad
 AIBS_TENX_SAMPLE_TOTAL_METADATA_PATH = PACKAGE_DIR / 'files/AIBS.TENX.KeySampleMetadata.816.csv.gz'
 AIBS_TENX_SAMPLE_TOTAL_FULL_METADATA_PATH = PACKAGE_DIR / 'files/AIBS.TENX.SampleMetadata.816.csv.gz'
 AIBS_TENX_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/AIBS_TENX/AIBS.10X.ordered.zarr'
-AIBS_TENX_CELL_TYPE_ANNOTATION_PATH = '/home/hanliu/project/cemba/study/Clustering/' \
-                                      'AIBS_TENX/Summary/AIBS.TENX.Annotations.zarr'
+AIBS_TENX_CELL_TYPE_ANNOTATION_PATH = '/gale/netapp/cemba3c/BICCN/wmb/aibs/AIBS.TENX.Annotations.zarr'
 
 # Outliers
 # /home/hanliu/project/cemba/study/MarkOutlier/AIBS_TENX 05/02/2022

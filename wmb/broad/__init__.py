@@ -5,7 +5,7 @@ from ..annot import BROADTENXCellAnnotation
 from functools import lru_cache
 
 
-class BROAD:
+class BROAD(AutoPathMixIn):
     def __init__(self):
         self.BROAD_TENX_SAMPLE_METADATA_PATH = BROAD_TENX_SAMPLE_METADATA_PATH
         self.BROAD_TENX_ZARR_PATH = BROAD_TENX_ZARR_PATH
@@ -16,6 +16,9 @@ class BROAD:
         self._gene_zarr = None
         self._cell_million_reads = None
         self._gene_index = None
+
+        # validate path or auto change prefix
+        self._check_file_path_attrs()
         return
 
     def get_tenx_gene_map(self):

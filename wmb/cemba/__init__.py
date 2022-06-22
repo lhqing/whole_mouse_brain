@@ -68,6 +68,9 @@ class CEMBASnmCAndSnm3C(AutoPathMixIn):
         # internal variables
         self._mc_gene_mcds = None
         self._m3c_gene_mcds = None
+
+        # validate path or auto change prefix
+        self._check_file_path_attrs()
         return
 
     def _open_mc_gene_mcds(self):
@@ -300,6 +303,9 @@ class CEMBAATAC(AutoPathMixIn):
         self._full_name_map = pd.read_csv(self.CEMBA_ATAC_CLUSTER_FULL_NAME_PATH,
                                           index_col=0, sep='\t').squeeze()
         self._mapping_metric = None
+
+        # validate path or auto change prefix
+        self._check_file_path_attrs()
         return
 
     def get_atac_mapping_metric(self):

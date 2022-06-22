@@ -12,8 +12,8 @@ PACKAGE_DIR = pathlib.Path(wmb.__path__[0])
 # /home/hanliu/project/cemba/study/BasicFilteringAndPrepareMetadata 04/20/2022
 CEMBA_SNMC_MAPPING_METRIC_PATH = PACKAGE_DIR / 'files/CEMBA.CellMetadata.snmC-seq.small.csv.gz'
 CEMBA_SNM3C_MAPPING_METRIC_PATH = PACKAGE_DIR / 'files/CEMBA.CellMetadata.snm3C-seq.small.csv.gz'
-CEMBA_SNMC_FULL_MAPPING_METRIC_PATH = '/home/hanliu/project/cemba/metainfo/CEMBA.CellMetadata.snmC-seq.hdf'
-CEMBA_SNM3C_FULL_MAPPING_METRIC_PATH = '/home/hanliu/project/cemba/metainfo/CEMBA.CellMetadata.snm3C-seq.hdf'
+CEMBA_SNMC_FULL_MAPPING_METRIC_PATH = '/gale/netapp/cemba3c/BICCN/wmb/cemba/CEMBA.CellMetadata.snmC-seq.hdf'
+CEMBA_SNM3C_FULL_MAPPING_METRIC_PATH = '/gale/netapp/cemba3c/BICCN/wmb/cemba/CEMBA.CellMetadata.snm3C-seq.hdf'
 
 # the code to prepare cemba file path is in
 # /home/hanliu/cemba3c/BICCN/wmb/file_path 04/20/2022
@@ -44,12 +44,10 @@ CEMBA_SNM3C_3C_CHROM100K_RAW_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/CEMBA_3C/mc
 
 # cluster assignments
 # cell class, major type, subtype
-CEMBA_SNMC_CELL_TYPE_ANNOTATION_PATH = '/home/hanliu/project/cemba/study/Clustering/' \
-                                       'CEMBA_MC/Summary/CEMBA.snmC.Annotations.zarr'
+CEMBA_SNMC_CELL_TYPE_ANNOTATION_PATH = '/gale/netapp/cemba3c/BICCN/wmb/cemba/CEMBA.snmC.Annotations.zarr'
 # TODO snm3C cell type annotation
 CEMBA_SNM3C_CELL_TYPE_ANNOTATION_PATH = None
-# CEMBA_SNM3C_CELL_TYPE_ANNOTATION_PATH = '/home/hanliu/project/cemba/study/Clustering/' \
-#                                        'CEMBA_3C/Summary/CEMBA.snm3C.Annotations.zarr'
+# CEMBA_SNM3C_CELL_TYPE_ANNOTATION_PATH = '/gale/netapp/cemba3c/BICCN/wmb/cemba/CEMBA.snm3C.Annotations.zarr'
 
 # Outlier IDs
 # /home/hanliu/project/cemba/study/MarkOutlier 05/12/2022

@@ -16,7 +16,7 @@ def _get_mapping_metric(path, pass_basic_qc_only=True):
     return df
 
 
-class AIBS:
+class AIBS(AutoPathMixIn):
     def __init__(self):
         self.AIBS_SMART_CELL_METADATA_PATH = AIBS_SMART_CELL_METADATA_PATH
         self.AIBS_SMART_CELL_FULL_METADATA_PATH = AIBS_SMART_CELL_FULL_METADATA_PATH
@@ -41,6 +41,9 @@ class AIBS:
         self._tenx_gene_zarr = None
         self._tenx_cell_million_reads = None
         self._tenx_gene_index = None
+
+        # validate path or auto change prefix
+        self._check_file_path_attrs()
         return
 
     def get_smart_gene_map(self):
