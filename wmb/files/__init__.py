@@ -23,7 +23,6 @@ class AutoPathMixIn:
                             cur_path = new_path
                             found = True
                 except TypeError:
-                    print(attr, cur_path)
                     continue
 
                 if found:
