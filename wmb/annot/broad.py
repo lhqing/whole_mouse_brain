@@ -13,7 +13,7 @@ class BROADTENXCellAnnotation(CellAnnotation):
         self['sample'] = self.get_index('cell').map(lambda i: i[:-18])
 
         self['DissectionRegion'] = self['sample'].to_pandas().map(metadata['DissectionRegion'])
-        
+
         metadata['MajorRegion'] = metadata['DissectionRegion'].map(
             brain.map_dissection_region_to_major_region())
         self['MajorRegion'] = self['sample'].to_pandas().map(metadata['MajorRegion'])

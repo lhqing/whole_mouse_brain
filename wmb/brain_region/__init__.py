@@ -37,6 +37,9 @@ class BrainRegions:
         else:
             use_meta = self._region_meta
         value_map = use_meta.set_index(k)[v].to_dict()
+
+        # deal with nan
+        value_map['nan'] = '#D3D3D3'  # lightgrey
         return value_map
 
     def get_major_region_palette(self, region_type=None):
