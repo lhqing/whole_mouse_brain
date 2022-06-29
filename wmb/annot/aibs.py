@@ -5,7 +5,7 @@ from ..brain_region import brain
 class AIBSTENXCellAnnotation(CellAnnotation):
     __slots__ = ()
 
-    def __init__(self, annot_path, metadata):
+    def __init__(self, annot_path, metadata, add_l4_from_l3=True):
         super().__init__(annot_path)
 
         # add AIBS specific attributes
@@ -20,13 +20,18 @@ class AIBSTENXCellAnnotation(CellAnnotation):
         metadata['SubRegion'] = metadata['Structure'].map(
             brain.map_dissection_region_to_sub_region())
         self['SubRegion'] = self['sample'].to_pandas().map(metadata['SubRegion'])
+
+        if add_l4_from_l3:
+            if 'L4' in self.data_vars:
+                raise ValueError('L4 already exists in annotation')
+            self['L4'] = self['L3'].copy()
         return
 
 
 class AIBSSMARTCellAnnotation(CellAnnotation):
     __slots__ = ()
 
-    def __init__(self, annot_path, metadata):
+    def __init__(self, annot_path, metadata, add_l4_from_l3=True):
         super().__init__(annot_path)
 
         self['DissectionRegion'] = metadata['Substructure']
@@ -36,4 +41,10 @@ class AIBSSMARTCellAnnotation(CellAnnotation):
 
         self['SubRegion'] = metadata['Substructure'].map(
             brain.map_dissection_region_to_sub_region())
+
+        if add_l4_from_l3:
+            if 'L4' in self.data_vars:
+                raise ValueError('L4 already exists in annotation')
+            self['L4'] = self['L3'].copy()
+
         return
