@@ -14,7 +14,5 @@ RUN apt-get update && \
     apt-get install google-cloud-sdk -y
 
 USER $MAMBA_USER
-
 # EXPOSE 8080
-
-ENTRYPOINT ["/usr/local/bin/_entrypoint.sh", "jupyter-lab", "--no-browser", "--ip=0.0.0.0", "--port=8080"]
+# ENTRYPOINT ["/usr/local/bin/_entrypoint.sh", "jupyter-lab", "--no-browser", "--ip=0.0.0.0", "--port=8080"]
