@@ -1,6 +1,6 @@
 # startup script
 # copy analysis files and mount filestore
-sudo mount 10.132.160.226:/eckerhome /mnt/home
+sudo mount 10.1.247.106:/eckerhome /mnt/home
 cd BICCN
 # start jupyter
 screen -R jupyter
