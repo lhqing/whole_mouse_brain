@@ -288,6 +288,11 @@ class CEMBASnmCAndSnm3C(AutoPathMixIn):
         ).to_pandas()
         return gene_data
 
+    def get_integration_annot(self, ref, query):
+        # TODO this function will return the integration result zarr dataset
+        # will return two xr.Datasets, one for ref and one for query
+        raise NotImplementedError('Not implemented yet')
+
 
 class CEMBAATAC(AutoPathMixIn):
     """
