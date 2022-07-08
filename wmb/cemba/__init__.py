@@ -4,7 +4,7 @@ import pandas as pd
 from ALLCools.mcds import MCDS
 
 from wmb.files import *
-from ..annot import CEMBAmCCellAnnotation, CEMBAATACCellAnnotation
+from ..annot import CEMBAmCCellAnnotation, CEMBAm3CCellAnnotation, CEMBAATACCellAnnotation
 from ..brain_region import brain
 from ..genome import mm10
 
@@ -265,10 +265,8 @@ class CEMBASnmCAndSnm3C(AutoPathMixIn):
                                      self.get_mc_mapping_metric())
 
     def get_m3c_annot(self):
-        # TODO: make 3C annotation
-        raise NotImplementedError('Not implemented yet')
-        # return CEMBAm3CCellAnnotation(self.CEMBA_SNM3C_CELL_TYPE_ANNOTATION_PATH,
-        #                               self.get_m3c_mapping_metric())
+        return CEMBAm3CCellAnnotation(self.CEMBA_SNM3C_CELL_TYPE_ANNOTATION_PATH,
+                                      self.get_m3c_mapping_metric())
 
     @lru_cache(maxsize=200)
     def get_mc_gene_frac(self, gene, mc_type='CHN'):

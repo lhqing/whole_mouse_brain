@@ -45,9 +45,7 @@ CEMBA_SNM3C_3C_CHROM100K_RAW_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/CEMBA_3C/mc
 # cluster assignments
 # cell class, major type, subtype
 CEMBA_SNMC_CELL_TYPE_ANNOTATION_PATH = '/gale/netapp/cemba3c/BICCN/wmb/cemba/CEMBA.snmC.Annotations.zarr'
-# TODO snm3C cell type annotation
-CEMBA_SNM3C_CELL_TYPE_ANNOTATION_PATH = None
-# CEMBA_SNM3C_CELL_TYPE_ANNOTATION_PATH = '/gale/netapp/cemba3c/BICCN/wmb/cemba/CEMBA.snm3C.Annotations.zarr'
+CEMBA_SNM3C_CELL_TYPE_ANNOTATION_PATH = '/gale/netapp/cemba3c/BICCN/wmb/cemba/CEMBA.snm3C.Annotations.zarr'
 
 # Outlier IDs
 # /home/hanliu/project/cemba/study/MarkOutlier 05/12/2022
