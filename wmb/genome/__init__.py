@@ -1,12 +1,14 @@
-import pandas as pd
 import numpy as np
+import pandas as pd
+
 from ..files import *
 
 
 class MM10GenomeRef:
-    def __init__(self, annot_version='GENCODE_vm22'):
+    def __init__(self, annot_version='GENCODE_vm23'):
         self.ENCODE_BLACKLIST_PATH = ENCODE_BLACKLIST_PATH
         self.GENCODE_MM10_vm22 = GENCODE_MM10_vm22
+        self.GENCODE_MM10_vm23 = GENCODE_MM10_vm23
         self._gene_id_to_name = None
         self._gene_name_to_id = None
         self._gene_id_base_to_name = None
@@ -14,18 +16,17 @@ class MM10GenomeRef:
         self._get_gene_id_name_dict(annot_version=annot_version)
         return
 
-    def get_gene_metadata(self, annot_version='GENCODE_vm22'):
+    def get_gene_metadata(self, annot_version='GENCODE_vm23'):
         if annot_version == 'GENCODE_vm22':
             gene_meta = pd.read_csv(self.GENCODE_MM10_vm22, sep='\t', index_col='gene_id')
+        elif annot_version == 'GENCODE_vm23':
+            gene_meta = pd.read_csv(self.GENCODE_MM10_vm23, sep='\t', index_col='gene_id')
         else:
             raise NotImplementedError
         return gene_meta
 
-    def _get_gene_id_name_dict(self, annot_version='GENCODE_vm22'):
-        if annot_version == 'GENCODE_vm22':
-            self._gene_id_to_name = self.get_gene_metadata()['gene_name'].to_dict()
-        else:
-            raise NotImplementedError
+    def _get_gene_id_name_dict(self, annot_version='GENCODE_vm23'):
+        self._gene_id_to_name = self.get_gene_metadata(annot_version)['gene_name'].to_dict()
 
         self._gene_name_to_id = {v: k for k, v in self._gene_id_to_name.items()}
         self._gene_id_base_to_name = {k.split('.')[0]: v for k, v in self._gene_id_to_name.items()}

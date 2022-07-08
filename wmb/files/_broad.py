@@ -18,3 +18,6 @@ BROAD_TENX_OUTLIER_IDS_PATH = PACKAGE_DIR / 'files/BROAD.TENX.DoubletsID.txt.gz'
 
 # gene metadata
 BROAD_TENX_GENE_MAP_PATH = PACKAGE_DIR / 'files/BROAD.TENX.GeneMap.csv'
+
+# Gene chunk zarr path
+BROAD_TENX_GENE_CHUNK_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/share/gene_mcds_for_plot/GeneChunks/BROAD.TENX'

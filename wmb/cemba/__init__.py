@@ -65,6 +65,10 @@ class CEMBASnmCAndSnm3C(AutoPathMixIn):
         self.CEMBA_SNMC_CELL_TYPE_ANNOTATION_PATH = CEMBA_SNMC_CELL_TYPE_ANNOTATION_PATH
         self.CEMBA_SNM3C_CELL_TYPE_ANNOTATION_PATH = CEMBA_SNM3C_CELL_TYPE_ANNOTATION_PATH
 
+        # gene chunk zarr path
+        self.CEMBA_SNMC_GENE_CHUNK_ZARR_PATH = CEMBA_SNMC_GENE_CHUNK_ZARR_PATH
+        self.CEMBA_SNM3C_GENE_CHUNK_ZARR_PATH = CEMBA_SNM3C_GENE_CHUNK_ZARR_PATH
+
         # internal variables
         self._mc_gene_mcds = None
         self._m3c_gene_mcds = None
@@ -74,10 +78,10 @@ class CEMBASnmCAndSnm3C(AutoPathMixIn):
         return
 
     def _open_mc_gene_mcds(self):
-        self._mc_gene_mcds = MCDS.open(self.CEMBA_SNMC_MCDS_PATH, var_dim='geneslop2k')
+        self._mc_gene_mcds = MCDS.open(self.CEMBA_SNMC_GENE_CHUNK_ZARR_PATH)
 
     def _open_m3c_gene_mcds(self):
-        self._m3c_gene_mcds = MCDS.open(self.CEMBA_SNM3C_MCDS_PATH, var_dim='geneslop2k')
+        self._m3c_gene_mcds = MCDS.open(self.CEMBA_SNM3C_GENE_CHUNK_ZARR_PATH)
 
     def get_mc_mapping_metric(self, pass_basic_qc_only=True, remove_outlier_ids=True, select_cells=None):
         """
@@ -281,8 +285,26 @@ class CEMBASnmCAndSnm3C(AutoPathMixIn):
             gene_id = gene
             gene_name = mm10.gene_id_to_name(gene)
 
-        gene_data = self._mc_gene_mcds['geneslop2k_da_frac'].sel(
-            mc_type=mc_type, geneslop2k=gene_id
+        gene_data = self._mc_gene_mcds['geneslop2k-vm23_da_frac_fc'].sel(
+            {'mc_type': mc_type, 'geneslop2k-vm23': gene_id}
+        ).to_pandas()
+        return gene_data
+
+    @lru_cache(maxsize=200)
+    def get_m3c_gene_frac(self, gene, mc_type='CHN'):
+        if self._m3c_gene_mcds is None:
+            self._open_m3c_gene_mcds()
+
+        # check if gene is gene name:
+        try:
+            gene_name = gene
+            gene_id = mm10.gene_name_to_id(gene)
+        except KeyError:
+            gene_id = gene
+            gene_name = mm10.gene_id_to_name(gene)
+
+        gene_data = self._m3c_gene_mcds['geneslop2k-vm23_da_frac_fc'].sel(
+            {'mc_type': mc_type, 'geneslop2k-vm23': gene_id}
         ).to_pandas()
         return gene_data
 

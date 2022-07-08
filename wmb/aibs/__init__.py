@@ -1,5 +1,6 @@
 from functools import lru_cache
 
+import numpy as np
 import pandas as pd
 
 from wmb.files import *
@@ -33,6 +34,9 @@ class AIBS(AutoPathMixIn):
         self.AIBS_TENX_OUTLIER_IDS_PATH = AIBS_TENX_OUTLIER_IDS_PATH
         self.AIBS_TENX_SAMPLE_TYPE_ANNOTATION_PATH = AIBS_TENX_CELL_TYPE_ANNOTATION_PATH
         self.AIBS_TENX_GENE_MAP_PATH = AIBS_TENX_GENE_MAP_PATH
+
+        self.AIBS_SMART_GENE_CHUNK_ZARR_PATH = AIBS_SMART_GENE_CHUNK_ZARR_PATH
+        self.AIBS_TENX_GENE_CHUNK_ZARR_PATH = AIBS_TENX_GENE_CHUNK_ZARR_PATH
 
         # internal variables
         self._smart_gene_zarr = None
@@ -97,7 +101,7 @@ class AIBS(AutoPathMixIn):
 
     def _open_smart_zarr(self):
         import xarray as xr
-        self._smart_gene_zarr = xr.open_zarr(self.AIBS_SMART_ZARR_PATH)
+        self._smart_gene_zarr = xr.open_zarr(self.AIBS_SMART_GENE_CHUNK_ZARR_PATH)
         self._smart_cell_million_reads = self._smart_gene_zarr['read_count'].to_pandas()
         self._smart_cell_million_reads /= 1000000
         self._smart_gene_index = self._smart_gene_zarr.get_index('gene')
@@ -105,7 +109,7 @@ class AIBS(AutoPathMixIn):
 
     def _open_tenx_zarr(self):
         import xarray as xr
-        self._tenx_gene_zarr = xr.open_zarr(self.AIBS_TENX_ZARR_PATH)
+        self._tenx_gene_zarr = xr.open_zarr(self.AIBS_TENX_GENE_CHUNK_ZARR_PATH)
         self._tenx_cell_million_reads = self._tenx_gene_zarr['umi_count'].to_pandas()
         self._tenx_cell_million_reads /= 1000000
         self._tenx_gene_index = self._tenx_gene_zarr.get_index('gene')
@@ -134,7 +138,7 @@ class AIBS(AutoPathMixIn):
         return use_gene_text
 
     @lru_cache(maxsize=200)
-    def _get_gene_data(self, gene, normalize, dataset):
+    def _get_gene_data(self, gene, normalize, log, dataset):
         if dataset == 'smart':
             gene_zarr = self._smart_gene_zarr
             cell_million_reads = self._smart_cell_million_reads
@@ -145,27 +149,32 @@ class AIBS(AutoPathMixIn):
             raise ValueError('dataset must be smart or tenx, got {}'.format(dataset))
 
         # raw counts
-        gene_data = gene_zarr['gene_da'].sel(gene=gene).to_pandas()
+        gene_data = gene_zarr['gene_da_fc'].sel(gene=gene).to_pandas()
         # normalize to CPM
         if normalize:
             gene_data /= cell_million_reads
+
+        # log transform
+        if log:
+            gene_data = np.log1p(gene_data)
+
         return gene_data
 
-    def get_tenx_gene_data(self, gene, normalize=True):
+    def get_tenx_gene_data(self, gene, normalize=True, log=True):
         if self._tenx_gene_zarr is None:
             self._open_tenx_zarr()
 
         gene_index = self._tenx_gene_index
         gene = self._standardize_gene_index(gene, 'tenx', gene_index)
-        return self._get_gene_data(gene, normalize, 'tenx')
+        return self._get_gene_data(gene, normalize=normalize, log=log, dataset='tenx')
 
-    def get_smart_gene_data(self, gene, normalize=True):
+    def get_smart_gene_data(self, gene, normalize=True, log=True):
         if self._smart_gene_zarr is None:
             self._open_smart_zarr()
 
         gene_index = self._smart_gene_index
         gene = self._standardize_gene_index(gene, 'smart', gene_index)
-        return self._get_gene_data(gene, normalize, 'smart')
+        return self._get_gene_data(gene, normalize=normalize, log=log, dataset='smart')
 
 
 aibs = AIBS()

@@ -51,3 +51,7 @@ AIBS_TENX_OUTLIER_IDS_PATH = PACKAGE_DIR / 'files/AIBS.TENX.DoubletsID.txt.gz'
 
 # gene metadata
 AIBS_TENX_GENE_MAP_PATH = PACKAGE_DIR / 'files/AIBS.TENX.GeneMap.csv'
+
+# Gene chunk zarr path
+AIBS_SMART_GENE_CHUNK_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/share/gene_mcds_for_plot/GeneChunks/AIBS.SMART'
+AIBS_TENX_GENE_CHUNK_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/share/gene_mcds_for_plot/GeneChunks/AIBS.TENX'
