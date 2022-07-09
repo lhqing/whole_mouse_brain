@@ -25,6 +25,6 @@ class BROADTENXCellAnnotation(CellAnnotation):
         if add_l4_from_l3:
             if 'L4' in self.data_vars:
                 raise ValueError('L4 already exists in annotation')
-            self['L4'] = self['L3'].copy()
-            
+            self['L4'] = self['L3'].copy()    
         return
+
