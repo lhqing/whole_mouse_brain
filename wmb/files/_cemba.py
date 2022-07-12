@@ -56,8 +56,8 @@ CEMBA_SNM3C_OUTLIER_IDS_PATH = PACKAGE_DIR / 'files/CEMBA.snm3C.DoubletsID.txt.g
 CEMBA_LIU_2021_NATURE_SNMC_METADATA_PATH = PACKAGE_DIR / 'files/CEMBA.Liu2021Nature.snmC.metadata.csv.gz'
 
 # Gene chunk zarr path
-CEMBA_SNMC_GENE_CHUNK_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/share/gene_mcds_for_plot/GeneChunks/CEMBA.snmC'
-CEMBA_SNM3C_GENE_CHUNK_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/share/gene_mcds_for_plot/GeneChunks/CEMBA.snm3C'
+CEMBA_SNMC_GENE_CHUNK_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/wmb/GeneChunks/CEMBA.snmC'
+CEMBA_SNM3C_GENE_CHUNK_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/wmb/GeneChunks/CEMBA.snm3C'
 
 # =================================
 # CEMBA ATAC
@@ -68,5 +68,4 @@ CEMBA_ATAC_CELL_TYPE_ANNOTATION_PATH = '/gale/netapp/cemba3c/BICCN/CEMBA_ATAC/me
 CEMBA_ATAC_CLUSTER_FULL_NAME_PATH = PACKAGE_DIR / 'files/CEMBA.snATAC.ClusterDescription.tsv'
 CEMBA_ATAC_MAPPING_METRIC_PATH = '/gale/netapp/cemba3c/BICCN/CEMBA_ATAC/meta/CEMBA.snATAC.Metadata.hdf'
 
-
-# TODO CEMBA_ATAC_GENE_CHUNK_PATH =
+CEMBA_ATAC_GENE_CHUNK_PATH = '/gale/netapp/cemba3c/BICCN/wmb/GeneChunks/CEMBA.ATAC'
