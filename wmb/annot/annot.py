@@ -34,8 +34,8 @@ class CellAnnotation(xr.Dataset):
         for hierarchy_list in self.attrs['cluster_hierarchy']:
             for i, var_name in enumerate(hierarchy_list):
                 if i > 0:
-                    self[var_name] = self[hierarchy_list[i - 1]].load() + \
-                                     '_' + self[var_name].load()
+                    self[var_name] = self[hierarchy_list[i - 1]].to_pandas().astype(str) + \
+                                     '_' + self[var_name].to_pandas().astype(str)
         return
 
     def get_cell_annot(self, cluster_name):

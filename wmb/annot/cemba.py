@@ -75,9 +75,4 @@ class CEMBAATACCellAnnotation(CellAnnotation):
         metadata['SubRegion'] = metadata['DissectionRegion'].map(
             brain.map_dissection_region_to_sub_region(region_type='CEMBA'))
         self['SubRegion'] = self.get_index('cell').map(metadata['SubRegion'])
-
-        if 'L1_annot' in self.data_vars:
-            raise ValueError('L1_annot already exists in annotation')
-        else:
-            self['L1_annot'] = self['L1'].copy()
         return
