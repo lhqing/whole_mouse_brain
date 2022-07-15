@@ -127,7 +127,7 @@ rule r05:
         nb="{group_dir}/05.embedding.ipynb",
         log="{group_dir}/log/05.embedding.log"
     resources:
-        ncells=1  # bypass ncells limit
+        ncells=0  # bypass ncells limit
     threads: 1
     shell:
         "papermill --cwd {wildcards.group_dir} "
@@ -148,7 +148,7 @@ rule r06:
         nb="{group_dir}/06.confusion_matrix.ipynb",
         log="{group_dir}/log/06.confusion_matrix.log"
     resources:
-        ncells=1  # bypass ncells limit
+        ncells=0  # bypass ncells limit
     threads: 1
     shell:
         "papermill --cwd {wildcards.group_dir} "
@@ -168,7 +168,7 @@ rule r07:
         mc_ig="{group_dir}/mc_integration_group.csv.gz",
         atac_ig="{group_dir}/atac_integration_group.csv.gz",
     resources:
-        ncells=1  # bypass ncells limit
+        ncells=0  # bypass ncells limit
     log:
         nb="{group_dir}/07.select_integration_group.ipynb",
         log="{group_dir}/log/07.select_integration_group.log"
