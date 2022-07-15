@@ -1,5 +1,16 @@
 import pandas as pd
 import pathlib
+from functools import lru_cache
+
+
+@lru_cache
+def get_n_cells(wildcards):
+    group_dir = wildcards.group_dir
+    mc_cells = pd.read_csv(f'{group_dir}/mc_cells.txt', header=None).index.size
+    atac_cells = pd.read_csv(f'{group_dir}/atac_cells.txt', header=None).index.size
+    print(f'{group_dir}, # of Cells {mc_cells + atac_cells}')
+    return mc_cells + atac_cells
+
 
 dataset = 'REPLACE_DATASET'
 cluster_col = 'REPLACE_CLUSTER_COL'
@@ -31,6 +42,8 @@ rule r01:
         nb=f"{template_dir}/01.prepare_mc.ipynb",
     output:
         adata=temp("{group_dir}/mc_input.h5ad")
+    resources:
+        ncells=get_n_cells
     log:
         nb="{group_dir}/01.prepare_mc.ipynb",
         log="{group_dir}/log/01.prepare_mc.log"
@@ -48,6 +61,8 @@ rule r02:
         nb=f"{template_dir}/02.prepare_atac.ipynb",
     output:
         adata=temp("{group_dir}/atac_input.h5ad")
+    resources:
+        ncells=get_n_cells
     log:
         nb="{group_dir}/02.prepare_atac.ipynb",
         log="{group_dir}/log/02.prepare_atac.log"
@@ -67,6 +82,8 @@ rule r03:
     output:
         temp("{group_dir}/mc_lsi.h5ad"),
         temp("{group_dir}/atac_lsi.h5ad")
+    resources:
+        ncells=get_n_cells
     log:
         nb="{group_dir}/03.merge_and_lsi.ipynb",
         log="{group_dir}/log/03.merge_and_lsi.log"
@@ -89,6 +106,8 @@ rule r04:
     log:
         nb="{group_dir}/04.integration.ipynb",
         log="{group_dir}/log/04.integration.log"
+    resources:
+        ncells=get_n_cells
     threads: 1
     shell:
         "papermill --cwd {wildcards.group_dir} "
@@ -107,6 +126,8 @@ rule r05:
     log:
         nb="{group_dir}/05.embedding.ipynb",
         log="{group_dir}/log/05.embedding.log"
+    resources:
+        ncells=1  # bypass ncells limit
     threads: 1
     shell:
         "papermill --cwd {wildcards.group_dir} "
@@ -126,6 +147,8 @@ rule r06:
     log:
         nb="{group_dir}/06.confusion_matrix.ipynb",
         log="{group_dir}/log/06.confusion_matrix.log"
+    resources:
+        ncells=1  # bypass ncells limit
     threads: 1
     shell:
         "papermill --cwd {wildcards.group_dir} "
@@ -144,6 +167,8 @@ rule r07:
     output:
         mc_ig="{group_dir}/mc_integration_group.csv.gz",
         atac_ig="{group_dir}/atac_integration_group.csv.gz",
+    resources:
+        ncells=1  # bypass ncells limit
     log:
         nb="{group_dir}/07.select_integration_group.ipynb",
         log="{group_dir}/log/07.select_integration_group.log"
