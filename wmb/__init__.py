@@ -19,3 +19,6 @@ from .pbn import pbn
 from .brain_region import brain
 # from .genes import genes
 from .genome import mm10
+
+# integration
+from .integration import biccn_integration

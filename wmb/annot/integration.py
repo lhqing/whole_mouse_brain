@@ -133,7 +133,3 @@ class IntegrationResultZarr(xr.Dataset):
         score_df.index.name = self.ref_name + '_Cluster'
         score_df.columns.name = self.query_name + '_Cluster'
         return score_df
-
-    def map_query_to_ref(self, n_top=3, score_cutoff=0.5):
-        return
-
