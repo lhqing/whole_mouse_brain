@@ -1,3 +1,4 @@
+import pandas as pd
 import pathlib
 
 
@@ -12,17 +13,18 @@ mc_type = 'REPLACE_MC_TYPE'
 template_dir = template_dir.rstrip('/')
 categorical_key_str = "'{" + f'categorical_key:{categorical_key}' + "}'"
 
-group_names = [p.name
-               for p in pathlib.Path().glob('*')
-               if (not p.name.startswith('.')) and p.is_dir() and (p.name != 'Summary')]
-print('group names',group_names)
+
+group_names = [p.name 
+               for p in pathlib.Path().glob('*') 
+               if (not p.name.startswith('.')) and p.is_dir() and (p.name != 'Summary') and (p.name != 'arc')]
+print('group names', group_names)
 
 
 rule all:
     input:
-        expand('{group_dir}/finish',group_dir=group_names),
-        expand('{group_dir}/mc_integration_group.csv.gz',group_dir=group_names),
-        expand('{group_dir}/m3c_integration_group.csv.gz',group_dir=group_names),
+        expand('{group_dir}/finish', group_dir=group_names),
+        expand('{group_dir}/mc_integration_group.csv.gz', group_dir=group_names),
+        expand('{group_dir}/m3c_integration_group.csv.gz', group_dir=group_names),
 
 
 rule r01:
@@ -163,6 +165,7 @@ rule r06:
 rule r07:
     input:
         mc='{group_dir}/final_with_coords.h5ad',
+        flag="{group_dir}/finish",
     params:
         nb=f"{template_dir}/07.select_integration_group.ipynb",
     output:
