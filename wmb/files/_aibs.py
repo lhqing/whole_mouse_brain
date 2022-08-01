@@ -55,3 +55,7 @@ AIBS_TENX_GENE_MAP_PATH = PACKAGE_DIR / 'files/AIBS.TENX.GeneMap.csv'
 # Gene chunk zarr path
 AIBS_SMART_GENE_CHUNK_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/wmb/GeneChunks/AIBS.SMART'
 AIBS_TENX_GENE_CHUNK_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/wmb/GeneChunks/AIBS.TENX'
+
+# Cluster Aggregation
+AIBS_SMART_CLUSTER_L4_SUM_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/wmb/aibs/AIBS.SMART.L4Agg.zarr'
+AIBS_TENX_CLUSTER_L4_SUM_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/wmb/aibs/AIBS.TENX.L4Agg.zarr'

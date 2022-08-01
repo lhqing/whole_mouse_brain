@@ -69,6 +69,10 @@ class CEMBASnmCAndSnm3C(AutoPathMixIn):
         self.CEMBA_SNMC_GENE_CHUNK_ZARR_PATH = CEMBA_SNMC_GENE_CHUNK_ZARR_PATH
         self.CEMBA_SNM3C_GENE_CHUNK_ZARR_PATH = CEMBA_SNM3C_GENE_CHUNK_ZARR_PATH
 
+        # cluster aggregate zarr path
+        self.CEMBA_SNMC_CLUSTER_L4_SUM_ZARR_PATH = CEMBA_SNMC_CLUSTER_L4_SUM_ZARR_PATH
+        self.CEMBA_SNM3C_CLUSTER_L4_SUM_ZARR_PATH = CEMBA_SNM3C_CLUSTER_L4_SUM_ZARR_PATH
+
         # internal variables
         self._mc_gene_mcds = None
         self._m3c_gene_mcds = None

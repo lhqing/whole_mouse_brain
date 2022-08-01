@@ -38,6 +38,9 @@ class AIBS(AutoPathMixIn):
         self.AIBS_SMART_GENE_CHUNK_ZARR_PATH = AIBS_SMART_GENE_CHUNK_ZARR_PATH
         self.AIBS_TENX_GENE_CHUNK_ZARR_PATH = AIBS_TENX_GENE_CHUNK_ZARR_PATH
 
+        self.AIBS_SMART_CLUSTER_L4_SUM_ZARR_PATH = AIBS_SMART_CLUSTER_L4_SUM_ZARR_PATH
+        self.AIBS_TENX_CLUSTER_L4_SUM_ZARR_PATH = AIBS_TENX_CLUSTER_L4_SUM_ZARR_PATH
+
         # internal variables
         self._smart_gene_zarr = None
         self._smart_cell_million_reads = None

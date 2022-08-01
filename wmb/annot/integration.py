@@ -49,7 +49,7 @@ class IntegrationResultZarr(xr.Dataset):
         print(f'For the {dataset} cells:')
         cells = (final_group == '').sum()
         print(f'{cells: 8d} cells do not belong to any integration group.')
-        level_counts = final_group.str.count('_').value_counts().sort_index()
+        level_counts = final_group[final_group != ''].str.count('_').value_counts().sort_index()
         for level, cells in level_counts.items():
             print(
                 f'{cells: 8d} cells belong to {self.levels[level]} integration group.'
@@ -82,11 +82,11 @@ class IntegrationResultZarr(xr.Dataset):
         return self.attrs['integration_levels']
 
     @property
-    def final_ref_inte_group(self):
+    def ref_group(self):
         return self[f'{self.ref_name}_Final_InteGroup'].to_pandas()
 
     @property
-    def final_query_inte_group(self):
+    def query_group(self):
         return self[f'{self.query_name}_Final_InteGroup'].to_pandas()
 
     @property
@@ -116,8 +116,8 @@ class IntegrationResultZarr(xr.Dataset):
     def inte_group_overlap_score(self, group):
         from ALLCools.integration.confusion import calculate_overlap_score
 
-        ref_group = self.final_ref_inte_group
-        query_group = self.final_query_inte_group
+        ref_group = self.ref_group
+        query_group = self.query_group
 
         ref_cells = ref_group[ref_group.str.startswith(group)].index
         query_cells = query_group[query_group.str.startswith(group)].index
@@ -133,3 +133,25 @@ class IntegrationResultZarr(xr.Dataset):
         score_df.index.name = self.ref_name + '_Cluster'
         score_df.columns.name = self.query_name + '_Cluster'
         return score_df
+
+    def get_group_data(self, group, coord='tsne'):
+        if group == 'nan' or group == '-1' or group == '':
+            return None, None
+
+        group_level = len(group.split('_'))
+        level = self.levels[group_level]
+
+        ref_cells = self.ref_group[self.ref_group.str.startswith(group)].index
+        query_cells = self.query_group[self.query_group.str.startswith(group)].index
+
+        ref_df = self[f'{self.ref_name}_{level}_{coord}_coord'].sel(
+            {f'{self.ref_name}_cell': ref_cells}).to_pandas()
+        ref_df['CoCluster'] = self.get_ref_co_cluster(level)
+        ref_df['Cluster'] = self.ref_cluster[ref_cells]
+
+        query_df = self[f'{self.query_name}_{level}_{coord}_coord'].sel(
+            {f'{self.query_name}_cell': query_cells}).to_pandas()
+        query_df['CoCluster'] = self.get_query_co_cluster(level)
+        query_df['Cluster'] = self.query_cluster[query_cells]
+        return ref_df, query_df
+

@@ -59,6 +59,10 @@ CEMBA_LIU_2021_NATURE_SNMC_METADATA_PATH = PACKAGE_DIR / 'files/CEMBA.Liu2021Nat
 CEMBA_SNMC_GENE_CHUNK_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/wmb/GeneChunks/CEMBA.snmC'
 CEMBA_SNM3C_GENE_CHUNK_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/wmb/GeneChunks/CEMBA.snm3C'
 
+# Cluster Aggregation
+CEMBA_SNMC_CLUSTER_L4_SUM_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/wmb/cemba/CEMBA.snmC.L4Agg.zarr'
+CEMBA_SNM3C_CLUSTER_L4_SUM_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/wmb/cemba/CEMBA.snm3C.L4Agg.zarr'
+
 # =================================
 # CEMBA ATAC
 # =================================
@@ -69,3 +73,6 @@ CEMBA_ATAC_CLUSTER_FULL_NAME_PATH = PACKAGE_DIR / 'files/CEMBA.snATAC.ClusterDes
 CEMBA_ATAC_MAPPING_METRIC_PATH = '/gale/netapp/cemba3c/BICCN/CEMBA_ATAC/meta/CEMBA.snATAC.Metadata.hdf'
 
 CEMBA_ATAC_GENE_CHUNK_PATH = '/gale/netapp/cemba3c/BICCN/wmb/GeneChunks/CEMBA.ATAC'
+
+# Cluster Aggregation
+CEMBA_ATAC_CLUSTER_L4_SUM_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/wmb/cemba_atac/CEMBA.ATAC.L4Agg.zarr/'

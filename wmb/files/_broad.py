@@ -21,3 +21,6 @@ BROAD_TENX_GENE_MAP_PATH = PACKAGE_DIR / 'files/BROAD.TENX.GeneMap.csv'
 
 # Gene chunk zarr path
 BROAD_TENX_GENE_CHUNK_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/wmb/GeneChunks/BROAD.TENX'
+
+# Cluster Aggregation
+BROAD_TENX_CLUSTER_L4_SUM_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/wmb/broad/BROAD.TENX.L4Agg.zarr'
