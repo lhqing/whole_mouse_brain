@@ -23,8 +23,7 @@ class BROADTENXCellAnnotation(CellAnnotation):
         self['SubRegion'] = self['sample'].to_pandas().map(metadata['SubRegion'])
 
         if add_l4_from_l3:
-            if 'L4' in self.data_vars:
-                raise ValueError('L4 already exists in annotation')
-            self['L4'] = self['L3'].copy()    
+            if 'L4' in self.data_vars and 'L3' in self.data_vars:
+                self['L4'] = self['L3'].copy()
         return
 
