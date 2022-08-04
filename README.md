@@ -12,4 +12,3 @@ I will keep this as private repo until publish
 
 ## Code organization
 ![code_org.jpg](wmb.mindnode/QuickLook/Preview.jpg)
-

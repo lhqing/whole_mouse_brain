@@ -32,7 +32,7 @@ class AIBS(AutoPathMixIn):
         self.AIBS_TENX_SAMPLE_TOTAL_FULL_METADATA_PATH = AIBS_TENX_SAMPLE_TOTAL_FULL_METADATA_PATH
         self.AIBS_TENX_ZARR_PATH = AIBS_TENX_ZARR_PATH
         self.AIBS_TENX_OUTLIER_IDS_PATH = AIBS_TENX_OUTLIER_IDS_PATH
-        self.AIBS_TENX_SAMPLE_TYPE_ANNOTATION_PATH = AIBS_TENX_CELL_TYPE_ANNOTATION_PATH
+        self.AIBS_TENX_CELL_TYPE_ANNOTATION_PATH = AIBS_TENX_CELL_TYPE_ANNOTATION_PATH
         self.AIBS_TENX_GENE_MAP_PATH = AIBS_TENX_GENE_MAP_PATH
 
         self.AIBS_SMART_GENE_CHUNK_ZARR_PATH = AIBS_SMART_GENE_CHUNK_ZARR_PATH
@@ -99,7 +99,7 @@ class AIBS(AutoPathMixIn):
                                        self.get_smart_cell_metadata())
 
     def get_tenx_annot(self):
-        return AIBSTENXCellAnnotation(self.AIBS_TENX_SAMPLE_TYPE_ANNOTATION_PATH,
+        return AIBSTENXCellAnnotation(self.AIBS_TENX_CELL_TYPE_ANNOTATION_PATH,
                                       self.get_tenx_sample_metadata())
 
     def _open_smart_zarr(self):

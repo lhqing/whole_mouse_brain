@@ -200,7 +200,7 @@ class CEMBASnmCAndSnm3C(AutoPathMixIn):
         allc_type = allc_type.lower()
 
         def _read_file_paths(p):
-            s = pd.read_csv(p, index_col=0, squeeze=True)
+            s = pd.read_csv(p, index_col=0).squeeze()
             s.index.name = 'cell'
             return s
 

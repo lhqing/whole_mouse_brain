@@ -68,11 +68,14 @@ CEMBA_SNM3C_CLUSTER_L4_SUM_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/wmb/cemba/CEM
 # =================================
 
 CEMBA_ATAC_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/CEMBA_ATAC/zarr/CEMBA.snATAC.zarr'
-CEMBA_ATAC_CELL_TYPE_ANNOTATION_PATH = '/gale/netapp/cemba3c/BICCN/CEMBA_ATAC/meta/CEMBA.snATAC.Annotations.zarr'
 CEMBA_ATAC_CLUSTER_FULL_NAME_PATH = PACKAGE_DIR / 'files/CEMBA.snATAC.ClusterDescription.tsv'
 CEMBA_ATAC_MAPPING_METRIC_PATH = '/gale/netapp/cemba3c/BICCN/CEMBA_ATAC/meta/CEMBA.snATAC.Metadata.hdf'
 
+# gene chunk
 CEMBA_ATAC_GENE_CHUNK_PATH = '/gale/netapp/cemba3c/BICCN/wmb/GeneChunks/CEMBA.ATAC'
+
+# annotation
+CEMBA_ATAC_CELL_TYPE_ANNOTATION_PATH = '/gale/netapp/cemba3c/BICCN/wmb/cemba_atac/CEMBA.snATAC.Annotations.zarr'
 
 # Cluster Aggregation
 CEMBA_ATAC_CLUSTER_L4_SUM_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/wmb/cemba_atac/CEMBA.ATAC.L4Agg.zarr/'
