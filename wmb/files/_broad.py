@@ -24,3 +24,4 @@ BROAD_TENX_GENE_CHUNK_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/wmb/GeneChunks/BRO
 
 # Cluster Aggregation
 BROAD_TENX_CLUSTER_L4_SUM_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/wmb/broad/BROAD.TENX.L4Agg.zarr'
+BROAD_TENX_CLUSTER_L4Region_SUM_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/wmb/broad/BROAD.TENX.L4RegionAgg.zarr'

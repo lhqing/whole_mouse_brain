@@ -59,3 +59,6 @@ AIBS_TENX_GENE_CHUNK_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/wmb/GeneChunks/AIBS
 # Cluster Aggregation
 AIBS_SMART_CLUSTER_L4_SUM_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/wmb/aibs/AIBS.SMART.L4Agg.zarr'
 AIBS_TENX_CLUSTER_L4_SUM_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/wmb/aibs/AIBS.TENX.L4Agg.zarr'
+
+AIBS_SMART_CLUSTER_L4Region_SUM_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/wmb/aibs/AIBS.SMART.L4RegionAgg.zarr'
+AIBS_TENX_CLUSTER_L4Region_SUM_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/wmb/aibs/AIBS.TENX.L4RegionAgg.zarr'
