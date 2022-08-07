@@ -19,7 +19,8 @@ class BROAD(AutoPathMixIn):
         self.BROAD_TENX_GENE_CHUNK_ZARR_PATH = BROAD_TENX_GENE_CHUNK_ZARR_PATH
 
         # cluster aggregate zarr path
-        self.CEMBA_ATAC_CLUSTER_L4_SUM_ZARR_PATH = CEMBA_ATAC_CLUSTER_L4_SUM_ZARR_PATH
+        self.BROAD_TENX_CLUSTER_L4_SUM_ZARR_PATH = BROAD_TENX_CLUSTER_L4_SUM_ZARR_PATH
+        self.BROAD_TENX_CLUSTER_L4Region_SUM_ZARR_PATH = BROAD_TENX_CLUSTER_L4Region_SUM_ZARR_PATH
 
         self._gene_zarr = None
         self._cell_million_reads = None

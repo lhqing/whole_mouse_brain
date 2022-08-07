@@ -4,6 +4,7 @@ from ._broad import *
 from ._brain_region import *
 from ._ref import *
 from ._integration import *
+from .palette import PALETTES
 import pathlib
 
 

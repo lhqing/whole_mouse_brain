@@ -76,3 +76,22 @@ class CellAnnotation(xr.Dataset):
         # add cell level annotation, but not save to zarr
         self._map_cluster_cat(cluster_name)
         return
+
+    def get_cluster_centroids_df(self, coord, groupby):
+        cell_coords = self[f'{coord}_coord'].to_pandas()
+        cluster_df = cell_coords.groupby(self[groupby].to_pandas()).median()
+        cluster_df['cell_counts'] = self[groupby].to_pandas().value_counts()
+        return cluster_df
+
+    def add_palette(self, palette, da_name):
+        if 'palettes' not in self.attrs:
+            self.attrs['palettes'] = {}
+
+        self.attrs['palettes'][da_name] = palette
+        return
+
+    def get_palette(self, da_name):
+        try:
+            return self.attrs['palettes'][da_name]
+        except KeyError:
+            return None

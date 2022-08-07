@@ -41,6 +41,8 @@ class AIBS(AutoPathMixIn):
 
         self.AIBS_SMART_CLUSTER_L4_SUM_ZARR_PATH = AIBS_SMART_CLUSTER_L4_SUM_ZARR_PATH
         self.AIBS_TENX_CLUSTER_L4_SUM_ZARR_PATH = AIBS_TENX_CLUSTER_L4_SUM_ZARR_PATH
+        self.AIBS_SMART_CLUSTER_L4Region_SUM_ZARR_PATH = AIBS_SMART_CLUSTER_L4Region_SUM_ZARR_PATH
+        self.AIBS_TENX_CLUSTER_L4Region_SUM_ZARR_PATH = AIBS_TENX_CLUSTER_L4Region_SUM_ZARR_PATH
 
         # internal variables
         self._smart_gene_zarr = None
@@ -107,8 +109,11 @@ class AIBS(AutoPathMixIn):
         else:
             raise ValueError('Unknown version: {}'.format(version))
 
-        return AIBSTENXCellAnnotation(path,
-                                      self.get_tenx_sample_metadata())
+        annot = AIBSTENXCellAnnotation(path,
+                                       self.get_tenx_sample_metadata())
+        if version == 'v2':
+            annot.add_palette(palette=PALETTES['AIBS.TENX.Annot.V2'], da_name='L2_annot')
+        return annot
 
     def _open_smart_zarr(self):
         import xarray as xr

@@ -36,6 +36,8 @@ CEMBA_SNM3C_100K_IMPUTED_COOL_PATH = PACKAGE_DIR / 'files/CEMBA.snm3C.100KImpute
 # MCDS is ordered according to the first pass clustering, data type is standardized
 CEMBA_SNMC_MCDS_PATH = '/gale/netapp/cemba3c/BICCN/CEMBA_RS1/dataset/CEMBA.snmC.mcds'
 CEMBA_SNM3C_MCDS_PATH = '/gale/netapp/cemba3c/BICCN/CEMBA_3C/mcds/CEMBA.snm3C.mcds'
+
+
 # snm3C compartment, embedding, domain
 # prepared in /gale/netapp/cemba3c/BICCN/CEMBA_3C/mcds/prepare_3c_matrix 05/15/2022
 CEMBA_SNM3C_3C_COMPARTMENT_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/CEMBA_3C/mcds/CEMBA.snm3C.3C.mcds/chrom100k'

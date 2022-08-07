@@ -72,6 +72,8 @@ class CEMBASnmCAndSnm3C(AutoPathMixIn):
         # cluster aggregate zarr path
         self.CEMBA_SNMC_CLUSTER_L4_SUM_ZARR_PATH = CEMBA_SNMC_CLUSTER_L4_SUM_ZARR_PATH
         self.CEMBA_SNM3C_CLUSTER_L4_SUM_ZARR_PATH = CEMBA_SNM3C_CLUSTER_L4_SUM_ZARR_PATH
+        self.CEMBA_SNMC_CLUSTER_L4Region_SUM_ZARR_PATH = CEMBA_SNMC_CLUSTER_L4Region_SUM_ZARR_PATH
+        self.CEMBA_SNM3C_CLUSTER_L4Region_SUM_ZARR_PATH = CEMBA_SNM3C_CLUSTER_L4Region_SUM_ZARR_PATH
 
         # internal variables
         self._mc_gene_mcds = None
@@ -218,7 +220,7 @@ class CEMBASnmCAndSnm3C(AutoPathMixIn):
         return allc_paths
 
     def get_m3c_contact_path(self):
-        s = pd.read_csv(self.CEMBA_SNM3C_CONTACT_PATH, index_col=0, squeeze=True)
+        s = pd.read_csv(self.CEMBA_SNM3C_CONTACT_PATH, index_col=0).squeeze()
         s.index.name = 'cell'
         return s
 
@@ -241,7 +243,7 @@ class CEMBASnmCAndSnm3C(AutoPathMixIn):
         cool_type = cool_type.lower()
 
         def _read_file_paths(p):
-            s = pd.read_csv(p, index_col=0, squeeze=True)
+            s = pd.read_csv(p, index_col=0).squeeze()
             s.index.name = 'cell'
             return s
 
@@ -269,8 +271,12 @@ class CEMBASnmCAndSnm3C(AutoPathMixIn):
         return pd.read_csv(self.CEMBA_LIU_2021_NATURE_SNMC_METADATA_PATH, index_col=0)
 
     def get_mc_annot(self):
-        return CEMBAmCCellAnnotation(self.CEMBA_SNMC_CELL_TYPE_ANNOTATION_PATH,
-                                     self.get_mc_mapping_metric())
+        annot = CEMBAmCCellAnnotation(self.CEMBA_SNMC_CELL_TYPE_ANNOTATION_PATH,
+                                      self.get_mc_mapping_metric())
+
+        # mC L4 Annot also created from AIBS TENX Annot V2
+        annot.add_palette(palette=PALETTES['AIBS.TENX.Annot.V2'], da_name='L4_annot')
+        return annot
 
     def get_m3c_annot(self):
         return CEMBAm3CCellAnnotation(self.CEMBA_SNM3C_CELL_TYPE_ANNOTATION_PATH,
@@ -328,6 +334,9 @@ class CEMBAATAC(AutoPathMixIn):
         self.CEMBA_ATAC_CELL_TYPE_ANNOTATION_PATH = CEMBA_ATAC_CELL_TYPE_ANNOTATION_PATH
         self.CEMBA_ATAC_CLUSTER_FULL_NAME_PATH = CEMBA_ATAC_CLUSTER_FULL_NAME_PATH
         self.CEMBA_ATAC_MAPPING_METRIC_PATH = CEMBA_ATAC_MAPPING_METRIC_PATH
+
+        self.CEMBA_ATAC_CLUSTER_L4_SUM_ZARR_PATH = CEMBA_ATAC_CLUSTER_L4_SUM_ZARR_PATH
+        self.CEMBA_ATAC_CLUSTER_L4Region_SUM_ZARR_PATH = CEMBA_ATAC_CLUSTER_L4Region_SUM_ZARR_PATH
 
         self._full_name_map = pd.read_csv(self.CEMBA_ATAC_CLUSTER_FULL_NAME_PATH,
                                           index_col=0, sep='\t').squeeze()
