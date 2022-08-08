@@ -4,7 +4,7 @@ import pandas as pd
 
 import wmb
 
-palette_dir = pathlib.Path(str(wmb.__path__)) / 'files/palette'
+palette_dir = pathlib.Path(wmb.__path__[0]) / 'files/palette'
 
 
 def read_palette(palette_path):
