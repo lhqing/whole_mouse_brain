@@ -114,6 +114,7 @@ class IntegrationResultZarr(xr.Dataset):
         return self._get_categorical_vector(dataset, level, 'InteGroup')
 
     def inte_group_overlap_score(self, group):
+        """Calculate the overlap score of a group."""
         from ALLCools.integration.confusion import calculate_overlap_score
 
         ref_group = self.ref_group
@@ -154,4 +155,3 @@ class IntegrationResultZarr(xr.Dataset):
         query_df['CoCluster'] = self.get_query_co_cluster(level)
         query_df['Cluster'] = self.query_cluster[query_cells]
         return ref_df, query_df
-

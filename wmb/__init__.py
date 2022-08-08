@@ -9,7 +9,7 @@ For each dataset, write a get gene value function, given gene name, return gene 
 """
 
 # datasets agents
-from .cemba import cemba, cemba_atac
+from .cemba import cemba, cemba_atac, cemba_epi_retro
 from .aibs import aibs
 from .broad import broad
 from .glia import glia

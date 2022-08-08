@@ -76,3 +76,12 @@ class CEMBAATACCellAnnotation(CellAnnotation):
             brain.map_dissection_region_to_sub_region(region_type='CEMBA'))
         self['SubRegion'] = self.get_index('cell').map(metadata['SubRegion'])
         return
+
+
+class CEMBAEpiRetroCellAnnotation(CellAnnotation):
+    __slots__ = ()
+
+    def __init__(self, annot_path, metadata):
+        super().__init__(annot_path)
+
+        return
