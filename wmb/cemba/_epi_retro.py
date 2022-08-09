@@ -9,9 +9,7 @@ from ..genome import mm10
 
 
 class CEMBAEpiRetro(AutoPathMixIn):
-    """
-    CEMBA ATAC-seq data
-    """
+    """CEMBA EpiRetro-seq data."""
 
     def __init__(self):
         self.CEMBA_EPI_RETRO_ZARR_PATH = CEMBA_EPI_RETRO_ZARR_PATH
