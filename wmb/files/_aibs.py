@@ -43,6 +43,10 @@ AIBS_TENX_SAMPLE_FULL_METADATA_PATH = PACKAGE_DIR / 'files/AIBS.TENX.SampleMetad
 AIBS_TENX_SAMPLE_TOTAL_METADATA_PATH = PACKAGE_DIR / 'files/AIBS.TENX.KeySampleMetadata.816.csv.gz'
 AIBS_TENX_SAMPLE_TOTAL_FULL_METADATA_PATH = PACKAGE_DIR / 'files/AIBS.TENX.SampleMetadata.816.csv.gz'
 AIBS_TENX_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/AIBS_TENX/AIBS.10X.ordered.zarr'
+# zarr file created from the h5ad Zizhen shared on 08/2022, contains 4M cells pass QC,
+# with her metadata and annots in AIBS_TENX_CELL_TYPE_ANNOTATION_V2_PATH
+AIBS_TENX_V2_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/AIBS_TENX/AIBS.10X.v2.zarr'
+
 AIBS_TENX_CELL_TYPE_ANNOTATION_PATH = '/gale/netapp/cemba3c/BICCN/wmb/aibs/AIBS.TENX.Annotations.zarr'
 AIBS_TENX_CELL_TYPE_ANNOTATION_V2_PATH = '/gale/netapp/cemba3c/BICCN/wmb/aibs/AIBS.TENX.Annotations.v2.zarr'
 # Outliers

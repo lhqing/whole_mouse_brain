@@ -84,8 +84,8 @@ class CellAnnotation(xr.Dataset):
         return cluster_df
 
     def add_palette(self, palette, da_name, missing_color='#D3D3D3'):
-        if da_name not in self.data_vars and da_name not in self.coords:
-            print(f'Data variable or coordinate does not exist with {da_name}, palette not added')
+        if da_name not in self:
+            print(f'{da_name} does not exist in data_vars or coords, palette not added.')
             return
 
         if 'palettes' not in self.attrs:
