@@ -127,9 +127,16 @@ class AIBS(AutoPathMixIn):
         self._smart_gene_index = self._smart_gene_zarr.get_index('gene')
         return
 
-    def _open_tenx_zarr(self):
+    def _open_tenx_zarr(self, version):
         import xarray as xr
-        self._tenx_gene_zarr = xr.open_zarr(self.AIBS_TENX_GENE_CHUNK_ZARR_PATH)
+        if version == 'v1':
+            path = self.AIBS_TENX_GENE_CHUNK_ZARR_PATH
+        elif version == 'v2':
+            path = self.AIBS_TENX_GENE_CHUNK_V2_ZARR_PATH
+        else:
+            raise ValueError('Unknown version: {}'.format(version))
+
+        self._tenx_gene_zarr = xr.open_zarr(path)
         self._tenx_cell_million_reads = self._tenx_gene_zarr['umi_count'].to_pandas()
         self._tenx_cell_million_reads /= 1000000
         self._tenx_gene_index = self._tenx_gene_zarr.get_index('gene')
@@ -180,9 +187,9 @@ class AIBS(AutoPathMixIn):
 
         return gene_data
 
-    def get_tenx_gene_data(self, gene, normalize=True, log=True):
+    def get_tenx_gene_data(self, gene, normalize=True, log=True, version='v2'):
         if self._tenx_gene_zarr is None:
-            self._open_tenx_zarr()
+            self._open_tenx_zarr(version=version)
 
         gene_index = self._tenx_gene_index
         gene = self._standardize_gene_index(gene, 'tenx', gene_index)
