@@ -21,8 +21,9 @@ REGION_PALETTE = {
 class GliaMCT:
     def __init__(self):
         self.metadata = '/gale/netapp/glia1/analysis_hl/study/BasicCellFilter/Glia.snmCT.CellMetadata.csv.gz'
-        self.GLIA_MCT_MCDS_PATH = '/gale/netapp/glia1/dataset/mcds/*.mcds'
-        self.GLIA_MCT_RNA_ZARR_PATH = '/gale/netapp/glia1/dataset/rna_ds/*.RNA.zarr'
+        self.GLIA_MCT_MCDS_PATH = '/gale/netapp/glia1/dataset/DVC.snmCT.mcds'
+        self.GLIA_MCT_RNA_GENE_CHUNK_PATH = '/gale/netapp/glia1/dataset/DVC.snmCT.rna_feature_chunk.zarr'
+        self.GLIA_MCT_MC_GENE_CHUNK_PATH = '/gale/netapp/glia1/dataset/DVC.snmCT.gene_frac_feature_chunk.zarr'
         self.GLIA_MCT_ANNOTATION_PATH = '/gale/netapp/glia1/analysis_hl/study/Clustering/' \
                                         'Summary/GLIA.snmCT.Annotations.zarr'
         self.AGE_PALETTE = AGE_PALETTE
@@ -33,6 +34,9 @@ class GliaMCT:
         self._rna_dataset = None
         self._per_cell_million_rna_reads = None
 
+        from ..genome import MM10GenomeRef
+        self._mm10 = MM10GenomeRef(annot_version='GENCODE_vm22')
+
     def get_glia_metadata(self):
         return pd.read_csv(self.metadata, index_col=0)
 
@@ -41,12 +45,7 @@ class GliaMCT:
 
     def _open_gene_mcds(self):
         from ALLCools.mcds import MCDS
-        mcds = MCDS.open(self.GLIA_MCT_MCDS_PATH, var_dim='geneslop2k')
-
-        # TODO precompute gene mC fraction for each dataset
-        if 'geneslop2k_da_frac' not in mcds:
-            mcds.add_mc_frac()
-
+        mcds = MCDS.open(self.GLIA_MCT_MC_GENE_CHUNK_PATH)
         self._gene_dataset = mcds
 
     @lru_cache(maxsize=200)
@@ -57,19 +56,19 @@ class GliaMCT:
         # check if gene is gene name:
         try:
             gene_name = gene
-            gene_id = mm10.gene_name_to_id(gene)
+            gene_id = self._mm10.gene_name_to_id(gene)
         except KeyError:
             gene_id = gene
-            gene_name = mm10.gene_id_to_name(gene)
+            gene_name = self._mm10.gene_id_to_name(gene)
 
-        gene_data = self._gene_dataset['geneslop2k_da_frac'].sel(
+        gene_data = self._gene_dataset['geneslop2k_da_frac_fc'].sel(
             mc_type=mc_type, geneslop2k=gene_id
         ).to_pandas()
         return gene_data
 
     def _open_rna_zarr(self):
         from ALLCools.mcds import MCDS
-        self._rna_dataset = MCDS.open(self.GLIA_MCT_RNA_ZARR_PATH)
+        self._rna_dataset = MCDS.open(self.GLIA_MCT_RNA_GENE_CHUNK_PATH)
         self._per_cell_million_rna_reads = self.get_glia_metadata()['FinalRNAReads'] / 1e6
 
     @lru_cache(maxsize=200)
@@ -80,12 +79,12 @@ class GliaMCT:
         # check if gene is gene name:
         try:
             gene_name = gene
-            gene_id = mm10.gene_name_to_id(gene)
+            gene_id = self._mm10.gene_name_to_id(gene)
         except KeyError:
             gene_id = gene
-            gene_name = mm10.gene_id_to_name(gene)
+            gene_name = self._mm10.gene_id_to_name(gene)
 
-        gene_data = self._rna_dataset['gene_da'].sel(gene=gene_id).to_pandas()
+        gene_data = self._rna_dataset['gene_da_fc'].sel(gene=gene_id).to_pandas()
 
         if normalize:
             gene_data = gene_data / self._per_cell_million_rna_reads
