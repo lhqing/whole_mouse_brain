@@ -21,7 +21,7 @@ class AutoPathMixIn:
                     else:
                         # try GCP path
                         # change everything before BICCN
-                        new_path = cur_path.replace('/gale/netapp/cemba3c', '/mnt/home')
+                        new_path = cur_path.replace('/gale/netapp/cemba3c', '/cemba')
                         if pathlib.Path(new_path).exists():
                             cur_path = new_path
                             found = True
