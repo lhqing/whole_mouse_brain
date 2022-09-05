@@ -1,5 +1,3 @@
-import pathlib
-
 from ._aibs import *
 from ._brain_region import *
 from ._broad import *
@@ -30,7 +28,6 @@ class AutoPathMixIn:
         for attr in dir(self):
             if not attr.startswith('__') and attr.endswith('_PATH'):
                 cur_path = self.__getattribute__(attr)
-
                 if is_remote:
                     cur_path = cur_path.replace(LOCAL_PREFIX, REMOTE_PREFIX)
                     self.__setattr__(attr, cur_path)
@@ -38,3 +35,4 @@ class AutoPathMixIn:
                 if check:
                     if not pathlib.Path(cur_path).exists():
                         print(f"{attr} do not exist: {cur_path}")
+        return

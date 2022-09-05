@@ -4,7 +4,7 @@ name: jupyter
 
 resources:
   cloud: gcp
-  instance_type: n2d-standard-32
+  instance_type: n2d-standard-8
   region: us-west1
 
 file_mounts:
@@ -19,12 +19,8 @@ file_mounts:
     mode: MOUNT
 
 setup: |
-  conda install mamba -y -n base -c conda-forge
   pip install --upgrade pip
-  gsutil cp gs://ecker-hanqing-wmb-us-west1/wmb/sky/env.yaml ./
-  mamba env update -f env.yaml
-  rm env.yaml
-  ln -s /home/hanliu ./hanliu
+  conda install -c conda-forge -y jupyter jupyterlab
 
 run: |
   cd ~/sky_workdir
