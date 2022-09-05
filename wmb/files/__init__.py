@@ -1,34 +1,40 @@
-from ._cemba import *
-from ._aibs import *
-from ._broad import *
-from ._cemba_epi_retro import *
-from ._brain_region import *
-from ._ref import *
-from ._integration import *
-from .palette import PALETTES
 import pathlib
+
+from ._aibs import *
+from ._brain_region import *
+from ._broad import *
+from ._cemba import *
+from ._cemba_epi_retro import *
+from ._integration import *
+from ._ref import *
+from .palette import PALETTES
+
+LOCAL_PREFIX = '/gale/netapp/cemba3c/BICCN'
+REMOTE_PREFIX = '/cemba'
 
 
 class AutoPathMixIn:
-    def _check_file_path_attrs(self):
+    @staticmethod
+    def _is_remote():
+        if pathlib.Path(LOCAL_PREFIX).exists():
+            return False
+        else:
+            if pathlib.Path(REMOTE_PREFIX).exists():
+                return True
+            else:
+                return False
+
+    def _check_file_path_attrs(self, check=False):
+        is_remote = self._is_remote()
+
         for attr in dir(self):
             if not attr.startswith('__') and attr.endswith('_PATH'):
                 cur_path = self.__getattribute__(attr)
-                found = False
-                try:
-                    if pathlib.Path(cur_path).exists():
-                        found = True
-                    else:
-                        # try GCP path
-                        # change everything before BICCN
-                        new_path = cur_path.replace('/gale/netapp/cemba3c/BICCN', '/cemba')
-                        if pathlib.Path(new_path).exists():
-                            cur_path = new_path
-                            found = True
-                except TypeError:
-                    continue
 
-                if found:
+                if is_remote:
+                    cur_path = cur_path.replace(LOCAL_PREFIX, REMOTE_PREFIX)
                     self.__setattr__(attr, cur_path)
-                else:
-                    print(f'{attr} do not exist: {cur_path}')
+
+                if check:
+                    if not pathlib.Path(cur_path).exists():
+                        print(f"{attr} do not exist: {cur_path}")

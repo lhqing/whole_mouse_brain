@@ -28,4 +28,4 @@ setup: |
 
 run: |
   cd ~/sky_workdir
-  jupyter notebook --port 8898
+  jupyter lab --port 8898
