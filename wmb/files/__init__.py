@@ -29,7 +29,7 @@ class AutoPathMixIn:
             if not attr.startswith('__') and attr.endswith('_PATH'):
                 cur_path = self.__getattribute__(attr)
                 if is_remote:
-                    cur_path = cur_path.replace(LOCAL_PREFIX, REMOTE_PREFIX)
+                    cur_path = pathlib.Path(str(cur_path).replace(LOCAL_PREFIX, REMOTE_PREFIX))
                     self.__setattr__(attr, cur_path)
 
                 if check:

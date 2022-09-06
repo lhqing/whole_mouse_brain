@@ -24,4 +24,4 @@ setup: |
 
 run: |
   cd ~/sky_workdir
-  jupyter lab --port 8898
+  jupyter lab --port 8898 --no-browser
