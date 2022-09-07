@@ -1,7 +1,8 @@
-import pandas as pd
-import numpy as np
 from functools import lru_cache
-from ..genome import mm10
+
+import numpy as np
+import pandas as pd
+
 from ..annot import GliamCTCellAnnotation
 
 AGE_PALETTE = {'E16': '#d24f38',
@@ -26,6 +27,7 @@ class GliaMCT:
         self.GLIA_MCT_MC_GENE_CHUNK_PATH = '/gale/netapp/glia1/dataset/DVC.snmCT.gene_frac_feature_chunk.zarr'
         self.GLIA_MCT_ANNOTATION_PATH = '/gale/netapp/glia1/analysis_hl/study/Clustering/' \
                                         'Summary/GLIA.snmCT.Annotations.zarr'
+        self.GLIA_ALLC_PATH = '/gale/netapp/glia1/analysis_hl/bulk/PrepareFileList/total_allc.tsv.gz'
         self.AGE_PALETTE = AGE_PALETTE
         self.SEX_PALETTE = SEX_PALETTE
         self.REGION_PALETTE = REGION_PALETTE
@@ -55,11 +57,9 @@ class GliaMCT:
 
         # check if gene is gene name:
         try:
-            gene_name = gene
             gene_id = self._mm10.gene_name_to_id(gene)
         except KeyError:
             gene_id = gene
-            gene_name = self._mm10.gene_id_to_name(gene)
 
         gene_data = self._gene_dataset['geneslop2k_da_frac_fc'].sel(
             mc_type=mc_type, geneslop2k=gene_id
@@ -78,11 +78,9 @@ class GliaMCT:
 
         # check if gene is gene name:
         try:
-            gene_name = gene
             gene_id = self._mm10.gene_name_to_id(gene)
         except KeyError:
             gene_id = gene
-            gene_name = self._mm10.gene_id_to_name(gene)
 
         gene_data = self._rna_dataset['gene_da_fc'].sel(gene=gene_id).to_pandas()
 

@@ -28,8 +28,6 @@ setup: |
     gsutil cp gs://ecker-hanqing-wmb-us-west1/wmb/sky/env.yaml ./
     mamba env update -f env.yaml
     rm env.yaml
-    ln -s /home/hanliu ./hanliu
-    touch setup.done
   fi
 
 run: |
