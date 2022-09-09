@@ -1,3 +1,4 @@
+import pandas as pd
 import xarray as xr
 
 
@@ -27,6 +28,8 @@ class CellAnnotation(xr.Dataset):
             if var_name.endswith('_cat_annot'):
                 cluster_name = var_name.split('_cat_annot')[0]
                 self._map_cluster_cat(cluster_name)
+
+        self.attrs['__cache__'] = {}
         return
 
     def _concat_hierarchy_label(self):
@@ -53,7 +56,9 @@ class CellAnnotation(xr.Dataset):
 
     def save_annot(self, cat_map, cluster_name, missing_name='unknown'):
         """Save annotation to zarr file"""
-        import pandas as pd
+        # delete cache
+        if "__cache__" in self.attrs:
+            del self.attrs['__cache__']
 
         annot = pd.Series(cat_map)
         cat_name = f'{cluster_name}_cat'
@@ -77,11 +82,17 @@ class CellAnnotation(xr.Dataset):
         self._map_cluster_cat(cluster_name)
         return
 
-    def get_cluster_centroids_df(self, coord, groupby):
-        cell_coords = self[f'{coord}_coord'].to_pandas()
-        cluster_df = cell_coords.groupby(self[groupby].to_pandas()).median()
-        cluster_df['cell_counts'] = self[groupby].to_pandas().value_counts()
-        return cluster_df
+    def get_cluster_centroids_df(self, coords, groupby):
+        if isinstance(coords, str):
+            coords = [coords]
+        records = []
+        for coord in coords:
+            cell_coords = self[f'{coord}_coord'].to_pandas()
+            cluster_df = cell_coords.groupby(self[groupby].to_pandas()).median()
+            records.append(cluster_df)
+        all_coords = pd.concat(records, axis=1)
+        all_coords['cell_counts'] = self[groupby].to_pandas().value_counts()
+        return all_coords
 
     def add_palette(self, palette, da_name, missing_color='#D3D3D3'):
         if da_name not in self:

@@ -14,6 +14,9 @@ file_mounts:
   /cemba:
     source: gs://ecker-hanqing-wmb-us-west1/
     mode: MOUNT
+  /ref:
+    source: gs://ecker-hanqing-reference/
+    mode: MOUNT
   /home/hanliu:
     source: gs://ecker-hanqing-analysis/
     mode: MOUNT
