@@ -9,10 +9,13 @@ class MM10GenomeRef:
         self.ENCODE_BLACKLIST_PATH = ENCODE_BLACKLIST_PATH
         self.GENCODE_MM10_vm22 = GENCODE_MM10_vm22
         self.GENCODE_MM10_vm23 = GENCODE_MM10_vm23
+        self.TF_GENE_TABLE_PATH = MM10_TF_GENE_TABLE_PATH
+
         self._gene_id_to_name = None
         self._gene_name_to_id = None
         self._gene_id_base_to_name = None
         self._gene_name_to_id_base = None
+        self._tf_gene_table = None
         self._get_gene_id_name_dict(annot_version=annot_version)
         return
 
@@ -72,6 +75,17 @@ class MM10GenomeRef:
                 return np.nan
             else:
                 raise e
+
+    def get_tf_gene_table(self):
+        if self._tf_gene_table is None:
+            self._tf_gene_table = pd.read_csv(self.TF_GENE_TABLE_PATH)
+        return self._tf_gene_table
+
+    def get_tf_gene_ids(self):
+        return pd.Index(self.get_tf_gene_table()['gene_id'].unique())
+
+    def get_tf_gene_names(self):
+        return pd.Index(self.get_tf_gene_table()['gene_name'].unique())
 
 
 mm10 = MM10GenomeRef()

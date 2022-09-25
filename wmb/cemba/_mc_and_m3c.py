@@ -75,6 +75,15 @@ class CEMBASnmCAndSnm3C(AutoPathMixIn):
         self.CEMBA_SNMC_CLUSTER_L4Region_SUM_ZARR_PATH = CEMBA_SNMC_CLUSTER_L4Region_SUM_ZARR_PATH
         self.CEMBA_SNM3C_CLUSTER_L4Region_SUM_ZARR_PATH = CEMBA_SNM3C_CLUSTER_L4Region_SUM_ZARR_PATH
 
+        # BaseDS
+        self.CEMBA_SNMC_BASE_DS_PATH = CEMBA_SNMC_BASE_DS_REMOTE_PATH
+        self.CEMBA_SNM3C_BASE_DS_PATH = CEMBA_SNM3C_BASE_DS_REMOTE_PATH
+        self.MM10_MC_TYPE_CODEBOOK_PATH = MM10_MC_TYPE_CODEBOOK_REMOTE_PATH
+
+        # DMR and Annotation
+        self.CEMBA_SNMC_DMR_REGION_DS_PATH = CEMBA_SNMC_DMR_REGION_DS_REMOTE_PATH
+        self.CEMBA_SNMC_DMR_MOTIF_SCAN_REGION_DS_PATH = CEMBA_SNMC_DMR_MOTIF_SCAN_REGION_DS_REMOTE_PATH
+
         # internal variables
         self._mc_gene_mcds = None
         self._m3c_gene_mcds = None
@@ -317,3 +326,30 @@ class CEMBASnmCAndSnm3C(AutoPathMixIn):
             {'mc_type': mc_type, 'geneslop2k-vm23': gene_id}
         ).to_pandas()
         return gene_data
+
+    def get_base_ds(self, dataset='snmc'):
+        from ALLCools.mcds import BaseDS
+        if dataset.lower() in ('snmc', 'mc'):
+            return BaseDS(self.CEMBA_SNMC_BASE_DS_PATH, codebook_path=self.MM10_MC_TYPE_CODEBOOK_PATH)
+        elif dataset.lower() in ('snm3c', 'm3c'):
+            return BaseDS(self.CEMBA_SNM3C_BASE_DS_PATH, codebook_path=self.MM10_MC_TYPE_CODEBOOK_PATH)
+        else:
+            raise ValueError(f'Got invalid value for dataset {dataset}.')
+
+    def get_mc_dmr_ds(self, add_motif=False):
+        import xarray as xr
+        from ALLCools.mcds import RegionDS
+
+        ds_list = []
+        dmr_ds = RegionDS.open(self.CEMBA_SNMC_DMR_REGION_DS_PATH,
+                               region_dim='dmr')
+        ds_list.append(dmr_ds)
+
+        if add_motif:
+            motif_ds = RegionDS.open(self.CEMBA_SNMC_DMR_MOTIF_SCAN_REGION_DS_PATH,
+                                     region_dim='dmr')
+            ds_list.append(motif_ds)
+        if len(ds_list) == 1:
+            return ds_list[0]
+        else:
+            return xr.merge(ds_list)
