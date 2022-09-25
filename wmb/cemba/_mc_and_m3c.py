@@ -341,13 +341,17 @@ class CEMBASnmCAndSnm3C(AutoPathMixIn):
         from ALLCools.mcds import RegionDS
 
         ds_list = []
-        dmr_ds = RegionDS.open(self.CEMBA_SNMC_DMR_REGION_DS_PATH,
-                               region_dim='dmr')
+        dmr_ds = RegionDS(
+            xr.open_zarr(self.CEMBA_SNMC_DMR_REGION_DS_PATH),
+            region_dim='dmr', chrom_size_path=MM10_MAIN_CHROM_SIZES_PATH
+        )
         ds_list.append(dmr_ds)
 
         if add_motif:
-            motif_ds = RegionDS.open(self.CEMBA_SNMC_DMR_MOTIF_SCAN_REGION_DS_PATH,
-                                     region_dim='dmr')
+            motif_ds = RegionDS(
+                xr.open_zarr(self.CEMBA_SNMC_DMR_MOTIF_SCAN_REGION_DS_PATH),
+                region_dim='dmr', chrom_size_path=MM10_MAIN_CHROM_SIZES_PATH
+            )
             ds_list.append(motif_ds)
         if len(ds_list) == 1:
             return ds_list[0]

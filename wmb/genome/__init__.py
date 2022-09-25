@@ -10,6 +10,9 @@ class MM10GenomeRef:
         self.GENCODE_MM10_vm22 = GENCODE_MM10_vm22
         self.GENCODE_MM10_vm23 = GENCODE_MM10_vm23
         self.TF_GENE_TABLE_PATH = MM10_TF_GENE_TABLE_PATH
+        self.MAIN_CHROM_SIZES_PATH = MM10_MAIN_CHROM_SIZES_PATH
+        self.MAIN_CHROM_NOCHRM_SIZES_PATH = MM10_MAIN_CHROM_NOCHRM_SIZES_PATH
+        self.MAIN_CHROM_NOCHRM_NOCHRY_SIZES_PATH = MM10_MAIN_CHROM_NOCHRM_NOCHRY_SIZES_PATH
 
         self._gene_id_to_name = None
         self._gene_name_to_id = None
