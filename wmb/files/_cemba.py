@@ -73,6 +73,7 @@ CEMBA_SNM3C_BASE_DS_REMOTE_PATH = [f'/cemba/m3c-BaseDS/group{i}.baseds' for i in
 MM10_MC_TYPE_CODEBOOK_REMOTE_PATH = '/cemba/BaseDS/mm10_codebook'
 
 CEMBA_SNMC_DMR_REGION_DS_REMOTE_PATH = '/cemba/wmb/genome/CEMBA.snmC.L4Region-by-DMR.zarr'
+CEMBA_SNMC_DMR_REGION_DS_SAMPLE_CHUNK_REMOTE_PATH = '/cemba/wmb/genome/CEMBA.snmC.L4Region-by-DMR.sample_chunk.zarr'
 CEMBA_SNMC_DMR_MOTIF_SCAN_REGION_DS_REMOTE_PATH = '/cemba/wmb/genome/CEMBA.snmC.DMR.motif_scan.ds'
 
 # =================================
