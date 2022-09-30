@@ -6,6 +6,7 @@ resources:
   cloud: gcp
   instance_type: n2d-standard-32
   region: us-west1
+  disk_size: 256
 
 file_mounts:
   /data:
