@@ -83,6 +83,7 @@ class CEMBASnmCAndSnm3C(AutoPathMixIn):
         # DMR and Annotation
         self.CEMBA_SNMC_DMR_REGION_DS_PATH = CEMBA_SNMC_DMR_REGION_DS_REMOTE_PATH
         self.CEMBA_SNMC_DMR_MOTIF_SCAN_REGION_DS_PATH = CEMBA_SNMC_DMR_MOTIF_SCAN_REGION_DS_REMOTE_PATH
+        self.CEMBA_SNMC_DMR_TF_AND_MOTIF_HITS_DS_REMOTE_PATH = CEMBA_SNMC_DMR_TF_AND_MOTIF_HITS_DS_REMOTE_PATH
         self.CEMBA_SNMC_DMR_REGION_DS_SAMPLE_CHUNK_PATH = CEMBA_SNMC_DMR_REGION_DS_SAMPLE_CHUNK_REMOTE_PATH
 
         # internal variables
@@ -337,7 +338,7 @@ class CEMBASnmCAndSnm3C(AutoPathMixIn):
         else:
             raise ValueError(f'Got invalid value for dataset {dataset}.')
 
-    def get_mc_dmr_ds(self, chunk_type='region', add_motif=False):
+    def get_mc_dmr_ds(self, chunk_type='region', add_motif=False, add_motif_hits=False):
         import xarray as xr
         from ALLCools.mcds import RegionDS
 
@@ -361,6 +362,11 @@ class CEMBASnmCAndSnm3C(AutoPathMixIn):
                 region_dim='dmr', chrom_size_path=MM10_MAIN_CHROM_SIZES_PATH
             )
             ds_list.append(motif_ds)
+
+        if add_motif_hits:
+            motif_hits_ds = xr.open_zarr(self.CEMBA_SNMC_DMR_TF_AND_MOTIF_HITS_DS_REMOTE_PATH)
+            ds_list.append(motif_hits_ds)
+
         if len(ds_list) == 1:
             return ds_list[0]
         else:
