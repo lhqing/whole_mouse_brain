@@ -13,6 +13,7 @@ class MM10GenomeRef:
         self.MAIN_CHROM_SIZES_PATH = MM10_MAIN_CHROM_SIZES_PATH
         self.MAIN_CHROM_NOCHRM_SIZES_PATH = MM10_MAIN_CHROM_NOCHRM_SIZES_PATH
         self.MAIN_CHROM_NOCHRM_NOCHRY_SIZES_PATH = MM10_MAIN_CHROM_NOCHRM_NOCHRY_SIZES_PATH
+        self.CISTARGET_MGI_MOTIF_TF_TABLE_PATH = CISTARGET_MGI_MOTIF_TF_TABLE_PATH
 
         self._gene_id_to_name = None
         self._gene_name_to_id = None
@@ -89,6 +90,10 @@ class MM10GenomeRef:
 
     def get_tf_gene_names(self):
         return pd.Index(self.get_tf_gene_table()['gene_name'].unique())
+
+    def get_tf_motif_table(self):
+        df = pd.read_csv(self.CISTARGET_MGI_MOTIF_TF_TABLE_PATH, sep='\t')
+        return df
 
 
 mm10 = MM10GenomeRef()

@@ -68,8 +68,8 @@ CEMBA_SNM3C_CLUSTER_L4_SUM_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/wmb/cemba/CEM
 CEMBA_SNMC_CLUSTER_L4Region_SUM_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/wmb/cemba/CEMBA.snmC.L4RegionAgg.zarr'
 CEMBA_SNM3C_CLUSTER_L4Region_SUM_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/wmb/cemba/CEMBA.snm3C.L4RegionAgg.zarr'
 
-CEMBA_SNMC_BASE_DS_REMOTE_PATH = [f'/cemba/BaseDS/group{i}.baseds' for i in range(24)]
-CEMBA_SNM3C_BASE_DS_REMOTE_PATH = [f'/cemba/m3c-BaseDS/group{i}.baseds' for i in range(12)]
+CEMBA_SNMC_BASE_DS_REMOTE_PATH_LIST = [f'/cemba/BaseDS/group{i}.baseds' for i in range(24)]
+CEMBA_SNM3C_BASE_DS_REMOTE_PATH_LIST = [f'/cemba/m3c-BaseDS/group{i}.baseds' for i in range(12)]
 MM10_MC_TYPE_CODEBOOK_REMOTE_PATH = '/cemba/BaseDS/mm10_codebook'
 
 CEMBA_SNMC_DMR_REGION_DS_REMOTE_PATH = '/cemba/wmb/genome/CEMBA.snmC.L4Region-by-DMR.zarr'

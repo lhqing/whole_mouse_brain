@@ -76,8 +76,8 @@ class CEMBASnmCAndSnm3C(AutoPathMixIn):
         self.CEMBA_SNM3C_CLUSTER_L4Region_SUM_ZARR_PATH = CEMBA_SNM3C_CLUSTER_L4Region_SUM_ZARR_PATH
 
         # BaseDS
-        self.CEMBA_SNMC_BASE_DS_PATH = CEMBA_SNMC_BASE_DS_REMOTE_PATH
-        self.CEMBA_SNM3C_BASE_DS_PATH = CEMBA_SNM3C_BASE_DS_REMOTE_PATH
+        self.CEMBA_SNMC_BASE_DS_PATH_LIST = CEMBA_SNMC_BASE_DS_REMOTE_PATH_LIST
+        self.CEMBA_SNM3C_BASE_DS_PATH_LIST = CEMBA_SNM3C_BASE_DS_REMOTE_PATH_LIST
         self.MM10_MC_TYPE_CODEBOOK_PATH = MM10_MC_TYPE_CODEBOOK_REMOTE_PATH
 
         # DMR and Annotation
@@ -300,11 +300,9 @@ class CEMBASnmCAndSnm3C(AutoPathMixIn):
 
         # check if gene is gene name:
         try:
-            gene_name = gene
             gene_id = mm10.gene_name_to_id(gene)
         except KeyError:
             gene_id = gene
-            gene_name = mm10.gene_id_to_name(gene)
 
         gene_data = self._mc_gene_mcds['geneslop2k-vm23_da_frac_fc'].sel(
             {'mc_type': mc_type, 'geneslop2k-vm23': gene_id}
@@ -318,11 +316,9 @@ class CEMBASnmCAndSnm3C(AutoPathMixIn):
 
         # check if gene is gene name:
         try:
-            gene_name = gene
             gene_id = mm10.gene_name_to_id(gene)
         except KeyError:
             gene_id = gene
-            gene_name = mm10.gene_id_to_name(gene)
 
         gene_data = self._m3c_gene_mcds['geneslop2k-vm23_da_frac_fc'].sel(
             {'mc_type': mc_type, 'geneslop2k-vm23': gene_id}
@@ -332,9 +328,9 @@ class CEMBASnmCAndSnm3C(AutoPathMixIn):
     def get_base_ds(self, dataset='snmc'):
         from ALLCools.mcds import BaseDS
         if dataset.lower() in ('snmc', 'mc'):
-            return BaseDS(self.CEMBA_SNMC_BASE_DS_PATH, codebook_path=self.MM10_MC_TYPE_CODEBOOK_PATH)
+            return BaseDS(self.CEMBA_SNMC_BASE_DS_PATH_LIST, codebook_path=self.MM10_MC_TYPE_CODEBOOK_PATH)
         elif dataset.lower() in ('snm3c', 'm3c'):
-            return BaseDS(self.CEMBA_SNM3C_BASE_DS_PATH, codebook_path=self.MM10_MC_TYPE_CODEBOOK_PATH)
+            return BaseDS(self.CEMBA_SNM3C_BASE_DS_PATH_LIST, codebook_path=self.MM10_MC_TYPE_CODEBOOK_PATH)
         else:
             raise ValueError(f'Got invalid value for dataset {dataset}.')
 

@@ -13,3 +13,5 @@ MM10_TF_GENE_TABLE_PATH = '/ref/SCENIC/allTFs_mm.gene_info.csv'
 MM10_MAIN_CHROM_SIZES_PATH = PACKAGE_DIR / "files/mm10.main.chrom.sizes"
 MM10_MAIN_CHROM_NOCHRM_SIZES_PATH = PACKAGE_DIR / "files/mm10.main.chrom.nochrM.sizes"
 MM10_MAIN_CHROM_NOCHRM_NOCHRY_SIZES_PATH = PACKAGE_DIR / "files/mm10.main.chrom.nochrM.nochrY.sizes"
+
+CISTARGET_MGI_MOTIF_TF_TABLE_PATH = '/ref/SCENIC/v10nr_clust_public/snapshots/motifs-v10-nr.mgi-m0.00001-o0.0.tbl'
