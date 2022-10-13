@@ -72,10 +72,12 @@ CEMBA_SNMC_BASE_DS_REMOTE_PATH_LIST = [f'/cemba/BaseDS/group{i}.baseds' for i in
 CEMBA_SNM3C_BASE_DS_REMOTE_PATH_LIST = [f'/cemba/m3c-BaseDS/group{i}.baseds' for i in range(12)]
 MM10_MC_TYPE_CODEBOOK_REMOTE_PATH = '/cemba/BaseDS/mm10_codebook'
 
-CEMBA_SNMC_DMR_REGION_DS_REMOTE_PATH = '/cemba/wmb/genome/CEMBA.snmC.L4Region-by-DMR.zarr'
-CEMBA_SNMC_DMR_REGION_DS_SAMPLE_CHUNK_REMOTE_PATH = '/cemba/wmb/genome/CEMBA.snmC.L4Region-by-DMR.sample_chunk.zarr'
-CEMBA_SNMC_DMR_MOTIF_SCAN_REGION_DS_REMOTE_PATH = '/cemba/wmb/genome/CEMBA.snmC.DMR.motif_scan.ds'
-CEMBA_SNMC_DMR_TF_AND_MOTIF_HITS_DS_REMOTE_PATH = '/cemba/wmb/genome/CEMBA.snmC.DMR.tf_motif_enrichment_and_hits.ds'
+CEMBA_SNMC_DMR_REGION_DS_REMOTE_PATH = '/cemba/wmb/genome/CEMBA.snmC.L4Region-by-DMR.order.zarr'
+CEMBA_SNMC_DMR_REGION_DS_SAMPLE_CHUNK_REMOTE_PATH = \
+    '/cemba/wmb/genome/CEMBA.snmC.L4Region-by-DMR.sample_chunk.order.zarr'
+CEMBA_SNMC_DMR_MOTIF_SCAN_REGION_DS_REMOTE_PATH = '/cemba/wmb/genome/CEMBA.snmC.DMR.motif_scan.order.ds'
+CEMBA_SNMC_DMR_TF_AND_MOTIF_HITS_DS_REMOTE_PATH = \
+    '/cemba/wmb/genome/CEMBA.snmC.DMR.tf_motif_enrichment_and_hits.order.ds'
 
 # =================================
 # CEMBA ATAC
