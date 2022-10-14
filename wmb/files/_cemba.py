@@ -79,6 +79,12 @@ CEMBA_SNMC_DMR_MOTIF_SCAN_REGION_DS_REMOTE_PATH = '/cemba/wmb/genome/CEMBA.snmC.
 CEMBA_SNMC_DMR_TF_AND_MOTIF_HITS_DS_REMOTE_PATH = \
     '/cemba/wmb/genome/CEMBA.snmC.DMR.tf_motif_enrichment_and_hits.order.ds'
 
+# the same DMR regions as SNMC
+CEMBA_SNM3C_DMR_REGION_DS_REMOTE_PATH = '/cemba/wmb/genome/CEMBA.snm3C.L4Region-by-DMR.zarr'
+CEMBA_SNM3C_DMR_REGION_DS_SAMPLE_CHUNK_REMOTE_PATH = \
+    '/cemba/wmb/genome/CEMBA.snm3C.L4Region-by-DMR.sample_chunk.zarr'
+
+
 # =================================
 # CEMBA ATAC
 # =================================

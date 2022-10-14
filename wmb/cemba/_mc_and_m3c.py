@@ -80,11 +80,15 @@ class CEMBASnmCAndSnm3C(AutoPathMixIn):
         self.CEMBA_SNM3C_BASE_DS_PATH_LIST = CEMBA_SNM3C_BASE_DS_REMOTE_PATH_LIST
         self.MM10_MC_TYPE_CODEBOOK_PATH = MM10_MC_TYPE_CODEBOOK_REMOTE_PATH
 
-        # DMR and Annotation
+        # snmC DMR and Annotation
         self.CEMBA_SNMC_DMR_REGION_DS_PATH = CEMBA_SNMC_DMR_REGION_DS_REMOTE_PATH
         self.CEMBA_SNMC_DMR_MOTIF_SCAN_REGION_DS_PATH = CEMBA_SNMC_DMR_MOTIF_SCAN_REGION_DS_REMOTE_PATH
         self.CEMBA_SNMC_DMR_TF_AND_MOTIF_HITS_DS_REMOTE_PATH = CEMBA_SNMC_DMR_TF_AND_MOTIF_HITS_DS_REMOTE_PATH
         self.CEMBA_SNMC_DMR_REGION_DS_SAMPLE_CHUNK_PATH = CEMBA_SNMC_DMR_REGION_DS_SAMPLE_CHUNK_REMOTE_PATH
+
+        # snm3C DMR (regions are the same as snmC)
+        self.CEMBA_SNM3C_DMR_REGION_DS_PATH = CEMBA_SNM3C_DMR_REGION_DS_REMOTE_PATH
+        self.CEMBA_SNM3C_DMR_REGION_DS_SAMPLE_CHUNK_PATH = CEMBA_SNM3C_DMR_REGION_DS_SAMPLE_CHUNK_REMOTE_PATH
 
         # internal variables
         self._mc_gene_mcds = None
@@ -334,14 +338,27 @@ class CEMBASnmCAndSnm3C(AutoPathMixIn):
         else:
             raise ValueError(f'Got invalid value for dataset {dataset}.')
 
-    def get_mc_dmr_ds(self, chunk_type='region', add_motif=False, add_motif_hits=False):
+    def get_mc_dmr_ds(self, *args, **kwargs):
+        return self.get_dmr_ds(dataset='mc', *args, **kwargs)
+
+    def get_dmr_ds(self, dataset='mc', chunk_type='region', add_motif=False, add_motif_hits=False):
         import xarray as xr
         from ALLCools.mcds import RegionDS
 
         if chunk_type == 'region':
-            path = self.CEMBA_SNMC_DMR_REGION_DS_PATH
+            if dataset.lower() in ('snmc', 'mc'):
+                path = self.CEMBA_SNMC_DMR_REGION_DS_PATH
+            elif dataset.lower() in ('snm3c', 'm3c'):
+                path = self.CEMBA_SNM3C_DMR_REGION_DS_PATH
+            else:
+                raise ValueError(f'Got invalid value for dataset {dataset}.')
         elif chunk_type == 'sample':
-            path = self.CEMBA_SNMC_DMR_REGION_DS_SAMPLE_CHUNK_PATH
+            if dataset.lower() in ('snmc', 'mc'):
+                path = self.CEMBA_SNMC_DMR_REGION_DS_SAMPLE_CHUNK_PATH
+            elif dataset.lower() in ('snm3c', 'm3c'):
+                path = self.CEMBA_SNM3C_DMR_REGION_DS_SAMPLE_CHUNK_PATH
+            else:
+                raise ValueError(f'Got invalid value for dataset {dataset}.')
         else:
             raise ValueError(f'Got invalid value for chunk_type {chunk_type}.')
 
