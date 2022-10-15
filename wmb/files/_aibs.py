@@ -49,6 +49,8 @@ AIBS_TENX_V2_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/AIBS_TENX/AIBS.10X.v2.zarr'
 
 AIBS_TENX_CELL_TYPE_ANNOTATION_PATH = '/gale/netapp/cemba3c/BICCN/wmb/aibs/AIBS.TENX.Annotations.zarr'
 AIBS_TENX_CELL_TYPE_ANNOTATION_V2_PATH = '/gale/netapp/cemba3c/BICCN/wmb/aibs/AIBS.TENX.Annotations.v2.zarr'
+AIBS_TENX_CELL_TYPE_ANNOTATION_V3_PATH = '/gale/netapp/cemba3c/BICCN/wmb/aibs/AIBS.TENX.Annotations.v3.zarr'
+
 # Outliers
 # /home/hanliu/project/cemba/study/MarkOutlier/AIBS_TENX 05/02/2022
 AIBS_TENX_OUTLIER_IDS_PATH = PACKAGE_DIR / 'files/AIBS.TENX.DoubletsID.txt.gz'

@@ -37,6 +37,7 @@ class AIBS(AutoPathMixIn):
         self.AIBS_TENX_OUTLIER_IDS_PATH = AIBS_TENX_OUTLIER_IDS_PATH
         self.AIBS_TENX_CELL_TYPE_ANNOTATION_PATH = AIBS_TENX_CELL_TYPE_ANNOTATION_PATH
         self.AIBS_TENX_CELL_TYPE_ANNOTATION_V2_PATH = AIBS_TENX_CELL_TYPE_ANNOTATION_V2_PATH
+        self.AIBS_TENX_CELL_TYPE_ANNOTATION_V3_PATH = AIBS_TENX_CELL_TYPE_ANNOTATION_V3_PATH
         self.AIBS_TENX_GENE_MAP_PATH = AIBS_TENX_GENE_MAP_PATH
 
         self.AIBS_SMART_GENE_CHUNK_ZARR_PATH = AIBS_SMART_GENE_CHUNK_ZARR_PATH
@@ -105,11 +106,13 @@ class AIBS(AutoPathMixIn):
         return AIBSSMARTCellAnnotation(self.AIBS_SMART_CELL_TYPE_ANNOTATION_PATH,
                                        self.get_smart_cell_metadata())
 
-    def get_tenx_annot(self, version='v1'):
+    def get_tenx_annot(self, version='v3'):
         if version == 'v1':
             path = self.AIBS_TENX_CELL_TYPE_ANNOTATION_PATH
         elif version == 'v2':
             path = self.AIBS_TENX_CELL_TYPE_ANNOTATION_V2_PATH
+        elif version == 'v3':
+            path = self.AIBS_TENX_CELL_TYPE_ANNOTATION_V3_PATH
         else:
             raise ValueError('Unknown version: {}'.format(version))
 
