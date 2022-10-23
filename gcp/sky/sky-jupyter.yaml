@@ -9,6 +9,9 @@ resources:
   disk_size: 256
 
 file_mounts:
+  /rs2:
+    source: gs://ecker-cemba-rs2/
+    mode: MOUNT
   /data:
     source: gs://ecker-rachel-analysis/
     mode: MOUNT
