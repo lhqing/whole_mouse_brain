@@ -98,6 +98,7 @@ CEMBA_ATAC_GENE_CHUNK_PATH = '/gale/netapp/cemba3c/BICCN/wmb/GeneChunks/CEMBA.AT
 
 # annotation
 CEMBA_ATAC_CELL_TYPE_ANNOTATION_PATH = '/gale/netapp/cemba3c/BICCN/wmb/cemba_atac/CEMBA.snATAC.Annotations.zarr'
+CEMBA_ATAC_CELL_TYPE_ANNOTATION_V2_PATH = '/gale/netapp/cemba3c/BICCN/wmb/cemba_atac/CEMBA.snATAC.Annotations.v2.zarr'
 
 # Cluster Aggregation
 CEMBA_ATAC_CLUSTER_L4_SUM_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/wmb/cemba_atac/CEMBA.ATAC.L4Agg.zarr/'

@@ -10,7 +10,10 @@ class CEMBAATAC(AutoPathMixIn):
 
     def __init__(self):
         self.CEMBA_ATAC_ZARR_PATH = CEMBA_ATAC_ZARR_PATH
+
         self.CEMBA_ATAC_CELL_TYPE_ANNOTATION_PATH = CEMBA_ATAC_CELL_TYPE_ANNOTATION_PATH
+        self.CEMBA_ATAC_CELL_TYPE_ANNOTATION_V2_PATH = CEMBA_ATAC_CELL_TYPE_ANNOTATION_V2_PATH
+
         self.CEMBA_ATAC_CLUSTER_FULL_NAME_PATH = CEMBA_ATAC_CLUSTER_FULL_NAME_PATH
         self.CEMBA_ATAC_MAPPING_METRIC_PATH = CEMBA_ATAC_MAPPING_METRIC_PATH
 
@@ -30,8 +33,12 @@ class CEMBAATAC(AutoPathMixIn):
             self._mapping_metric = pd.read_hdf(self.CEMBA_ATAC_MAPPING_METRIC_PATH)
         return self._mapping_metric
 
-    def get_atac_annot(self):
-        return CEMBAATACCellAnnotation(self.CEMBA_ATAC_CELL_TYPE_ANNOTATION_PATH,
+    def get_atac_annot(self, version='v2'):
+        if version == 'v2':
+            path = self.CEMBA_ATAC_CELL_TYPE_ANNOTATION_V2_PATH
+        else:
+            path = self.CEMBA_ATAC_CELL_TYPE_ANNOTATION_PATH
+        return CEMBAATACCellAnnotation(path,
                                        self.get_atac_mapping_metric())
 
     def get_cluster_full_name(self, name):
