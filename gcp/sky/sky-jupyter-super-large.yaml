@@ -1,10 +1,10 @@
 # jupyter.yaml
 
-name: jupyter
+name: sl-jupyter
 
 resources:
   cloud: gcp
-  instance_type: n2d-standard-96
+  instance_type: n2d-highmem-96
   region: us-west1
 
 file_mounts:
@@ -33,3 +33,6 @@ setup: |
     rm env.yaml
   fi
 
+run: |
+  cd ~/sky_workdir
+  jupyter lab --no-browser --port 9999

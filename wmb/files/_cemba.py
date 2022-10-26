@@ -84,6 +84,8 @@ CEMBA_SNM3C_DMR_REGION_DS_REMOTE_PATH = '/cemba/wmb/genome/CEMBA.snm3C.L4Region-
 CEMBA_SNM3C_DMR_REGION_DS_SAMPLE_CHUNK_REMOTE_PATH = \
     '/cemba/wmb/genome/CEMBA.snm3C.L4Region-by-DMR.sample_chunk.zarr'
 
+# palette
+CEMBA_CELL_TYPE_ANNOT_PALETTE_PATH = PACKAGE_DIR / 'files/palette/CEMBA.CellTypeAnnot.csv'
 
 # =================================
 # CEMBA ATAC

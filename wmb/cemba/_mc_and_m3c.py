@@ -90,6 +90,9 @@ class CEMBASnmCAndSnm3C(AutoPathMixIn):
         self.CEMBA_SNM3C_DMR_REGION_DS_PATH = CEMBA_SNM3C_DMR_REGION_DS_REMOTE_PATH
         self.CEMBA_SNM3C_DMR_REGION_DS_SAMPLE_CHUNK_PATH = CEMBA_SNM3C_DMR_REGION_DS_SAMPLE_CHUNK_REMOTE_PATH
 
+        # Palette
+        self.CEMBA_CELL_TYPE_ANNOT_PALETTE_PATH = CEMBA_CELL_TYPE_ANNOT_PALETTE_PATH
+
         # internal variables
         self._mc_gene_mcds = None
         self._m3c_gene_mcds = None
@@ -384,3 +387,7 @@ class CEMBASnmCAndSnm3C(AutoPathMixIn):
             return ds_list[0]
         else:
             return xr.merge(ds_list)
+
+    def get_cell_type_palette(self):
+        p = pd.read_csv(self.CEMBA_CELL_TYPE_ANNOT_PALETTE_PATH, index_col=0, header=None).squeeze().to_dict()
+        return p

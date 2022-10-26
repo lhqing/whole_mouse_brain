@@ -69,3 +69,5 @@ AIBS_TENX_CLUSTER_L4_SUM_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/wmb/aibs/AIBS.T
 
 AIBS_SMART_CLUSTER_L4Region_SUM_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/wmb/aibs/AIBS.SMART.L4RegionAgg.zarr'
 AIBS_TENX_CLUSTER_L4Region_SUM_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/wmb/aibs/AIBS.TENX.L4RegionAgg.zarr'
+
+AIBS_TENX_CELL_TYPE_ANNOT_PALETTE_V2_PATH = PACKAGE_DIR / 'files/palette/AIBS.TENX.Annot.v2.csv'

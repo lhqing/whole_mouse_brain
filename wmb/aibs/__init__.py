@@ -49,6 +49,8 @@ class AIBS(AutoPathMixIn):
         self.AIBS_SMART_CLUSTER_L4Region_SUM_ZARR_PATH = AIBS_SMART_CLUSTER_L4Region_SUM_ZARR_PATH
         self.AIBS_TENX_CLUSTER_L4Region_SUM_ZARR_PATH = AIBS_TENX_CLUSTER_L4Region_SUM_ZARR_PATH
 
+        self.AIBS_TENX_CELL_TYPE_ANNOT_PALETTE_V2_PATH = AIBS_TENX_CELL_TYPE_ANNOT_PALETTE_V2_PATH
+
         # internal variables
         self._smart_gene_zarr = None
         self._smart_cell_million_reads = None
@@ -205,6 +207,10 @@ class AIBS(AutoPathMixIn):
         gene_index = self._smart_gene_index
         gene = self._standardize_gene_index(gene, 'smart', gene_index)
         return self._get_gene_data(gene, normalize=normalize, log=log, dataset='smart')
+
+    def get_cell_type_palette(self):
+        p = pd.read_csv(self.AIBS_TENX_CELL_TYPE_ANNOT_PALETTE_V2_PATH, index_col=0, header=None).squeeze()
+        return p
 
 
 aibs = AIBS()
