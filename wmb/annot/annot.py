@@ -12,8 +12,9 @@ class CellAnnotation(xr.Dataset):
 
         # determine cluster hierarchy list
         cluster_data_var = []
-        for var_name in self.attrs['cluster_hierarchy']:
-            cluster_data_var += var_name
+        if 'cluster_hierarchy' in self.attrs:
+            for var_name in self.attrs['cluster_hierarchy']:
+                cluster_data_var += var_name
         self.attrs['cluster_data_var'] = cluster_data_var
 
         # fill cluster cat if the annotation exists
@@ -34,11 +35,12 @@ class CellAnnotation(xr.Dataset):
 
     def _concat_hierarchy_label(self):
         """Concatenate hierarchy labels to make lower level labels unique"""
-        for hierarchy_list in self.attrs['cluster_hierarchy']:
-            for i, var_name in enumerate(hierarchy_list):
-                if i > 0:
-                    self[var_name] = self[hierarchy_list[i - 1]].to_pandas().astype(str) + \
-                                     '_' + self[var_name].to_pandas().astype(str)
+        if 'cluster_hierarchy' in self.attrs:
+            for hierarchy_list in self.attrs['cluster_hierarchy']:
+                for i, var_name in enumerate(hierarchy_list):
+                    if i > 0:
+                        self[var_name] = self[hierarchy_list[i - 1]].to_pandas().astype(str) + \
+                                         '_' + self[var_name].to_pandas().astype(str)
         return
 
     def get_cell_annot(self, cluster_name):
