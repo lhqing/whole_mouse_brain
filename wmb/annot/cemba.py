@@ -68,13 +68,14 @@ class CEMBAATACCellAnnotation(CellAnnotation):
 
         cemba_ids = self.get_index('cell').map(lambda i: i.split('_')[1])
         cemba_id_to_dr = brain.map_cemba_id_to_dissection_region('CEMBA')
-        self['DissectionRegion'] = cemba_ids.map(cemba_id_to_dr)
+        dissection_regions = cemba_ids.map(cemba_id_to_dr)
+        self['DissectionRegion'] = dissection_regions
 
-        metadata['MajorRegion'] = metadata['DissectionRegion'].map(
+        metadata['MajorRegion'] = dissection_regions.map(
             brain.map_dissection_region_to_major_region(region_type='CEMBA'))
         self['MajorRegion'] = self.get_index('cell').map(metadata['MajorRegion'])
 
-        metadata['SubRegion'] = metadata['DissectionRegion'].map(
+        metadata['SubRegion'] = dissection_regions.map(
             brain.map_dissection_region_to_sub_region(region_type='CEMBA'))
         self['SubRegion'] = self.get_index('cell').map(metadata['SubRegion'])
         return
