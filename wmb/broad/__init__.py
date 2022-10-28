@@ -56,7 +56,8 @@ class BROAD(AutoPathMixIn):
         else:
             path = self.BROAD_TENX_CELL_TYPE_ANNOTATION_PATH
         return BROADTENXCellAnnotation(path,
-                                       self.get_tenx_sample_metadata())
+                                       self.get_tenx_sample_metadata(),
+                                       version=version)
 
     def _open_gene_chunk_zarr(self, version):
         import xarray as xr
