@@ -76,15 +76,17 @@ class BROAD(AutoPathMixIn):
             self._open_gene_chunk_zarr(version=version)
 
         # check if gene is gene name:
-        if gene in self._gene_index:
-            # gene is gene name
-            gene_name = gene
+        if version == 'v2':
+            if gene not in self._gene_index:
+                gene = mm10.gene_name_to_id(gene, allow_nan=False)
         else:
-            gene_name = mm10.gene_id_to_name(gene)
+            if gene not in self._gene_index:
+                # gene is gene name
+                gene = mm10.gene_id_to_name(gene, allow_nan=False)
 
         # raw counts
         gene_data = self._gene_zarr['gene_da_fc'].sel(
-            gene=gene_name).to_pandas()
+            gene=gene).to_pandas()
 
         # normalize to CPM
         if normalize:
