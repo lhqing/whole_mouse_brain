@@ -6,11 +6,14 @@ from ..brain_region import brain
 class BROADTENXCellAnnotation(CellAnnotation):
     __slots__ = ()
 
-    def __init__(self, annot_path, metadata, add_l4_from_l3=True):
+    def __init__(self, annot_path, metadata, add_l4_from_l3=True, version='v2'):
         super().__init__(annot_path)
 
         # add BROAD specific attributes
-        self['sample'] = self.get_index('cell').map(lambda i: i[:-18])
+        if version == 'v2':
+            self['sample'] = self.get_index('cell').map(lambda i: i.split('_')[0])
+        else:
+            self['sample'] = self.get_index('cell').map(lambda i: i[:-18])
 
         self['DissectionRegion'] = self['sample'].to_pandas().map(metadata['DissectionRegion'])
 
