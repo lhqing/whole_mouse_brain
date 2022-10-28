@@ -66,7 +66,9 @@ class CEMBAATACCellAnnotation(CellAnnotation):
     def __init__(self, annot_path, metadata):
         super().__init__(annot_path)
 
-        self['DissectionRegion'] = self.get_index('cell').map(metadata['DissectionRegion'])
+        cemba_ids = self.get_index('cell').map(lambda i: i.split('_')[1])
+        cemba_id_to_dr = brain.map_cemba_id_to_dissection_region('CEMBA')
+        self['DissectionRegion'] = cemba_ids.map(cemba_id_to_dr)
 
         metadata['MajorRegion'] = metadata['DissectionRegion'].map(
             brain.map_dissection_region_to_major_region(region_type='CEMBA'))
