@@ -39,4 +39,4 @@ setup: |
 
 run: |
   cd ~/sky_workdir
-  jupyter lab --no-browser --port 8898
+  nohup jupyter-lab --LabApp.token='' --no-browser --port 8898 > ~/jupyter.log 2>&1 &
