@@ -38,8 +38,7 @@ class CEMBAATAC(AutoPathMixIn):
             path = self.CEMBA_ATAC_CELL_TYPE_ANNOTATION_V2_PATH
         else:
             path = self.CEMBA_ATAC_CELL_TYPE_ANNOTATION_PATH
-        return CEMBAATACCellAnnotation(path,
-                                       self.get_atac_mapping_metric())
+        return CEMBAATACCellAnnotation(path)
 
     def get_cluster_full_name(self, name):
         return self._full_name_map.loc[name]

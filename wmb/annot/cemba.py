@@ -63,7 +63,7 @@ class CEMBAm3CCellAnnotation(CellAnnotation):
 class CEMBAATACCellAnnotation(CellAnnotation):
     __slots__ = ()
 
-    def __init__(self, annot_path, metadata):
+    def __init__(self, annot_path):
         super().__init__(annot_path)
 
         cemba_ids = self.get_index('cell').map(lambda i: i.split('_')[1])
@@ -71,13 +71,11 @@ class CEMBAATACCellAnnotation(CellAnnotation):
         dissection_regions = cemba_ids.map(cemba_id_to_dr)
         self['DissectionRegion'] = dissection_regions
 
-        metadata['MajorRegion'] = dissection_regions.map(
-            brain.map_dissection_region_to_major_region(region_type='CEMBA'))
-        self['MajorRegion'] = self.get_index('cell').map(metadata['MajorRegion'])
+        major_map = brain.map_dissection_region_to_major_region(region_type='CEMBA')
+        self['MajorRegion'] = dissection_regions.map(major_map)
 
-        metadata['SubRegion'] = dissection_regions.map(
-            brain.map_dissection_region_to_sub_region(region_type='CEMBA'))
-        self['SubRegion'] = self.get_index('cell').map(metadata['SubRegion'])
+        sub_map = brain.map_dissection_region_to_sub_region(region_type='CEMBA')
+        self['SubRegion'] = dissection_regions.map(sub_map)
         return
 
 
