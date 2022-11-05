@@ -79,6 +79,13 @@ CEMBA_SNMC_DMR_MOTIF_SCAN_REGION_DS_REMOTE_PATH = '/cemba/wmb/genome/CEMBA.snmC.
 CEMBA_SNMC_DMR_TF_AND_MOTIF_HITS_DS_REMOTE_PATH = \
     '/cemba/wmb/genome/CEMBA.snmC.DMR.tf_motif_enrichment_and_hits.order.ds'
 
+CEMBA_SNMC_DMR_ATAC_COUNT_ZARR_PATH = '/cemba/wmb/cemba/CEMBA.snmC.L4Region.DMR.ATAC.zarr'
+CEMBA_SNMC_CHROM_10BP_ATAC_COUNT_ZARR_PATH = '/cemba/wmb/cemba/CEMBA.snmC.L4Region.ATACCounts.zarr'
+
+# Integration based other modalities at cluster level
+CEMBA_SNMC_L4REGION_AIBS_TENX_COUNTS_ZARR_PATH = '/cemba/wmb/cemba/CEMBA.snmC.L4Region.AIBS_TENX_COUNTS.zarr'
+
+
 # the same DMR regions as SNMC
 CEMBA_SNM3C_DMR_REGION_DS_REMOTE_PATH = '/cemba/wmb/genome/CEMBA.snm3C.L4Region-by-DMR.zarr'
 CEMBA_SNM3C_DMR_REGION_DS_SAMPLE_CHUNK_REMOTE_PATH = \

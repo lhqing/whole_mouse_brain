@@ -1,6 +1,8 @@
 from functools import lru_cache
 
+import numpy as np
 import pandas as pd
+import xarray as xr
 from ALLCools.mcds import MCDS
 
 from wmb.files import *
@@ -86,6 +88,11 @@ class CEMBASnmCAndSnm3C(AutoPathMixIn):
         self.CEMBA_SNMC_DMR_TF_AND_MOTIF_HITS_DS_REMOTE_PATH = CEMBA_SNMC_DMR_TF_AND_MOTIF_HITS_DS_REMOTE_PATH
         self.CEMBA_SNMC_DMR_REGION_DS_SAMPLE_CHUNK_PATH = CEMBA_SNMC_DMR_REGION_DS_SAMPLE_CHUNK_REMOTE_PATH
 
+        # Integration based other modalities at cluster level
+        self.CEMBA_SNMC_L4REGION_AIBS_TENX_COUNTS_ZARR_PATH = CEMBA_SNMC_L4REGION_AIBS_TENX_COUNTS_ZARR_PATH
+        self.CEMBA_SNMC_DMR_ATAC_COUNT_ZARR_PATH = CEMBA_SNMC_DMR_ATAC_COUNT_ZARR_PATH
+        self.CEMBA_SNMC_CHROM_10BP_ATAC_COUNT_ZARR_PATH = CEMBA_SNMC_CHROM_10BP_ATAC_COUNT_ZARR_PATH
+
         # snm3C DMR (regions are the same as snmC)
         self.CEMBA_SNM3C_DMR_REGION_DS_PATH = CEMBA_SNM3C_DMR_REGION_DS_REMOTE_PATH
         self.CEMBA_SNM3C_DMR_REGION_DS_SAMPLE_CHUNK_PATH = CEMBA_SNM3C_DMR_REGION_DS_SAMPLE_CHUNK_REMOTE_PATH
@@ -95,7 +102,10 @@ class CEMBASnmCAndSnm3C(AutoPathMixIn):
 
         # internal variables
         self._mc_gene_mcds = None
+        self._mc_cluster_gene_ds = None
+        self._mc_cluster_gene_rna_ds = None
         self._m3c_gene_mcds = None
+        self._m3c_cluster_gene_ds = None
 
         # validate path or auto change prefix
         self._check_file_path_attrs()
@@ -106,6 +116,28 @@ class CEMBASnmCAndSnm3C(AutoPathMixIn):
 
     def _open_m3c_gene_mcds(self):
         self._m3c_gene_mcds = MCDS.open(self.CEMBA_SNM3C_GENE_CHUNK_ZARR_PATH)
+
+    def _open_mc_cluster_gene_ds(self):
+        ds = xr.open_zarr(self.CEMBA_SNMC_CLUSTER_L4Region_SUM_ZARR_PATH)
+        self._mc_cluster_gene_ds = ds['geneslop2k-vm23_da']
+
+        genome_sum = ds['chrom100k_da'].sum(dim='chrom100k')
+        frac = (genome_sum.sel(count_type='mc') / genome_sum.sel(count_type='cov')).load()
+        self._mc_cluster_gene_ds['cluster_overall_frac'] = frac
+        return
+
+    def _open_mc_cluster_gene_rna_ds(self):
+        self._mc_cluster_gene_rna_ds = xr.open_zarr(self.CEMBA_SNMC_L4REGION_AIBS_TENX_COUNTS_ZARR_PATH)
+        return
+
+    def _open_m3c_cluster_gene_ds(self):
+        ds = xr.open_zarr(self.CEMBA_SNM3C_CLUSTER_L4Region_SUM_ZARR_PATH)
+        self._m3c_cluster_gene_ds = ds['geneslop2k-vm23_da']
+
+        genome_sum = ds['chrom100k_da'].sum(dim='chrom100k')
+        frac = (genome_sum.sel(count_type='mc') / genome_sum.sel(count_type='cov')).load()
+        self._m3c_cluster_gene_ds['cluster_overall_frac'] = frac
+        return
 
     def get_mc_mapping_metric(self, pass_basic_qc_only=True, remove_outlier_ids=True, select_cells=None):
         """
@@ -316,6 +348,88 @@ class CEMBASnmCAndSnm3C(AutoPathMixIn):
         ).to_pandas()
         return gene_data
 
+    def _get_cluster_gene_frac(self, dataset, gene, mc_type, value_type, alpha, norm_frac):
+        if dataset == 'mc':
+            if self._mc_cluster_gene_ds is None:
+                self._open_mc_cluster_gene_ds()
+            ds = self._mc_cluster_gene_ds
+        elif dataset == 'm3c':
+            if self._m3c_cluster_gene_ds is None:
+                self._open_m3c_cluster_gene_ds()
+            ds = self._m3c_cluster_gene_ds
+        else:
+            raise ValueError('dataset must be "mc" or "m3c"')
+
+        # check if gene is gene name:
+        try:
+            gene_id = mm10.gene_name_to_id(gene)
+        except KeyError:
+            gene_id = gene
+
+        count_table = ds.sel(
+            {'mc_type': mc_type, 'geneslop2k-vm23': gene_id}
+        ).to_pandas()
+
+        mc = count_table['mc']
+        cov = count_table['cov']
+        if value_type == 'frac':
+            frac = mc / (cov + alpha)
+            if norm_frac:
+                global_frac = ds['cluster_overall_frac'].sel(mc_type=mc_type).to_pandas()
+                data = frac / global_frac
+            else:
+                data = frac
+        elif value_type == 'mvalue':
+            import numpy as np
+            data = np.log2((mc + alpha) / (cov - mc + alpha))
+        else:
+            raise ValueError('value_type must be "frac" or "mvalue"')
+
+        return data
+
+    def get_mc_cluster_gene_frac(self, gene, mc_type='CHN', value_type='frac', alpha=0.001, norm_frac=True):
+        return self._get_cluster_gene_frac('mc', gene, mc_type, value_type, alpha, norm_frac)
+
+    def get_m3c_cluster_gene_frac(self, gene, mc_type='CHN', value_type='frac', alpha=0.001, norm_frac=True):
+        return self._get_cluster_gene_frac('m3c', gene, mc_type, value_type, alpha, norm_frac)
+
+    def get_mc_cluster_gene_rna(self, gene, cluster_level='L4Region', norm=True, log1p=True):
+        """
+        Get RNA expression of a gene in a cluster
+
+        Parameters
+        ----------
+        gene :
+            gene name or gene id
+        cluster_level :
+            cluster level to get expression for
+        norm :
+            if True, normalize expression by CPM
+        log1p :
+            if True, log1p transform expression
+
+        Returns
+        -------
+        pandas.Series
+        """
+
+        if self._mc_cluster_gene_rna_ds is None:
+            self._open_mc_cluster_gene_rna_ds()
+        da = self._mc_cluster_gene_rna_ds[f'{cluster_level}_da']
+
+        # check if gene is gene name:
+        try:
+            gene_id = mm10.gene_name_to_id(gene)
+        except KeyError:
+            gene_id = gene
+
+        gene_data = da.sel(gene=gene_id).to_pandas()
+        if norm:
+            gene_data = gene_data * 1000000 / da[f'{cluster_level}_umi_count']
+        if log1p:
+            gene_data = np.log1p(gene_data)
+        return gene_data
+
     @lru_cache(maxsize=200)
     def get_m3c_gene_frac(self, gene, mc_type='CHN'):
         if self._m3c_gene_mcds is None:
@@ -344,7 +458,7 @@ class CEMBASnmCAndSnm3C(AutoPathMixIn):
     def get_mc_dmr_ds(self, *args, **kwargs):
         return self.get_dmr_ds(dataset='mc', *args, **kwargs)
 
-    def get_dmr_ds(self, dataset='mc', chunk_type='region', add_motif=False, add_motif_hits=False):
+    def get_dmr_ds(self, dataset='mc', chunk_type='region', add_motif=False, add_motif_hits=False, add_atac=False):
         import xarray as xr
         from ALLCools.mcds import RegionDS
 
@@ -382,6 +496,11 @@ class CEMBASnmCAndSnm3C(AutoPathMixIn):
         if add_motif_hits:
             motif_hits_ds = xr.open_zarr(self.CEMBA_SNMC_DMR_TF_AND_MOTIF_HITS_DS_REMOTE_PATH)
             ds_list.append(motif_hits_ds)
+
+        if add_atac:
+            atac_ds = xr.open_zarr(self.CEMBA_SNMC_DMR_ATAC_COUNT_ZARR_PATH)
+            atac_ds = atac_ds.assign_coords(dmr=dmr_ds.coords['dmr'].values).rename({'L4Region': 'sample_id'})
+            ds_list.append(atac_ds)
 
         if len(ds_list) == 1:
             return ds_list[0]

@@ -6,7 +6,7 @@ resources:
   cloud: gcp
   instance_type: n2d-highmem-96
   region: us-west1
-
+  disk_size: 384
 file_mounts:
   /data:
     source: gs://ecker-rachel-analysis/
