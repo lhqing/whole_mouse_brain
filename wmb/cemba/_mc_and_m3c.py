@@ -348,6 +348,7 @@ class CEMBASnmCAndSnm3C(AutoPathMixIn):
         ).to_pandas()
         return gene_data
 
+    @lru_cache(maxsize=200)
     def _get_cluster_gene_frac(self, dataset, gene, mc_type, value_type, alpha, norm_frac):
         if dataset == 'mc':
             if self._mc_cluster_gene_ds is None:
