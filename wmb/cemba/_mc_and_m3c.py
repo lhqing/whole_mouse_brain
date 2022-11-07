@@ -328,9 +328,6 @@ class CEMBASnmCAndSnm3C(AutoPathMixIn):
     def get_mc_annot(self):
         annot = CEMBAmCCellAnnotation(self.CEMBA_SNMC_CELL_TYPE_ANNOTATION_PATH,
                                       self.get_mc_mapping_metric())
-
-        # mC L4 Annot also created from AIBS TENX Annot V2
-        annot.add_palette(palette=PALETTES['AIBS.TENX.Annot.V2'], da_name='L4_annot')
         return annot
 
     def get_m3c_annot(self):

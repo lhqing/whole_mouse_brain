@@ -96,21 +96,4 @@ class CellAnnotation(xr.Dataset):
         all_coords['cell_counts'] = self[groupby].to_pandas().value_counts()
         return all_coords
 
-    def add_palette(self, palette, da_name, missing_color='#D3D3D3'):
-        if da_name not in self:
-            print(f'{da_name} does not exist in data_vars or coords, palette not added.')
-            return
 
-        if 'palettes' not in self.attrs:
-            self.attrs['palettes'] = {}
-        # fill missing cat with missing_color
-        unique_cats = self[da_name].to_pandas().unique()
-        self.attrs['palettes'][da_name] = {cat: palette[cat] if cat in palette else missing_color
-                                           for cat in unique_cats}
-        return
-
-    def get_palette(self, da_name):
-        try:
-            return self.attrs['palettes'][da_name]
-        except KeyError:
-            return None

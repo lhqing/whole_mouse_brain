@@ -122,8 +122,6 @@ class AIBS(AutoPathMixIn):
 
         annot = AIBSTENXCellAnnotation(path,
                                        self.get_tenx_sample_metadata())
-        if version == 'v2':
-            annot.add_palette(palette=PALETTES['AIBS.TENX.Annot.V2'], da_name='L2_annot')
         return annot
 
     def _open_smart_zarr(self):
