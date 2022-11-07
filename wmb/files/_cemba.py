@@ -32,6 +32,11 @@ CEMBA_SNM3C_10K_IMPUTED_COOL_PATH = PACKAGE_DIR / 'files/CEMBA.snm3C.10KImputedC
 CEMBA_SNM3C_25K_IMPUTED_COOL_PATH = PACKAGE_DIR / 'files/CEMBA.snm3C.25KImputedCoolURLs.csv.gz'
 CEMBA_SNM3C_100K_IMPUTED_COOL_PATH = PACKAGE_DIR / 'files/CEMBA.snm3C.100KImputedCoolURLs.csv.gz'
 
+# snm3C multi-sample zarr dataset
+CEMBA_SNM3C_L4REGION_COOL_DS_PATH = [f'/cemba/m3c-CoolDS/group{i}.coolds' for i in range(48)]
+CEMBA_SNM3C_L4REGION_COOL_DS_SAMPLE_WEIGHTS_PATH = '/cemba/m3c-CoolDS/CEMBA.snm3C.L4Region.CellCounts.csv'
+CEMBA_SNM3C_L4REGION_COOL_DS_CHROMS_SIZES_PATH = '/cemba/m3c-CoolDS/mm10.main.nochrY.nochrM.chrom.sizes'
+
 # MCDS Path 04/20/2022
 # MCDS is ordered according to the first pass clustering, data type is standardized
 CEMBA_SNMC_MCDS_PATH = '/gale/netapp/cemba3c/BICCN/CEMBA_RS1/dataset/CEMBA.snmC.mcds'

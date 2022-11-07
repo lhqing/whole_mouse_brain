@@ -51,6 +51,11 @@ class CEMBASnmCAndSnm3C(AutoPathMixIn):
         self.CEMBA_SNM3C_25K_IMPUTED_COOL_PATH = CEMBA_SNM3C_25K_IMPUTED_COOL_PATH
         self.CEMBA_SNM3C_100K_IMPUTED_COOL_PATH = CEMBA_SNM3C_100K_IMPUTED_COOL_PATH
 
+        # CoolDS snm3C multi-sample zarr dataset
+        self.CEMBA_SNM3C_L4REGION_COOL_DS_PATH = CEMBA_SNM3C_L4REGION_COOL_DS_PATH
+        self.CEMBA_SNM3C_L4REGION_COOL_DS_SAMPLE_WEIGHTS_PATH = CEMBA_SNM3C_L4REGION_COOL_DS_SAMPLE_WEIGHTS_PATH
+        self.CEMBA_SNM3C_L4REGION_COOL_DS_CHROMS_SIZES_PATH = CEMBA_SNM3C_L4REGION_COOL_DS_CHROMS_SIZES_PATH
+
         # dataset paths
         self.CEMBA_SNMC_MCDS_PATH = CEMBA_SNMC_MCDS_PATH
         self.CEMBA_SNM3C_MCDS_PATH = CEMBA_SNM3C_MCDS_PATH
@@ -511,3 +516,16 @@ class CEMBASnmCAndSnm3C(AutoPathMixIn):
     def get_cell_type_palette(self):
         p = pd.read_csv(self.CEMBA_CELL_TYPE_ANNOT_PALETTE_PATH, index_col=0, header=None).squeeze().to_dict()
         return p
+
+    def get_cool_ds(self):
+        from ALLCools.mcds import CoolDS
+        sample_weights = pd.read_csv(
+            self.CEMBA_SNM3C_L4REGION_COOL_DS_SAMPLE_WEIGHTS_PATH, index_col=0
+        ).squeeze()
+        cool_ds = CoolDS(
+            cool_ds_paths=self.CEMBA_SNM3C_L4REGION_COOL_DS_PATH,
+            chrom_sizes_path=self.CEMBA_SNM3C_L4REGION_COOL_DS_CHROMS_SIZES_PATH,
+            sample_weights=sample_weights,
+            sample_dim='sample_id'
+        )
+        return cool_ds
