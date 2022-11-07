@@ -52,7 +52,7 @@ class CEMBASnmCAndSnm3C(AutoPathMixIn):
         self.CEMBA_SNM3C_100K_IMPUTED_COOL_PATH = CEMBA_SNM3C_100K_IMPUTED_COOL_PATH
 
         # CoolDS snm3C multi-sample zarr dataset
-        self.CEMBA_SNM3C_L4REGION_COOL_DS_PATH = CEMBA_SNM3C_L4REGION_COOL_DS_PATH
+        self.CEMBA_SNM3C_L4REGION_COOL_DS_PATH_LIST = CEMBA_SNM3C_L4REGION_COOL_DS_PATH_LIST
         self.CEMBA_SNM3C_L4REGION_COOL_DS_SAMPLE_WEIGHTS_PATH = CEMBA_SNM3C_L4REGION_COOL_DS_SAMPLE_WEIGHTS_PATH
         self.CEMBA_SNM3C_L4REGION_COOL_DS_CHROMS_SIZES_PATH = CEMBA_SNM3C_L4REGION_COOL_DS_CHROMS_SIZES_PATH
 
@@ -522,12 +522,12 @@ class CEMBASnmCAndSnm3C(AutoPathMixIn):
         return p
 
     def get_cool_ds(self):
-        from ALLCools.mcds import CoolDS
+        from ALLCools.mcds.cool_ds import CoolDS
         sample_weights = pd.read_csv(
             self.CEMBA_SNM3C_L4REGION_COOL_DS_SAMPLE_WEIGHTS_PATH, index_col=0
         ).squeeze()
         cool_ds = CoolDS(
-            cool_ds_paths=self.CEMBA_SNM3C_L4REGION_COOL_DS_PATH,
+            cool_ds_paths=self.CEMBA_SNM3C_L4REGION_COOL_DS_PATH_LIST,
             chrom_sizes_path=self.CEMBA_SNM3C_L4REGION_COOL_DS_CHROMS_SIZES_PATH,
             sample_weights=sample_weights,
             sample_dim='sample_id'

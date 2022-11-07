@@ -33,7 +33,7 @@ CEMBA_SNM3C_25K_IMPUTED_COOL_PATH = PACKAGE_DIR / 'files/CEMBA.snm3C.25KImputedC
 CEMBA_SNM3C_100K_IMPUTED_COOL_PATH = PACKAGE_DIR / 'files/CEMBA.snm3C.100KImputedCoolURLs.csv.gz'
 
 # snm3C multi-sample zarr dataset
-CEMBA_SNM3C_L4REGION_COOL_DS_PATH = [f'/cemba/m3c-CoolDS/group{i}.coolds' for i in range(48)]
+CEMBA_SNM3C_L4REGION_COOL_DS_PATH_LIST = [f'/cemba/m3c-CoolDS/group{i}.coolds' for i in range(48)]
 CEMBA_SNM3C_L4REGION_COOL_DS_SAMPLE_WEIGHTS_PATH = '/cemba/m3c-CoolDS/CEMBA.snm3C.L4Region.CellCounts.csv'
 CEMBA_SNM3C_L4REGION_COOL_DS_CHROMS_SIZES_PATH = '/cemba/m3c-CoolDS/mm10.main.nochrY.nochrM.chrom.sizes'
 
