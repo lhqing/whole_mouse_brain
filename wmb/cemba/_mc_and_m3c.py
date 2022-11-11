@@ -568,7 +568,7 @@ class CEMBASnmCAndSnm3C(AutoPathMixIn):
         for cell_type in l4r_to_cell_type.unique():
             all_m3c_clusters = set()
             for mc_cluster in l4r_to_cell_type[l4r_to_cell_type == cell_type].index:
-                all_m3c_clusters.update(cluster_map[mc_cluster])
+                all_m3c_clusters.update(cluster_map.get(mc_cluster, []))
             cell_type_to_cluster_map[cell_type] = all_m3c_clusters
-        
+
         return cell_type_to_cluster_map
