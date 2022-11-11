@@ -36,6 +36,9 @@ CEMBA_SNM3C_100K_IMPUTED_COOL_PATH = PACKAGE_DIR / 'files/CEMBA.snm3C.100KImpute
 CEMBA_SNM3C_L4REGION_COOL_DS_PATH_LIST = [f'/cemba/m3c-CoolDS/group{i}.coolds' for i in range(48)]
 CEMBA_SNM3C_L4REGION_COOL_DS_SAMPLE_WEIGHTS_PATH = '/cemba/m3c-CoolDS/CEMBA.snm3C.L4Region.CellCounts.csv'
 CEMBA_SNM3C_L4REGION_COOL_DS_CHROMS_SIZES_PATH = '/cemba/m3c-CoolDS/mm10.main.nochrY.nochrM.chrom.sizes'
+CEMBA_SNM3C_L4REGION_CHROM_25K_COOL_DS_PATH = '/cemba/CEMBA_3C/CEMBA.snm3C.chrom25k.L4Region.Q.coolds'
+CEMBA_SNM3C_L4REGION_CHROM_100K_COOL_DS_PATH = 'CEMBA.snm3C.chrom100k.L4Region.Q+Raw.coolds'
+
 
 # MCDS Path 04/20/2022
 # MCDS is ordered according to the first pass clustering, data type is standardized
@@ -92,6 +95,9 @@ CEMBA_SNMC_DMR_TF_AND_MOTIF_HITS_DS_REMOTE_PATH = \
 
 CEMBA_SNMC_DMR_ATAC_COUNT_ZARR_PATH = '/cemba/wmb/cemba/CEMBA.snmC.L4Region.DMR.ATAC.zarr'
 CEMBA_SNMC_CHROM_10BP_ATAC_COUNT_ZARR_PATH = '/cemba/wmb/cemba/CEMBA.snmC.L4Region.ATACCounts.zarr'
+
+# snmC and snm3C Integration
+CEMBA_SNMC_TO_SNM3C_CLUSTER_MAP_PATH = PACKAGE_DIR / 'files/CEMBA.snmC-to-snm3C.L4RegionMap.221110.dict'
 
 # Integration based other modalities at cluster level
 CEMBA_SNMC_L4REGION_AIBS_TENX_COUNTS_ZARR_PATH = '/cemba/wmb/cemba/CEMBA.snmC.L4Region.AIBS_TENX_COUNTS.zarr'

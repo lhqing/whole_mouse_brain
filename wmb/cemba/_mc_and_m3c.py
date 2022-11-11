@@ -55,6 +55,8 @@ class CEMBASnmCAndSnm3C(AutoPathMixIn):
         self.CEMBA_SNM3C_L4REGION_COOL_DS_PATH_LIST = CEMBA_SNM3C_L4REGION_COOL_DS_PATH_LIST
         self.CEMBA_SNM3C_L4REGION_COOL_DS_SAMPLE_WEIGHTS_PATH = CEMBA_SNM3C_L4REGION_COOL_DS_SAMPLE_WEIGHTS_PATH
         self.CEMBA_SNM3C_L4REGION_COOL_DS_CHROMS_SIZES_PATH = CEMBA_SNM3C_L4REGION_COOL_DS_CHROMS_SIZES_PATH
+        self.CEMBA_SNM3C_L4REGION_CHROM_25K_COOL_DS_PATH = CEMBA_SNM3C_L4REGION_CHROM_25K_COOL_DS_PATH
+        self.CEMBA_SNM3C_L4REGION_CHROM_100K_COOL_DS_PATH = CEMBA_SNM3C_L4REGION_CHROM_100K_COOL_DS_PATH
 
         # dataset paths
         self.CEMBA_SNMC_MCDS_PATH = CEMBA_SNMC_MCDS_PATH
@@ -101,6 +103,7 @@ class CEMBASnmCAndSnm3C(AutoPathMixIn):
         self.CEMBA_SNMC_DMR_REGION_DS_SAMPLE_CHUNK_PATH = CEMBA_SNMC_DMR_REGION_DS_SAMPLE_CHUNK_REMOTE_PATH
 
         # Integration based other modalities at cluster level
+        self.CEMBA_SNMC_TO_SNM3C_CLUSTER_MAP_PATH = CEMBA_SNMC_TO_SNM3C_CLUSTER_MAP_PATH
         self.CEMBA_SNMC_L4REGION_AIBS_TENX_COUNTS_ZARR_PATH = CEMBA_SNMC_L4REGION_AIBS_TENX_COUNTS_ZARR_PATH
         self.CEMBA_SNMC_DMR_ATAC_COUNT_ZARR_PATH = CEMBA_SNMC_DMR_ATAC_COUNT_ZARR_PATH
         self.CEMBA_SNMC_CHROM_10BP_ATAC_COUNT_ZARR_PATH = CEMBA_SNMC_CHROM_10BP_ATAC_COUNT_ZARR_PATH
@@ -521,15 +524,29 @@ class CEMBASnmCAndSnm3C(AutoPathMixIn):
         p = pd.read_csv(self.CEMBA_CELL_TYPE_ANNOT_PALETTE_PATH, index_col=0, header=None).squeeze().to_dict()
         return p
 
-    def get_cool_ds(self):
+    def get_cool_ds(self, resolution='10K'):
+        if resolution == '10K':
+            path = self.CEMBA_SNM3C_L4REGION_COOL_DS_PATH_LIST
+        elif resolution == '100K':
+            path = self.CEMBA_SNM3C_L4REGION_CHROM_100K_COOL_DS_PATH
+        elif resolution == '25K':
+            path = self.CEMBA_SNM3C_L4REGION_CHROM_25K_COOL_DS_PATH
+        else:
+            raise ValueError(f'Got invalid value for resolution {resolution}.')
+
         from ALLCools.mcds.cool_ds import CoolDS
         sample_weights = pd.read_csv(
             self.CEMBA_SNM3C_L4REGION_COOL_DS_SAMPLE_WEIGHTS_PATH, index_col=0
         ).squeeze()
+
         cool_ds = CoolDS(
-            cool_ds_paths=self.CEMBA_SNM3C_L4REGION_COOL_DS_PATH_LIST,
+            cool_ds_paths=path,
             chrom_sizes_path=self.CEMBA_SNM3C_L4REGION_COOL_DS_CHROMS_SIZES_PATH,
             sample_weights=sample_weights,
             sample_dim='sample_id'
         )
         return cool_ds
+
+    def get_mc_cluster_to_m3c_cluster_map(self):
+        import joblib
+        return joblib.load(self.CEMBA_SNMC_TO_SNM3C_CLUSTER_MAP_PATH)
