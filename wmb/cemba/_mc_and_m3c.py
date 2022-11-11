@@ -122,6 +122,9 @@ class CEMBASnmCAndSnm3C(AutoPathMixIn):
         self._m3c_gene_mcds = None
         self._m3c_cluster_gene_ds = None
 
+        self._mc_annot = None
+        self._m3c_annot = None
+
         # validate path or auto change prefix
         self._check_file_path_attrs()
         return
@@ -336,13 +339,18 @@ class CEMBASnmCAndSnm3C(AutoPathMixIn):
         return pd.read_csv(self.CEMBA_LIU_2021_NATURE_SNMC_METADATA_PATH, index_col=0)
 
     def get_mc_annot(self):
-        annot = CEMBAmCCellAnnotation(self.CEMBA_SNMC_CELL_TYPE_ANNOTATION_PATH,
-                                      self.get_mc_mapping_metric())
-        return annot
+        if self._mc_annot is None:
+            annot = CEMBAmCCellAnnotation(self.CEMBA_SNMC_CELL_TYPE_ANNOTATION_PATH,
+                                          self.get_mc_mapping_metric())
+            self._mc_annot = annot
+        return self._mc_annot
 
     def get_m3c_annot(self):
-        return CEMBAm3CCellAnnotation(self.CEMBA_SNM3C_CELL_TYPE_ANNOTATION_PATH,
-                                      self.get_m3c_mapping_metric())
+        if self._m3c_annot is None:
+            annot = CEMBAm3CCellAnnotation(self.CEMBA_SNM3C_CELL_TYPE_ANNOTATION_PATH,
+                                           self.get_m3c_mapping_metric())
+            self._m3c_annot = annot
+        return self._m3c_annot
 
     @lru_cache(maxsize=200)
     def get_mc_gene_frac(self, gene, mc_type='CHN'):
@@ -550,3 +558,17 @@ class CEMBASnmCAndSnm3C(AutoPathMixIn):
     def get_mc_cluster_to_m3c_cluster_map(self):
         import joblib
         return joblib.load(self.CEMBA_SNMC_TO_SNM3C_CLUSTER_MAP_PATH)
+
+    def get_mc_cell_type_to_m3c_cluster_map(self):
+        cluster_map = self.get_mc_cluster_to_m3c_cluster_map()
+        mc_annot = self.get_mc_annot()
+        l4r_to_cell_type = mc_annot["L4Region_cat_annot"].to_pandas()
+
+        cell_type_to_cluster_map = {}
+        for cell_type in l4r_to_cell_type.unique():
+            all_m3c_clusters = set()
+            for mc_cluster in l4r_to_cell_type[l4r_to_cell_type == cell_type].index:
+                all_m3c_clusters.update(cluster_map[mc_cluster])
+            cell_type_to_cluster_map[cell_type] = all_m3c_clusters
+        
+        return cell_type_to_cluster_map
