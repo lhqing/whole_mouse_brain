@@ -54,8 +54,8 @@ CEMBA_SNM3C_3C_CHROM100K_RAW_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/CEMBA_3C/mc
 CEMBA_SNM3C_LOOP_ANOVA_DS_PATH = '/cemba/CEMBA_3C/loop/CEMBA.snm3C.LoopANOVAStats.ds'
 CEMBA_SNM3C_LOOP_AND_SUMMIT_DS_PATH = '/cemba/CEMBA_3C/loop/CEMBA.snm3C.LoopAndSummit.ds'
 CEMBA_SNM3C_LOOP_VALUES_DS_PATH = '/cemba/CEMBA_3C/loop/CEMBA.snm3C.LoopValues_total.ds'
-CEMBA_SNM3C_DOMAIN_BOUNDARY_AND_CHI2_DS_PATH = '/cemba/CEMBA_3C/loop/CEMBA.snm3C.L4Region.DomainBoundaryAndChi2.ds'
-CEMBA_SNM3C_DOMAIN_INSULATION_SCORE_DS_PATH = '/cemba/CEMBA_3C/loop/CEMBA.snm3C.chrom25k.InsulationScore.coolds'
+CEMBA_SNM3C_DOMAIN_BOUNDARY_AND_CHI2_DS_PATH = '/cemba/CEMBA_3C/domain/CEMBA.snm3C.L4Region.DomainBoundaryAndChi2.ds'
+CEMBA_SNM3C_DOMAIN_INSULATION_SCORE_DS_PATH = '/cemba/CEMBA_3C/domain/CEMBA.snm3C.chrom25k.InsulationScore.coolds'
 
 
 # cluster assignments
