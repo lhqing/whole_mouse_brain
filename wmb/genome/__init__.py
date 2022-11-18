@@ -141,6 +141,6 @@ class MotifDSmm10:
         return motif_position_chrom_dict
 
 
-motif_ds = MotifDSmm10(motif_ds_dir=MOTIF_DS_PATH,
-                       motif_cluster_meta_path=MOTIF_CLUSTER_META_PATH,
+motif_ds = MotifDSmm10(motif_ds_dir=MOTIF_VIERSTRA_DS_PATH,
+                       motif_cluster_meta_path=MOTIF_VIERSTRA_CLUSTER_META_PATH,
                        chrom_sizes_path=mm10.MAIN_CHROM_NOCHRM_NOCHRY_SIZES_PATH)
