@@ -18,7 +18,7 @@ from .pbn import pbn
 # reference agents
 from .brain_region import brain
 # from .genes import genes
-from .genome import mm10
+from .genome import mm10, motif_ds
 
 # integration
 from .integration import biccn_integration

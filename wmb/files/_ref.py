@@ -15,3 +15,7 @@ MM10_MAIN_CHROM_NOCHRM_SIZES_PATH = PACKAGE_DIR / "files/mm10.main.chrom.nochrM.
 MM10_MAIN_CHROM_NOCHRM_NOCHRY_SIZES_PATH = PACKAGE_DIR / "files/mm10.main.chrom.nochrM.nochrY.sizes"
 
 CISTARGET_MGI_MOTIF_TF_TABLE_PATH = '/ref/SCENIC/v10nr_clust_public/snapshots/motifs-v10-nr.mgi-m0.00001-o0.0.tbl'
+
+MOTIF_VIERSTRA_DS_PATH = '/ref/motif_vierstra/MotifDS'
+MOTIF_VIERSTRA_CLUSTER_META_PATH = '/ref/motif_vierstra/motif_cluster.csv'
+MOTIF_VIERSTRA_META_PATH = '/ref/motif_vierstra/motif_metadata.csv'

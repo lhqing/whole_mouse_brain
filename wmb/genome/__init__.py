@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import xarray as xr
 
 from ..files import *
 
@@ -97,3 +98,49 @@ class MM10GenomeRef:
 
 
 mm10 = MM10GenomeRef()
+
+
+class MotifDSmm10:
+    def __init__(self, motif_ds_dir, motif_cluster_meta_path, chrom_sizes_path):
+        self._motif_ds_dir = motif_ds_dir
+        self._chrom_sizes = pd.read_csv(chrom_sizes_path, header=None, sep='\t', index_col=0).squeeze()
+
+        motif_cluster_meta = pd.read_csv(motif_cluster_meta_path)
+        motif_cluster_meta.index.name = 'motif_cluster'
+        self.motif_cluster_meta = motif_cluster_meta
+        self._chrom_cache = {}
+
+    def fetch(self, chrom):
+        if chrom in self._chrom_cache:
+            return self._chrom_cache[chrom]
+        else:
+            ds = xr.open_zarr(f'{self._motif_ds_dir}/{chrom}/')
+            for col, col_data in self.motif_cluster_meta.items():
+                if col_data.dtype == 'O':
+                    ds.coords[col] = col_data.to_xarray().astype(str)
+                else:
+                    ds.coords[col] = col_data
+            self._chrom_cache[chrom] = ds
+        return ds
+
+    def query_chrom_motif_position(self, chrom, motif_id, base_pos, score_cutoff=0):
+        ds = self.fetch(chrom)
+        pos_motif = np.where(ds['motif'].sel(motif_cluster=motif_id).values > score_cutoff)[0]
+        neg_motif = np.where(ds['motif'].sel(motif_cluster=motif_id).values < score_cutoff)[0]
+        motif_position = np.concatenate([pos_motif + base_pos, neg_motif - base_pos])
+        motif_position.sort()
+        return motif_position
+
+    def query_motif_position_chrom_dict(self, motif_id, base_pos, score_cutoff=0):
+        motif_position_chrom_dict = {}
+        for chrom in self._chrom_sizes.index:
+            motif_position_chrom_dict[chrom] = self.query_chrom_motif_position(chrom,
+                                                                               motif_id,
+                                                                               base_pos,
+                                                                               score_cutoff=score_cutoff)
+        return motif_position_chrom_dict
+
+
+motif_ds = MotifDSmm10(motif_ds_dir=MOTIF_DS_PATH,
+                       motif_cluster_meta_path=MOTIF_CLUSTER_META_PATH,
+                       chrom_sizes_path=mm10.MAIN_CHROM_NOCHRM_NOCHRY_SIZES_PATH)
