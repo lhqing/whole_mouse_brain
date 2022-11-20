@@ -470,11 +470,13 @@ class CEMBASnmCAndSnm3C(AutoPathMixIn):
     def get_base_ds(self, dataset='snmc'):
         from ALLCools.mcds import BaseDS
         if dataset.lower() in ('snmc', 'mc'):
-            return BaseDS(self.CEMBA_SNMC_BASE_DS_PATH_LIST, codebook_path=self.MM10_MC_TYPE_CODEBOOK_PATH,
-                          chrom_sizes_path=mm10.MM10_CHROM_SIZES_PATH)
+            return BaseDS(self.CEMBA_SNMC_BASE_DS_PATH_LIST,
+                          codebook_path=self.MM10_MC_TYPE_CODEBOOK_PATH,
+                          chrom_sizes_path=mm10.MAIN_CHROM_NOCHRM_SIZES_PATH)
         elif dataset.lower() in ('snm3c', 'm3c'):
-            return BaseDS(self.CEMBA_SNM3C_BASE_DS_PATH_LIST, codebook_path=self.MM10_MC_TYPE_CODEBOOK_PATH,
-                          chrom_sizes_path=mm10.MM10_CHROM_SIZES_PATH)
+            return BaseDS(self.CEMBA_SNM3C_BASE_DS_PATH_LIST,
+                          codebook_path=self.MM10_MC_TYPE_CODEBOOK_PATH,
+                          chrom_sizes_path=mm10.MAIN_CHROM_NOCHRM_SIZES_PATH)
         else:
             raise ValueError(f'Got invalid value for dataset {dataset}.')
 
