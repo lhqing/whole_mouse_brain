@@ -209,7 +209,7 @@ class AIBS(AutoPathMixIn):
         return self._get_gene_data(gene, normalize=normalize, log=log, dataset='smart')
 
     def get_cell_type_palette(self):
-        p = pd.read_csv(self.AIBS_TENX_CELL_TYPE_ANNOT_PALETTE_V2_PATH, index_col=0, header=None).squeeze()
+        p = pd.read_csv(self.AIBS_TENX_CELL_TYPE_ANNOT_PALETTE_V2_PATH, index_col=0, header=None).squeeze().to_dict()
         return p
 
 
