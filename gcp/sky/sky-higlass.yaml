@@ -22,11 +22,14 @@ setup: |
     mamba install -y jupyter jupyterlab pandas xarray dask zarr gcsfs
     pip install --upgrade pip
     pip install --upgrade wmb
+  
     sudo docker pull higlass/higlass-docker:latest
     sudo docker run --detach --publish 8989:80 --volume ~/hg-data:/data --volume ~/tmp:/tmp --volume /cemba:/cemba --name higlass-container higlass/higlass-docker:latest
     sudo docker exec higlass-container rm -rf /data/media
     sudo docker exec higlass-container ln -s /cemba/higlass /data/media
+  
     # ingest data to higlass with the ingest notebook
+    # jupyter nbconvert --to notebook --execute /cemba/higlass/notebooks/ingest_higlass.ipynb
   fi
 
 run: |
