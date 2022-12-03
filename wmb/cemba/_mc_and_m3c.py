@@ -105,6 +105,7 @@ class CEMBASnmCAndSnm3C(AutoPathMixIn):
         self.CEMBA_SNMC_DMR_REGION_DS_SAMPLE_CHUNK_PATH = CEMBA_SNMC_DMR_REGION_DS_SAMPLE_CHUNK_REMOTE_PATH
         self.CEMBA_SNMC_GROUPED_DMR_MC_REGION_DS_PATH = CEMBA_SNMC_GROUPED_DMR_MC_REGION_DS_PATH
         self.CEMBA_SNMC_GROUPED_DMR_ATAC_REGION_DS_PATH = CEMBA_SNMC_GROUPED_DMR_ATAC_REGION_DS_PATH
+        self.CEMBA_SNMC_GROUPED_DMR_MOTIF_REGION_DS_PATH = CEMBA_SNMC_GROUPED_DMR_MOTIF_REGION_DS_PATH
 
         # Integration based other modalities at cluster level
         self.CEMBA_SNMC_TO_SNM3C_CLUSTER_MAP_PATH = CEMBA_SNMC_TO_SNM3C_CLUSTER_MAP_PATH
@@ -487,8 +488,22 @@ class CEMBASnmCAndSnm3C(AutoPathMixIn):
     def get_mc_dmr_ds(self, *args, **kwargs):
         return self.get_dmr_ds(dataset='mc', *args, **kwargs)
 
+    def get_grouped_dmr_ds(self, add_atac=False, add_motif=False):
+        from ALLCools.mcds import RegionDS
+
+        mc_ds = xr.open_zarr(self.CEMBA_SNMC_GROUPED_DMR_MC_REGION_DS_PATH)
+        _ds = [mc_ds]
+        if add_atac:
+            atac_ds = xr.open_zarr(self.CEMBA_SNMC_GROUPED_DMR_ATAC_REGION_DS_PATH)
+            _ds.append(atac_ds)
+        if add_motif:
+            motif_ds = xr.open_zarr(self.CEMBA_SNMC_GROUPED_DMR_MOTIF_REGION_DS_PATH)
+            _ds.append(motif_ds)
+        region_ds = RegionDS(xr.merge(_ds))
+        region_ds.region_dim = 'dmr'
+        return region_ds
+
     def get_dmr_ds(self, dataset='mc', chunk_type='region', add_motif=False, add_motif_hits=False, add_atac=False):
-        import xarray as xr
         from ALLCools.mcds import RegionDS
 
         if chunk_type == 'region':

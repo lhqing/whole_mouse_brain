@@ -96,8 +96,9 @@ CEMBA_SNMC_DMR_REGION_DS_SAMPLE_CHUNK_REMOTE_PATH = \
 CEMBA_SNMC_DMR_MOTIF_SCAN_REGION_DS_REMOTE_PATH = '/cemba/wmb/genome/CEMBA.snmC.DMR.motif_scan.order.ds'
 CEMBA_SNMC_DMR_TF_AND_MOTIF_HITS_DS_REMOTE_PATH = \
     '/cemba/wmb/genome/CEMBA.snmC.DMR.tf_motif_enrichment_and_hits.order.ds'
-CEMBA_SNMC_GROUPED_DMR_MC_REGION_DS_PATH = '/cemba/wmb/genome/DMR/CEMBA.AllGroupedDMRs.ATAC.zarr'
-CEMBA_SNMC_GROUPED_DMR_ATAC_REGION_DS_PATH = '/cemba/wmb/genome/DMR/CEMBA.AllGroupedDMRs.mC.zarr'
+CEMBA_SNMC_GROUPED_DMR_MC_REGION_DS_PATH = '/cemba/wmb/genome/DMR/CEMBA.snmC.AllGroupedDMRs.mC.zarr'
+CEMBA_SNMC_GROUPED_DMR_ATAC_REGION_DS_PATH = '/cemba/wmb/genome/DMR/CEMBA.AllGroupedDMRs.ATAC.zarr'
+CEMBA_SNMC_GROUPED_DMR_MOTIF_REGION_DS_PATH = '/cemba/wmb/genome/DMR/CEMBA.DMRAllGroupedDMRs.Motif.zarr'
 
 CEMBA_SNMC_DMR_ATAC_COUNT_ZARR_PATH = '/cemba/wmb/cemba/CEMBA.snmC.L4Region.DMR.ATAC.zarr'
 CEMBA_SNMC_CHROM_10BP_ATAC_COUNT_ZARR_PATH = '/cemba/wmb/cemba/CEMBA.snmC.L4Region.ATACCounts.zarr'
