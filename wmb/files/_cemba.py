@@ -51,9 +51,13 @@ CEMBA_SNM3C_MCDS_PATH = '/gale/netapp/cemba3c/BICCN/CEMBA_3C/mcds/CEMBA.snm3C.mc
 CEMBA_SNM3C_3C_COMPARTMENT_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/CEMBA_3C/mcds/CEMBA.snm3C.3C.mcds/chrom100k'
 CEMBA_SNM3C_3C_DOMAIN_INSULATION_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/CEMBA_3C/mcds/CEMBA.snm3C.3C.mcds/chrom25k'
 CEMBA_SNM3C_3C_CHROM100K_RAW_ZARR_PATH = '/gale/netapp/cemba3c/BICCN/CEMBA_3C/mcds/CEMBA.snm3C.chrom100k_raw.zarr'
-CEMBA_SNM3C_LOOP_ANOVA_DS_PATH = '/cemba/CEMBA_3C/loop/CEMBA.snm3C.LoopANOVAStats.ds'
 CEMBA_SNM3C_LOOP_AND_SUMMIT_DS_PATH = '/cemba/CEMBA_3C/loop/CEMBA.snm3C.LoopAndSummit.ds'
+
+CEMBA_SNM3C_CELL_TYPE_10K_MATRIX_ANOVA_PATH = "/cemba/CEMBA_3C/loop/CEMBA.snm3C.CellTypeMatrixANOVA.10Kb.coolds/"
+CEMBA_SNM3C_CELL_CLUSTER_10K_MATRIX_ANOVA_PATH = "/cemba/CEMBA_3C/loop/CEMBA.snm3C.CellClusterMatrixANOVA.10Kb.coolds/"
 CEMBA_SNM3C_LOOP_VALUES_DS_PATH = '/cemba/CEMBA_3C/loop/CEMBA.snm3C.LoopValues_total.ds'
+CEMBA_SNM3C_LOOP_ANOVA_DS_PATH = '/cemba/CEMBA_3C/loop/CEMBA.snm3C.LoopANOVAStats.ds'
+CEMBA_SNM3C_LOOP_VALUES_AND_STATS_V2_DS_PATH = '/cemba/CEMBA_3C/loop/CEMBA.snm3C.HighFstatsLoops.DataAndStats.zarr'
 CEMBA_SNM3C_DOMAIN_BOUNDARY_AND_CHI2_DS_PATH = '/cemba/CEMBA_3C/domain/CEMBA.snm3C.L4Region.DomainBoundaryAndChi2.ds'
 CEMBA_SNM3C_DOMAIN_INSULATION_SCORE_DS_PATH = '/cemba/CEMBA_3C/domain/CEMBA.snm3C.chrom25k.InsulationScore.coolds'
 
@@ -92,6 +96,9 @@ CEMBA_SNMC_DMR_REGION_DS_SAMPLE_CHUNK_REMOTE_PATH = \
 CEMBA_SNMC_DMR_MOTIF_SCAN_REGION_DS_REMOTE_PATH = '/cemba/wmb/genome/CEMBA.snmC.DMR.motif_scan.order.ds'
 CEMBA_SNMC_DMR_TF_AND_MOTIF_HITS_DS_REMOTE_PATH = \
     '/cemba/wmb/genome/CEMBA.snmC.DMR.tf_motif_enrichment_and_hits.order.ds'
+CEMBA_SNMC_GROUPED_DMR_MC_REGION_DS_PATH = '/cemba/wmb/genome/DMR/CEMBA.snmC.AllGroupedDMRs.mC.zarr'
+CEMBA_SNMC_GROUPED_DMR_ATAC_REGION_DS_PATH = '/cemba/wmb/genome/DMR/CEMBA.AllGroupedDMRs.ATAC.zarr'
+CEMBA_SNMC_GROUPED_DMR_MOTIF_REGION_DS_PATH = '/cemba/wmb/genome/DMR/CEMBA.DMRAllGroupedDMRs.Motif.zarr'
 
 CEMBA_SNMC_DMR_ATAC_COUNT_ZARR_PATH = '/cemba/wmb/cemba/CEMBA.snmC.L4Region.DMR.ATAC.zarr'
 CEMBA_SNMC_CHROM_10BP_ATAC_COUNT_ZARR_PATH = '/cemba/wmb/cemba/CEMBA.snmC.L4Region.ATACCounts.zarr'

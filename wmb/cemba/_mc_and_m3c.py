@@ -66,10 +66,12 @@ class CEMBASnmCAndSnm3C(AutoPathMixIn):
         self.CEMBA_SNM3C_3C_CHROM100K_RAW_ZARR_PATH = CEMBA_SNM3C_3C_CHROM100K_RAW_ZARR_PATH
         self.CEMBA_SNM3C_3C_COMPARTMENT_ZARR_PATH = CEMBA_SNM3C_3C_COMPARTMENT_ZARR_PATH
         self.CEMBA_SNM3C_3C_DOMAIN_INSULATION_ZARR_PATH = CEMBA_SNM3C_3C_DOMAIN_INSULATION_ZARR_PATH
-        self.CEMBA_SNM3C_LOOP_ANOVA_DS_PATH = CEMBA_SNM3C_LOOP_ANOVA_DS_PATH
-        self.CEMBA_SNM3C_LOOP_AND_SUMMIT_DS_PATH = CEMBA_SNM3C_LOOP_AND_SUMMIT_DS_PATH
+        self.CEMBA_SNM3C_LOOP_VALUES_AND_STATS_DS_PATH = CEMBA_SNM3C_LOOP_VALUES_AND_STATS_V2_DS_PATH
+        self.CEMBA_SNM3C_CELL_TYPE_10K_MATRIX_ANOVA_PATH = CEMBA_SNM3C_CELL_TYPE_10K_MATRIX_ANOVA_PATH
+        self.CEMBA_SNM3C_CELL_CLUSTER_10K_MATRIX_ANOVA_PATH = CEMBA_SNM3C_CELL_CLUSTER_10K_MATRIX_ANOVA_PATH
+
         self.CEMBA_SNM3C_LOOP_VALUES_DS_PATH = CEMBA_SNM3C_LOOP_VALUES_DS_PATH
-        self.CEMBA_SNM3C_DOMAIN_BOUNDARY_AND_CHI2_DS_PAT = CEMBA_SNM3C_DOMAIN_BOUNDARY_AND_CHI2_DS_PATH
+        self.CEMBA_SNM3C_DOMAIN_BOUNDARY_AND_CHI2_DS_PATH = CEMBA_SNM3C_DOMAIN_BOUNDARY_AND_CHI2_DS_PATH
         self.CEMBA_SNM3C_DOMAIN_INSULATION_SCORE_DS_PATH = CEMBA_SNM3C_DOMAIN_INSULATION_SCORE_DS_PATH
 
         # other metadata
@@ -101,6 +103,9 @@ class CEMBASnmCAndSnm3C(AutoPathMixIn):
         self.CEMBA_SNMC_DMR_MOTIF_SCAN_REGION_DS_PATH = CEMBA_SNMC_DMR_MOTIF_SCAN_REGION_DS_REMOTE_PATH
         self.CEMBA_SNMC_DMR_TF_AND_MOTIF_HITS_DS_REMOTE_PATH = CEMBA_SNMC_DMR_TF_AND_MOTIF_HITS_DS_REMOTE_PATH
         self.CEMBA_SNMC_DMR_REGION_DS_SAMPLE_CHUNK_PATH = CEMBA_SNMC_DMR_REGION_DS_SAMPLE_CHUNK_REMOTE_PATH
+        self.CEMBA_SNMC_GROUPED_DMR_MC_REGION_DS_PATH = CEMBA_SNMC_GROUPED_DMR_MC_REGION_DS_PATH
+        self.CEMBA_SNMC_GROUPED_DMR_ATAC_REGION_DS_PATH = CEMBA_SNMC_GROUPED_DMR_ATAC_REGION_DS_PATH
+        self.CEMBA_SNMC_GROUPED_DMR_MOTIF_REGION_DS_PATH = CEMBA_SNMC_GROUPED_DMR_MOTIF_REGION_DS_PATH
 
         # Integration based other modalities at cluster level
         self.CEMBA_SNMC_TO_SNM3C_CLUSTER_MAP_PATH = CEMBA_SNMC_TO_SNM3C_CLUSTER_MAP_PATH
@@ -483,8 +488,22 @@ class CEMBASnmCAndSnm3C(AutoPathMixIn):
     def get_mc_dmr_ds(self, *args, **kwargs):
         return self.get_dmr_ds(dataset='mc', *args, **kwargs)
 
+    def get_grouped_dmr_ds(self, add_atac=False, add_motif=False):
+        from ALLCools.mcds import RegionDS
+
+        mc_ds = xr.open_zarr(self.CEMBA_SNMC_GROUPED_DMR_MC_REGION_DS_PATH)
+        _ds = [mc_ds]
+        if add_atac:
+            atac_ds = xr.open_zarr(self.CEMBA_SNMC_GROUPED_DMR_ATAC_REGION_DS_PATH)
+            _ds.append(atac_ds)
+        if add_motif:
+            motif_ds = xr.open_zarr(self.CEMBA_SNMC_GROUPED_DMR_MOTIF_REGION_DS_PATH)
+            _ds.append(motif_ds)
+        region_ds = RegionDS(xr.merge(_ds))
+        region_ds.region_dim = 'dmr'
+        return region_ds
+
     def get_dmr_ds(self, dataset='mc', chunk_type='region', add_motif=False, add_motif_hits=False, add_atac=False):
-        import xarray as xr
         from ALLCools.mcds import RegionDS
 
         if chunk_type == 'region':
@@ -556,6 +575,20 @@ class CEMBASnmCAndSnm3C(AutoPathMixIn):
             chrom_sizes_path=self.CEMBA_SNM3C_L4REGION_COOL_DS_CHROMS_SIZES_PATH,
             sample_weights=sample_weights,
             sample_dim='sample_id'
+        )
+        return cool_ds
+
+    def get_m3c_matrix_anova(self, group_level='CellType'):
+        from ALLCools.mcds.cool_ds import CoolDS
+        if group_level == 'CellType':
+            path = self.CEMBA_SNM3C_CELL_TYPE_10K_MATRIX_ANOVA_PATH
+        else:
+            path = self.CEMBA_SNM3C_CELL_CLUSTER_10K_MATRIX_ANOVA_PATH
+
+        cool_ds = CoolDS(
+            cool_ds_paths=path,
+            chrom_sizes_path=self.CEMBA_SNM3C_L4REGION_COOL_DS_CHROMS_SIZES_PATH,
+            sample_weights=None,
         )
         return cool_ds
 
